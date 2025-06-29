@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Bell, Star, ChevronDown, Menu } from 'lucide-react';
+import { Bell, ChevronDown, Menu } from 'lucide-react'; // remove Star
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -40,7 +41,7 @@ export default function Header({
   };
 
   const userName = user?.name || 'Guest';
-  const userAvatar = user?.avatar || '/default-avatar.png';
+  
   const userInitials = userName
     .split(' ')
     .map((n) => n[0])
