@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Sidebar from '@/components/screens/myAcc/sideBar';
+import Sidebar from '@/components/screens/dashboard/sidebar';
 import Header from '@/components/screens/myAcc/header';
-import AccountsList from '@/components/screens/myAcc/AccountsList';
-import ContactModal from '@/components/screens/myAcc/contactus';
+
+import ContactModal from '@/components/screens/dashboard/contactus';
 
 
 export default function Dashboard() {
@@ -52,7 +52,7 @@ export default function Dashboard() {
             theme={theme}
           />
           <main className="flex-1 overflow-y-auto  bg-slate-50 dark:bg-[#11162B] transition-colors duration-300">
-            <AccountsList />
+            <></>
           </main>
 
         </div>

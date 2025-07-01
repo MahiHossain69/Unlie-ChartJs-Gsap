@@ -73,3 +73,9 @@
 body {
   @apply bg-white text-black dark:bg-black dark:text-white;
 }
+body:is(.dark *) {
+    --tw-bg-opacity: 1;
+    background-color: #11162B;
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}

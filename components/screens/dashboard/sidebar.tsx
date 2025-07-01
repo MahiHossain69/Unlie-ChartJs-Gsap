@@ -1,9 +1,11 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { Users, Settings, MessageCircle, X } from 'lucide-react';
 import { RiDashboardLine } from "react-icons/ri";
 import { BsBook } from "react-icons/bs";
 import { RiChatAiLine } from "react-icons/ri";
+
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -17,21 +19,47 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose, onContactClick }: SidebarProps) {
+  const pathname = usePathname(); // 🧠 Current route
+
   const navigation = [
-    { name: 'My Accounts', icon: Users, href: '/', current: true },
-    { name: 'Settings', icon: Settings, href: '#', current: false },
-    { name: 'Dashboard', icon: RiDashboardLine, href: '/dashboard-page', current: false }, 
-    { name: 'Knowledge Base', icon: BsBook, href: '#', current: false },
-    { name: 'Ask the Avatar', icon: RiChatAiLine, href: '#', current: false },
+    {
+      name: 'My Accounts',
+      icon: Users,
+      href: '/',
+    },
+    {
+      name: 'Settings',
+      icon: Settings,
+      href: '#',
+    },
+    {
+      name: 'Dashboard',
+      icon: RiDashboardLine,
+      href: '/dashboard-page',
+    },
+    {
+      name: 'Knowledge Base',
+      icon: BsBook,
+      href: '#',
+    },
+    {
+      name: 'Ask the Avatar',
+      icon: RiChatAiLine,
+      href: '#',
+    },
   ];
 
   const handleNavClick = () => {
-    if (window.innerWidth < 1024) onClose();
+    if (window.innerWidth < 1024) {
+      onClose();
+    }
   };
 
   const handleContactClick = () => {
     onContactClick();
-    if (window.innerWidth < 1024) onClose();
+    if (window.innerWidth < 1024) {
+      onClose();
+    }
   };
 
   return (
@@ -63,22 +91,25 @@ export default function Sidebar({ isOpen, onClose, onContactClick }: SidebarProp
 
         {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-          {navigation.map(({ name, icon: Icon, href, current }) => (
-            <Link
-              key={name}
-              href={href}
-              onClick={handleNavClick}
-              className={cn(
-                'flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors',
-                current
-                  ? 'bg-blue-600 text-white'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700'
-              )}
-            >
-              <Icon className="mr-3 h-5 w-5 flex-shrink-0" />
-              {name}
-            </Link>
-          ))}
+          {navigation.map(({ name, icon: Icon, href }) => {
+            const isActive = pathname === href;
+            return (
+              <Link
+                key={name}
+                href={href}
+                onClick={handleNavClick}
+                className={cn(
+                  'flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors',
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-700'
+                )}
+              >
+                <Icon className="mr-3 h-5 w-5 flex-shrink-0" />
+                {name}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Contact Us */}

@@ -3,11 +3,11 @@ import "./globals.css";
 import localFont from "next/font/local";
 import FooterSection from "@/components/layouts/footer";
 
-// Load the font from inside the /app/fonts directory
+
 const spaceGrotesk = localFont({
   src: [
     {
-      path: "./../public/fonts/SpaceGrotesk-Bold.ttf", // ✅ Now it's valid
+      path: "./../public/fonts/SpaceGrotesk-Bold.ttf", 
       weight: "700",
       style: "normal",
     },
