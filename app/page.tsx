@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react';
 import Sidebar from '@/components/screens/myAcc/sideBar';
 import Header from '@/components/screens/myAcc/header';
 import AccountsList from '@/components/screens/myAcc/AccountsList';
+import ContactModal from '@/components/screens/myAcc/contactus';
+
 
 export default function Dashboard() {
   const [currentUser] = useState({
     name: 'Adam Root',
-    avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+    avatar: "/adamroot.svg", // Replace with your avatar URL
   });
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   // Load theme from localStorage
@@ -36,7 +39,11 @@ export default function Dashboard() {
   return (
     <section className="container mx-auto">
       <div className="flex h-screen bg-white dark:bg-[#101828] text-slate-900 dark:text-white transition-colors">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar 
+        isOpen={sidebarOpen} 
+        onClose={() => setSidebarOpen(false)}
+        onContactClick={() => setContactModalOpen(true)}
+      />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header
             user={currentUser}
@@ -47,7 +54,12 @@ export default function Dashboard() {
           <main className="flex-1 overflow-y-auto bg-slate-50 dark:bg-[#11162B] transition-colors duration-300">
             <AccountsList />
           </main>
+
         </div>
+         <ContactModal 
+        isOpen={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
+      />
       </div>
     </section>
   );

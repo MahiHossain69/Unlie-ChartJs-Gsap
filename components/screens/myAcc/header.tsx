@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Bell, ChevronDown, Menu } from 'lucide-react'; // remove Star
+import { Bell, ChevronDown, Menu } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
-import Adam from '@/public/adamroot.svg';
 
 interface HeaderProps {
   user?: {
@@ -41,7 +40,7 @@ export default function Header({
   };
 
   const userName = user?.name || 'Guest';
-  
+
   const userInitials = userName
     .split(' ')
     .map((n) => n[0])
@@ -66,18 +65,15 @@ export default function Header({
 
           {/* Greeting */}
           <div className="truncate max-w-[180px] sm:max-w-xs md:max-w-sm">
-            <h1 className="text-sm sm:text-base font-medium text-slate-900 dark:text-white whitespace-nowrap">
-              <span className="hidden sm:inline">{getGreeting()} - </span>
-              <span className="font-semibold">{userName}</span>
+            <h1 className="text-sm sm:text-base text-slate-900 dark:text-white whitespace-nowrap">
+              <span className="font-space hidden sm:inline font-normal text-[16px]">{getGreeting()} - </span>
+              <span className="font-bold text-[20px] font-space">{userName}</span>
             </h1>
           </div>
         </div>
 
         {/* Right side - actions */}
         <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-         
-        
-
           {/* Theme Toggle */}
           <Button
             variant="ghost"
@@ -145,7 +141,7 @@ export default function Header({
                 <Avatar className="h-8 w-8 rounded-none">
                   <AvatarImage asChild>
                     <Image
-                      src={Adam}
+                      src="/adamroot.svg"
                       alt="User Avatar"
                       width={32}
                       height={32}
@@ -161,11 +157,11 @@ export default function Header({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 mt-2 shadow-lg">
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Help & Support</DropdownMenuItem>
+              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>My Account</DropdownMenuItem>
+              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>Settings</DropdownMenuItem>
+              
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Sign out</DropdownMenuItem>
+              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>Log Out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

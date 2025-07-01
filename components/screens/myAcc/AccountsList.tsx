@@ -93,7 +93,7 @@ export default function AccountsList() {
   return (
     <div className="p-4 sm:p-6">
       <div className="mb-4 sm:mb-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">My Accounts</h2>
+        <h2 className="text-xl sm:text-2xl font-bold font-space text-slate-900 dark:text-white">My Accounts</h2>
       </div>
 
       <div className="space-y-3 sm:space-y-4">

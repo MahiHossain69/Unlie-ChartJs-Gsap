@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import FooterSection from "@/components/layouts/footer"
+import localFont from "next/font/local";
+import FooterSection from "@/components/layouts/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Load the font from inside the /app/fonts directory
+const spaceGrotesk = localFont({
+  src: [
+    {
+      path: "./../public/fonts/SpaceGrotesk-Bold.ttf", // ✅ Now it's valid
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-space",
 });
 
 export const metadata: Metadata = {
@@ -20,14 +22,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${spaceGrotesk.variable}`}>
         {children}
-        <FooterSection/>
+        <FooterSection />
       </body>
     </html>
   );
