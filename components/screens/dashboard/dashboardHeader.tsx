@@ -1,7 +1,7 @@
 "use client";
 
 import { RiHome2Line } from "react-icons/ri";
-import Link from "next/link";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
