@@ -79,3 +79,15 @@ body:is(.dark *) {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+@layer components {
+  .chart-container {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .chart-container.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}

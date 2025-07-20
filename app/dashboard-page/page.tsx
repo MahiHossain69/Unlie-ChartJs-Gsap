@@ -3,8 +3,15 @@
 import { useEffect, useState } from 'react';
 import Sidebar from '@/components/screens/dashboard/sidebar';
 import Header from '@/components/screens/myAcc/header';
+import DashboardContent from '@/components/screens/dashboard/dashboardHeader';
 
 import ContactModal from '@/components/screens/dashboard/contactus';
+import StatisticsCard from '@/components/screens/dashboard/StatisticsCard';
+import EmotionsCard from '@/components/screens/dashboard/EmotionsCard';
+import MainTopicsCard from '@/components/screens/dashboard/MainTopicsCard';
+import MentionsCard from '@/components/screens/dashboard/MentionsCard';
+import SentimentCard from '@/components/screens/dashboard/SentimentCard';
+import ThreatDetectionTable from '@/components/screens/dashboard/ThreatDetectionTable';
 
 
 export default function Dashboard() {
@@ -52,7 +59,34 @@ export default function Dashboard() {
             theme={theme}
           />
           <main className="flex-1 overflow-y-auto  bg-slate-50 dark:bg-[#11162B] transition-colors duration-300">
-            <></>
+            <DashboardContent/>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 sm:px-6 md:px-8 py-4 ">
+          <div className="dashboard-card">
+            <StatisticsCard />
+          </div>
+          <div className="dashboard-card">
+            <EmotionsCard />
+          </div>
+          <div className="dashboard-card">
+            <MainTopicsCard />
+          </div>
+        </div>
+
+        {/* Middle Row - Mentions, Sentiment */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 sm:px-6 md:px-8 py-4">
+          <div className="dashboard-card">
+            <MentionsCard />
+          </div>
+          <div className="dashboard-card">
+            <SentimentCard />
+          </div>
+        </div>
+
+        {/* Bottom Row - Threat Detection Table */}
+        <div className="dashboard-card px-4 sm:px-6 md:px-8 py-4">
+          <ThreatDetectionTable />
+        </div>
+      
           </main>
 
         </div>

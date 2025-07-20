@@ -51,12 +51,12 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
       
       {/* Modal */}
       <div className={cn(
-        "relative bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 transform transition-all duration-300 ease-out",
+        "relative bg-white dark:bg-[#070C22] rounded-2xl shadow-2xl w-full max-w-md mx-4 transform transition-all duration-300 ease-out",
         "animate-in fade-in-0 zoom-in-95"
       )}>
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <h2 className="text-xl font-bold font-space text-gray-900">Contact Us</h2>
+          <h2 className="text-xl font-bold font-space text-gray-900 dark:text-white">Contact Us</h2>
           <Button
             variant="ghost"
             size="icon"
@@ -71,7 +71,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Name Field */}
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-sm font-space font-medium text-gray-700">
+            <Label htmlFor="name" className="text-sm font-space font-medium text-gray-700 dark:text-white">
               Name
             </Label>
             <Input
@@ -82,13 +82,13 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Your name"
-              className="w-full px-3 py-2 border bg-gray-100 text-black border-[#D0D5DD] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-3 py-2 border bg-gray-100 dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
             />
           </div>
 
           {/* Email Field */}
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-space font-medium text-gray-700">
+            <Label htmlFor="email" className="text-sm font-space font-medium text-gray-700 dark:text-white">
               Email
             </Label>
             <Input
@@ -99,14 +99,14 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className="w-full px-3 py-2 border bg-gray-100 text-black border-[#D0D5DD] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-3 py-2 border bg-gray-100 dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
             />
           </div>
 
           {/* Message Field */}
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-sm font-space font-medium text-gray-700">
-              Message
+            <Label htmlFor="message" className="text-sm font-space font-medium text-gray-700 dark:text-white">
+              Text
             </Label>
             <Textarea
               id="message"
@@ -116,7 +116,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               onChange={handleInputChange}
               placeholder="Type your message here..."
               rows={4}
-              className="w-full px-3 py-2 border bg-gray-100 text-black border-[#D0D5DD] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+              className="w-full px-3 py-2 border bg-gray-100 dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
             />
           </div>
 

@@ -2,6 +2,15 @@
 
 import { useState } from 'react';
 import { Bell, ChevronDown, Menu } from 'lucide-react';
+import { MdOutlineSupervisorAccount } from "react-icons/md";
+import { IoSettingsOutline } from "react-icons/io5";
+import { LuLogOut } from "react-icons/lu";
+import { MdOutlineWbSunny } from "react-icons/md";
+import { IoMoonOutline } from "react-icons/io5";
+
+
+
+
 
 import { Button } from '@/components/ui/button';
 import {
@@ -83,35 +92,9 @@ export default function Header({
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-yellow-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 3v1m0 16v1m8.66-8.66l-.707.707M4.34 4.34l-.707.707M21 12h1M2 12H1m16.66 4.66l-.707.707M4.34 19.66l-.707.707M12 5a7 7 0 000 14a7 7 0 000-14z"
-                />
-              </svg>
+              <MdOutlineWbSunny/>
             ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-slate-800 dark:text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"
-                />
-              </svg>
+             <IoMoonOutline/>
             )}
           </Button>
 
@@ -156,12 +139,22 @@ export default function Header({
                 <ChevronDown className="h-4 w-4 text-slate-600 dark:text-white group-hover:rotate-180 transition-transform" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 mt-2 shadow-lg">
-              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>My Account</DropdownMenuItem>
-              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>Settings</DropdownMenuItem>
-              
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>Log Out</DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-full mt-2 space-y-4 px-7 shadow-lg">
+              <DropdownMenuItem className="flex items-center gap-2 font-space font-medium text-white">
+  <MdOutlineSupervisorAccount className="w-[30px] text-[#4A5773]  rounded-full bg-[#F2F4F7] dark:bg-[rgba(23,29,41,0.1)]  h-" />
+  My Account
+</DropdownMenuItem>
+
+<DropdownMenuItem className="flex items-center gap-2 font-space font-medium text-white">
+  <IoSettingsOutline className="w-[30px] text-[#4A5773]  rounded-full bg-[#F2F4F7] dark:bg-[rgba(23,29,41,0.1)]  h-" />
+  Settings
+</DropdownMenuItem>
+
+<DropdownMenuItem className="flex items-center gap-2 font-space font-medium text-white">
+  <LuLogOut className="w-[30px] text-[#4A5773]  rounded-full bg-[#F2F4F7] dark:bg-[rgba(23,29,41,0.1)]  h-" />
+  Log Out
+</DropdownMenuItem>
+
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

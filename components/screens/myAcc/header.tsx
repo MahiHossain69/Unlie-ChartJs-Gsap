@@ -2,6 +2,11 @@
 
 import { useState } from 'react';
 import { Bell, ChevronDown, Menu } from 'lucide-react';
+import { MdOutlineSupervisorAccount, MdOutlineWbSunny } from "react-icons/md";
+import { IoMoonOutline, IoSettingsOutline } from "react-icons/io5";
+import { LuLogOut } from "react-icons/lu";
+
+
 
 import { Button } from '@/components/ui/button';
 import {
@@ -48,7 +53,7 @@ export default function Header({
     .toUpperCase();
 
   return (
-    <header className="bg-white dark:bg-[#101828] border-b border-slate-200 dark:border-zinc-700 px-4 sm:px-6 py-3 transition-colors w-full">
+    <header className="bg-white dark:bg-[rgba(16,24,40,0.06)] border-b  border-slate-200 dark:border-zinc-700 px-4 sm:px-6 py-3 transition-colors w-full">
       <div className="flex items-center justify-between">
         {/* Left side - menu + greeting */}
         <div className="flex items-center gap-3 sm:gap-4">
@@ -75,45 +80,19 @@ export default function Header({
         {/* Right side - actions */}
         <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
           {/* Theme Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="inline-flex text-slate-600 hover:text-slate-900 dark:text-white"
-            onClick={onThemeToggle}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-yellow-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 3v1m0 16v1m8.66-8.66l-.707.707M4.34 4.34l-.707.707M21 12h1M2 12H1m16.66 4.66l-.707.707M4.34 19.66l-.707.707M12 5a7 7 0 000 14a7 7 0 000-14z"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-slate-800 dark:text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"
-                />
-              </svg>
-            )}
-          </Button>
+         <Button
+                     variant="ghost"
+                     size="icon"
+                     className="inline-flex text-slate-600 hover:text-slate-900 dark:text-white"
+                     onClick={onThemeToggle}
+                     aria-label="Toggle theme"
+                   >
+                     {theme === 'dark' ? (
+                       <MdOutlineWbSunny/>
+                     ) : (
+                      <IoMoonOutline/>
+                     )}
+                   </Button>
 
           {/* Notifications */}
           <Button
@@ -156,12 +135,22 @@ export default function Header({
                 <ChevronDown className="h-4 w-4 text-slate-600 dark:text-white group-hover:rotate-180 transition-transform" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 mt-2 shadow-lg">
-              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>My Account</DropdownMenuItem>
-              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>Settings</DropdownMenuItem>
-              
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className='font-space font-medium text-[#171D29]'>Log Out</DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-full rounded-2xl border-[rgba(255,255,255,0.1)] mt-2 space-y-4 px-7 shadow-lg">
+              <DropdownMenuItem className="flex items-center gap-2 font-space font-medium text-black">
+  <MdOutlineSupervisorAccount className="w-[30px]   rounded-full bg-[#F2F4F7] dark:bg-[rgba(23,29,41,0.1)] text-black dark:text-white  h-[30px]" />
+  My Account
+</DropdownMenuItem>
+
+<DropdownMenuItem className="flex items-center gap-2 font-space font-medium text-black">
+  <IoSettingsOutline className="w-[30px]   rounded-full bg-[#F2F4F7] dark:bg-[rgba(23,29,41,0.1)] text-black dark:text-white  h-[30px]" />
+  Settings
+</DropdownMenuItem>
+
+<DropdownMenuItem className="flex items-center gap-2 font-space font-medium text-black">
+  <LuLogOut className="w-[30px]   rounded-full bg-[#F2F4F7] dark:bg-[rgba(23,29,41,0.1)] text-black dark:text-white  h-[30px]" />
+  Log Out
+</DropdownMenuItem>
+
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

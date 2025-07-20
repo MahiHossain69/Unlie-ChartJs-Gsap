@@ -56,10 +56,14 @@ export default function Dashboard() {
           </main>
 
         </div>
-         <ContactModal 
+         
+          <ContactModal 
+         
         isOpen={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
+        
       />
+         
       </div>
     </section>
   );
