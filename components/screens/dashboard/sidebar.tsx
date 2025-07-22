@@ -99,7 +99,7 @@ export default function Sidebar({ isOpen, onClose, onContactClick }: SidebarProp
                 href={href}
                 onClick={handleNavClick}
                 className={cn(
-                  'flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors',
+                  'flex items-center font-space px-4 py-3 text-sm font-medium rounded-lg transition-colors',
                   isActive
                     ? 'bg-blue-600 text-white'
                     : 'text-slate-300 hover:text-white hover:bg-slate-700'

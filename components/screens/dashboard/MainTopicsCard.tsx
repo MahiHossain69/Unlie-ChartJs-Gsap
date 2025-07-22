@@ -1,39 +1,54 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Download } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { useEffect, useRef, useState } from 'react';
+import { format } from 'date-fns';
 import { gsap } from 'gsap';
+import { Calendar as CalendarIcon, Download } from 'lucide-react';
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { Badge } from '@/components/ui/badge';
+import { DateRange } from 'react-day-picker';
 
 const topics = [
-  { name: 'Trump', color: 'bg-emerald-500 text-white' },
-  { name: 'Apple', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Amazon', color: 'bg-emerald-500 text-white' },
-  { name: 'BYD', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Delaware', color: 'bg-red-500 text-white' },
-  { name: 'Tesla', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Semiconductors', color: 'bg-red-500 text-white' },
-  { name: 'Green Energy', color: 'bg-slate-600 text-gray-300' },
-  { name: 'SpaceX', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Bitcoin', color: 'bg-emerald-500 text-white' },
-  { name: 'Electric Vehicles', color: 'bg-red-500 text-white' },
-  { name: 'Lucid Motors', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Universal Studios', color: 'bg-emerald-500 text-white' },
-  { name: 'Bitcoin', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Binance', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Shopify', color: 'bg-red-500 text-white' },
-  { name: 'Bitcoin', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Ethereum', color: 'bg-emerald-500 text-white' },
-  { name: 'Netflix', color: 'bg-red-500 text-white' },
-  { name: 'Alibaba', color: 'bg-slate-600 text-gray-300' },
-  { name: 'Netflix', color: 'bg-slate-600 text-gray-300' },
+  { name: 'Trump', color: 'text-[#0CAF60]', fontWeight: 'font-bold',fontSize: 'text-[16px]', fontFamily: 'font-space' },
+  { name: 'Apple', color: 'text-[#4A5773]', fontWeight: 'font-normal',fontSize: 'text-[14px]', fontFamily: 'font-space'},
+  { name: 'Amazon', color: 'text-[#0CAF60]',fontWeight: 'font-normal',fontSize: 'text-[14px]', fontFamily: 'font-space' },
+  { name: 'BYD', color: 'text-[#0CAF60]', fontWeight: 'font-normal',fontSize: 'text-[14px]', fontFamily: 'font-space' },
+  { name: 'Delaware', color: 'text-[#F23838]',fontWeight: 'font-bold',fontSize: 'text-[20px]', fontFamily: 'font-space' },
+  { name: 'Tesla', color: 'text-[#4A5773]',fontWeight: 'font-normal',fontSize: 'text-[14px]', fontFamily: 'font-space'  },
+  { name: 'Semiconductors', color: 'text-[#F23838]',fontWeight: 'font-bold',fontSize: 'text-[20px]', fontFamily: 'font-space' },
+  { name: 'Green Energy', color: 'text-[#4A5773]',fontWeight: 'font-normal',fontSize: 'text-[14px]', fontFamily: 'font-space'  },
+  { name: 'SpaceX', color: 'text-[#4A5773]',fontWeight: 'font-normal',fontSize: 'text-[14px]', fontFamily: 'font-space'  },
+  { name: 'Bitcoin', color: 'text-[#0CAF60]',fontWeight: 'font-bold',fontSize: 'text-[20px]', fontFamily: 'font-space' },
+  { name: 'Electric Vehicles', color: 'text-[#F23838]',fontWeight: 'font-bold',fontSize: 'text-[20px]', fontFamily: 'font-space' },
+  { name: 'Lucid Motors', color: 'text-[#0CAF60]',fontWeight: 'font-normal',fontSize: 'text-[14px]', fontFamily: 'font-space'  },
+  { name: 'Universal Studios', color: 'text-[#0CAF60]',fontWeight: 'font-bold',fontSize: 'text-[20px]', fontFamily: 'font-space' },
+  { name: 'Bitcoin', color: 'text-[#4A5773]',fontWeight: 'font-medium',fontSize: 'text-[14px]', fontFamily: 'font-space'  },
+  { name: 'Binance', color: 'text-[#0CAF60]',fontWeight: 'font-normal',fontSize: 'text-[14px]', fontFamily: 'font-space'  },
+  { name: 'Shopify', color: 'text-[#F23838]',fontWeight: 'font-bold',fontSize: 'text-[18px]', fontFamily: 'font-space' },
+  { name: 'Bitcoin', color: 'text-[#4A5773]',fontWeight: 'font-medium',fontSize: 'text-[14px]', fontFamily: 'font-space'  },
+ 
 ];
 
 export default function MainTopicsCard() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(),
+    to: new Date()
+  });
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -41,9 +56,9 @@ export default function MainTopicsCard() {
       gsap.fromTo(
         badges,
         { scale: 0, opacity: 0 },
-        { 
-          scale: 1, 
-          opacity: 1, 
+        {
+          scale: 1,
+          opacity: 1,
           duration: 0.5,
           stagger: 0.05,
           delay: 0.8,
@@ -54,30 +69,69 @@ export default function MainTopicsCard() {
   }, []);
 
   return (
-    <Card className="bg-white dark:bg-[#101828] dark:border-slate-700 backdrop-blur-sm">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-white text-lg font-semibold">Main Topics</CardTitle>
-        <div className="flex items-center space-x-2">
-          <Select defaultValue="jan10-jan16">
-            <SelectTrigger className="w-32 h-8 bg-slate-800 border-slate-600 text-white text-sm">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-slate-800 border-slate-600">
-              <SelectItem value="jan10-jan16" className="text-white">Jan 10 - Jan 16</SelectItem>
-              <SelectItem value="jan17-jan23" className="text-white">Jan 17 - Jan 23</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button size="sm" variant="outline" className="h-8 w-8 p-0 bg-slate-800 border-slate-600 hover:bg-slate-700">
-            <Download className="w-3 h-3 text-gray-400" />
+    <Card className="bg-white dark:bg-[#101828]  dark:border-slate-700 backdrop-blur-sm w-full max-w-full sm:max-w-[100%] ">
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center mt-4 justify-between gap-4">
+        <CardTitle className="dark:text-white font-space text-black text-base sm:text-lg font-semibold">
+          Main Topics
+        </CardTitle>
+
+        <div className="flex items-center font-space gap-2">
+          <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-9 px-3 text-sm text-[#4A5773]  font-spacetext-[#4A5773] sm:text-sm dark:bg-slate-800 bg-white border-[#D0D5DD]  dark:text-white"
+              >
+                <CalendarIcon className="w-4 h-4 mr-2 dark:text-white  text-gray-600" />
+                Jan 10 - Jan 16
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="bg-white dark:bg-black border border-gray-200 rounded-xl shadow-lg p-4 w-80">
+              <Calendar
+                mode="range"
+                selected={dateRange}
+                onSelect={setDateRange}
+                numberOfMonths={1}
+                className="rounded-lg"
+              />
+              <div className="flex justify-between items-center mt-4 gap-2">
+                <Button
+                  variant="outline"
+                  className="flex-1 border border-gray-300 dark:text-white dark:hover:bg-slate-700 text-gray-700 hover:bg-gray-50 rounded-md"
+                  onClick={() => setCalendarOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                  onClick={() => setCalendarOpen(false)}
+                >
+                  Apply
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-9 w-9 p-0 dark:bg-slate-800 bg-white border-[#D0D5DD]  dark:text-white dark:hover:bg-slate-700"
+          >
+            <Download className="w-4 h-4 text-[#473BF0]" />
           </Button>
         </div>
       </CardHeader>
+
       <CardContent>
-        <div ref={containerRef} className="flex flex-wrap gap-2">
+        <div
+          ref={containerRef}
+          className="flex flex-wrap gap-2 max-h-[200px] sm:max-h-none overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 pr-1"
+        >
           {topics.map((topic, index) => (
-            <Badge 
+            <Badge
               key={`${topic.name}-${index}`}
-              className={`topic-badge ${topic.color} px-3 py-1 text-xs font-medium hover:scale-105 transition-transform cursor-pointer`}
+              className={`topic-badge ${topic.color} ${topic.fontWeight ?? ''} ${topic.fontSize ?? 'text-xs'} ${topic.fontFamily ?? 'font-sans'} px-3 py-1  bg-transparent hover:scale-105 shadow-none hover:bg-transparent transition-transform cursor-pointer`}
+
             >
               {topic.name}
             </Badge>
