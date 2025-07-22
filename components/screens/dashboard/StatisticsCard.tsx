@@ -5,7 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Download } from 'lucide-react';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartOptions, ChartData } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+  ChartData,
+  TooltipItem
+} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { gsap } from 'gsap';
 
@@ -70,7 +81,7 @@ export default function StatisticsCard() {
         bodyColor: '#FFFFFF',
         bodyFont: { family: 'spaceGrotesk', size: 12 },
         callbacks: {
-          label: function (tooltipItem: any) {
+          label: function (tooltipItem: TooltipItem<'bar'>) {
             return ` ${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
           },
         },
@@ -83,7 +94,6 @@ export default function StatisticsCard() {
         stacked: true,
         grid: { display: false },
         ticks: {
-          
           color: '#6B7280',
           font: { family: 'spaceGrotesk', size: 12 },
         },
@@ -95,7 +105,6 @@ export default function StatisticsCard() {
           color: '#6B7280',
           font: { family: 'spaceGrotesk', size: 12 },
           stepSize: 20,
-        
         },
         max: 80,
       },
@@ -105,19 +114,31 @@ export default function StatisticsCard() {
   return (
     <Card className="bg-white dark:bg-[#101828] dark:border-slate-700 shadow-sm border rounded-xl">
       <CardHeader className="flex flex-row items-center mt-4 justify-between px-5">
-        <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">Statistic</CardTitle>
+        <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">
+          Statistic
+        </CardTitle>
         <div className="flex items-center space-x-2">
           <Select defaultValue="weekly">
             <SelectTrigger className="w-24 h-8 dark:bg-slate-800 bg-white font-space border-[#D0D5DD] text-[#4A5773] dark:text-white text-sm">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="dark:bg-slate-800 bg-white border-slate-600">
-              <SelectItem value="weekly" className="dark:text-white font-space text-black">Weekly</SelectItem>
-              <SelectItem value="daily" className="dark:text-white font-space text-black">Daily</SelectItem>
-              <SelectItem value="monthly" className="dark:text-white font-space text-black">Monthly</SelectItem>
+              <SelectItem value="weekly" className="dark:text-white font-space text-black">
+                Weekly
+              </SelectItem>
+              <SelectItem value="daily" className="dark:text-white font-space text-black">
+                Daily
+              </SelectItem>
+              <SelectItem value="monthly" className="dark:text-white font-space text-black">
+                Monthly
+              </SelectItem>
             </SelectContent>
           </Select>
-          <Button size="sm" variant="outline" className="h-8 w-8 p-0 dark:bg-slate-800 bg-white border-[#D0D5DD] dark:text-white dark:hover:bg-slate-700">
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8 w-8 p-0 dark:bg-slate-800 bg-white border-[#D0D5DD] dark:text-white dark:hover:bg-slate-700"
+          >
             <Download className="w-4 h-4 text-[#473BF0]" />
           </Button>
         </div>
@@ -145,7 +166,7 @@ export default function StatisticsCard() {
         </div>
 
         {/* Chart */}
-        <div ref={chartRef} className="h-52  sm:h-56 md:h-60">
+        <div ref={chartRef} className="h-52 sm:h-56 md:h-60">
           <Bar data={data} options={options} />
         </div>
       </CardContent>
