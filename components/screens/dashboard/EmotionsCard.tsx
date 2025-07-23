@@ -110,7 +110,7 @@ export default function EmotionsCard() {
         {emotions.map((emotion, index) => (
           <div key={emotion.name} className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="dark:text-[#FFFFFFCC] text-[#4A5773] font-space text-sm font-normal">
+              <span className="dark:text-white/80 text-[#4A5773] font-space text-sm font-normal">
                 {emotion.name}
               </span>
               <span className="dark:text-white text-black font-space font-semibold text-sm">

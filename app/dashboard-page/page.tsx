@@ -71,7 +71,7 @@ export default function Dashboard() {
 
             {/* Middle Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4 sm:px-6 md:px-8 py-4">
-              <MentionsCard />
+              <MentionsCard  />
               <SentimentCard />
             </div>
 

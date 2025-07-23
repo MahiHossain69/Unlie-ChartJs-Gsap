@@ -118,19 +118,20 @@ export default function ThreatDetectionTable() {
       {/* Header */}
       <CardHeader className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 px-4 sm:px-6 py-4">
         <div className="flex flex-wrap items-center space-x-4">
-          <CardTitle className="text-white text-lg font-semibold">
+          <CardTitle className="text-white font-space text-lg font-semibold">
             Threat Detection
           </CardTitle>
-          <Badge className="bg-red-500/20 text-red-400 whitespace-nowrap">
+          <Badge className="bg-red-500/20 font-space text-red-400 ">
             8 open threats to review
           </Badge>
+          
         </div>
         <div className="w-full lg:w-auto">
           <div className="relative w-full sm:w-64">
             <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <Input
               placeholder="Search Threats"
-              className="pl-10 w-full h-9 bg-slate-800 border-slate-600 text-white placeholder-gray-400"
+              className="pl-10 w-full font-space font-normal text-[14px] h-9 bg-slate-800 border-slate-600 text-white placeholder-gray-400"
             />
           </div>
         </div>
@@ -141,7 +142,7 @@ export default function ThreatDetectionTable() {
         <div ref={tableRef} className="overflow-x-auto">
           <table className="w-full text-sm min-w-[768px]">
             <thead>
-              <tr className="border-b border-slate-700 text-xs sm:text-sm text-gray-400">
+              <tr className="border-b border-slate-700 font-space text-xs sm:text-sm text-gray-400">
                 {[
                   "Threat Type",
                   "Platform",

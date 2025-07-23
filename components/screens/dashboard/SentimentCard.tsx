@@ -28,22 +28,25 @@ export default function SentimentCard() {
     labels: ['Jan 10', 'Jan 11', 'Jan 12', 'Jan 13', 'Jan 14', 'Jan 15', 'Jan 16'],
     datasets: [
       {
-        label: 'Negative',
-        data: [40, 35, 30, 25, 30, 35, 40],
-        backgroundColor: '#ef4444',
-        borderRadius: { topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0 },
+        label: 'Neutral',
+        data: [100, 80, 100, 100, 100, 100, 100],
+        backgroundColor: '#5B606A',
+        borderRadius: { topLeft: 4, topRight: 4 },
+        barThickness: 10,
       },
       {
         label: 'Positive',
-        data: [80, 90, 100, 120, 110, 100, 90],
-        backgroundColor: '#22c55e',
+        data: [25, 25, 25, 25, 25, 25, 25],
+        backgroundColor: '#0CAF60',
         borderRadius: 0,
+        barThickness: 10,
       },
       {
-        label: 'Neutral',
-        data: [60, 55, 50, 45, 50, 55, 60],
-        backgroundColor: '#64748b',
-        borderRadius: { topLeft: 0, topRight: 0, bottomLeft: 4, bottomRight: 4 },
+        label: 'Negative',
+        data: [30, 20, 30, 30, 30, 30, 30],
+        backgroundColor: '#F23838',
+        borderRadius: { topLeft: 10, topRight: 10, bottomLeft: 4, bottomRight: 4 },
+        barThickness: 10,
       },
     ],
   };
@@ -61,6 +64,7 @@ export default function SentimentCard() {
         bodyColor: '#ffffff',
         borderColor: '#374151',
         borderWidth: 1,
+        padding: 8,
       },
     },
     scales: {
@@ -70,22 +74,21 @@ export default function SentimentCard() {
           display: false,
         },
         ticks: {
-          color: '#9ca3af',
-          font: {
-            size: 12,
-          },
+          color: '#4A5773',
+         font: { family: 'spaceGrotesk', size: 12 },
         },
       },
       y: {
         stacked: true,
+        min: 0,
+        max: 200,
         grid: {
-          color: '#374151',
+          color: '#E5E7EB',
         },
         ticks: {
-          color: '#9ca3af',
-          font: {
-            size: 12,
-          },
+          color: '#4A5773',
+          font: { family: 'spaceGrotesk', size: 12 },
+          stepSize: 50,
         },
       },
     },
@@ -94,46 +97,54 @@ export default function SentimentCard() {
   return (
     <Card className="bg-white dark:bg-[#101828] dark:border-slate-700 backdrop-blur-sm">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-white text-lg font-semibold">Sentiment</CardTitle>
+        <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">
+          Sentiment
+        </CardTitle>
         <div className="flex items-center space-x-2">
           <Select defaultValue="weekly">
-            <SelectTrigger className="w-24 h-8 bg-slate-800 border-slate-600 text-white text-sm">
+            <SelectTrigger className="w-24 h-8 dark:bg-slate-800 bg-white font-space border-[#D0D5DD] text-[#4A5773] dark:text-white text-sm">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-slate-800 border-slate-600">
-              <SelectItem value="weekly" className="text-white">Weekly</SelectItem>
-              <SelectItem value="daily" className="text-white">Daily</SelectItem>
-              <SelectItem value="monthly" className="text-white">Monthly</SelectItem>
+            <SelectContent className="dark:bg-slate-800 bg-white border-slate-600">
+              <SelectItem value="weekly" className="dark:text-white font-space text-black">
+                Weekly
+              </SelectItem>
+              <SelectItem value="daily" className="dark:text-white font-space text-black">
+                Daily
+              </SelectItem>
+              <SelectItem value="monthly" className="dark:text-white font-space text-black">
+                Monthly
+              </SelectItem>
             </SelectContent>
           </Select>
-          <Button size="sm" variant="outline" className="h-8 w-8 p-0 bg-slate-800 border-slate-600 hover:bg-slate-700">
-            <Download className="w-3 h-3 text-gray-400" />
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8 w-8 p-0 dark:bg-slate-800 bg-white border-[#D0D5DD] dark:text-white dark:hover:bg-slate-700"
+          >
+            <Download className="w-4 h-4 text-[#473BF0]" />
           </Button>
         </div>
       </CardHeader>
       <CardContent className="pb-6">
-        <div className="flex items-center space-x-4 mb-4">
+        <div className="flex items-center flex-wrap gap-x-4 gap-y-2 mb-4">
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-slate-500"></div>
-            <span className="text-xs text-gray-400">Neutral</span>
+            <div className="w-3 h-3 rounded-full bg-[#5B606A]"></div>
+            <span className="text-xs font-space text-[#4A5773] dark:text-white/80">Neutral</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span className="text-xs text-gray-400">Positive</span>
+            <div className="w-3 h-3 rounded-full bg-[#0CAF60]"></div>
+            <span className="text-xs font-space text-[#4A5773] dark:text-white/80">Positive</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <span className="text-xs text-gray-400">Negative</span>
+            <div className="w-3 h-3 rounded-full bg-[#F23838]"></div>
+            <span className="text-xs font-space text-[#4A5773] dark:text-white/80">Negative</span>
           </div>
         </div>
         <div ref={chartRef} className="h-48 relative">
           <Bar data={data} options={options} />
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
-            Jan 13
-          </div>
-          <div className="absolute top-4 right-4 bg-black text-white text-xs px-2 py-1 rounded">
-            +105 +155
-          </div>
+          
+          
         </div>
       </CardContent>
     </Card>

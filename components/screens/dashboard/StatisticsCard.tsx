@@ -146,22 +146,22 @@ export default function StatisticsCard() {
 
       <CardContent className="pb-6 px-5">
         {/* Legend */}
-        <div className="flex font-space font-normal items-center space-x-4 mb-4">
+        <div className="flex font-space font-normal  items-center space-x-4 mb-4">
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 rounded-full bg-[#F23838]" />
-            <span className="text-[10px] text-gray-500">High Risk</span>
+            <span className="text-[10px] text-gray-500 dark:text-white/80">High Risk</span>
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 rounded-full bg-[#E38604]" />
-            <span className="text-[10px] text-gray-500">Medium Risk</span>
+            <span className="text-[10px] text-gray-500 dark:text-white/80">Medium Risk</span>
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 rounded-full bg-[#0CAF60]" />
-            <span className="text-[10px] text-gray-500">Low Risk</span>
+            <span className="text-[10px] text-gray-500 dark:text-white/80">Low Risk</span>
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 rounded-full bg-[#665CF3]" />
-            <span className="text-[10px] text-gray-500">Mitigated Risk</span>
+            <span className="text-[10px] text-gray-500 dark:text-white/80">Mitigated Risk</span>
           </div>
         </div>
 

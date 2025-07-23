@@ -1,15 +1,40 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Download } from 'lucide-react';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { gsap } from 'gsap';
+import { useEffect, useRef } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+  ChartData,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { gsap } from "gsap";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Download } from "lucide-react";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function MentionsCard() {
   const chartRef = useRef(null);
@@ -19,55 +44,55 @@ export default function MentionsCard() {
       gsap.fromTo(
         chartRef.current,
         { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1, delay: 0.7, ease: 'power3.out' }
+        { scale: 1, opacity: 1, duration: 1, delay: 0.7, ease: "power3.out" }
       );
     }
   }, []);
 
-  const data = {
-    labels: ['Jan 10', 'Jan 11', 'Jan 12', 'Jan 13', 'Jan 14', 'Jan 15', 'Jan 16'],
+  const data: ChartData<"line"> = {
+    labels: ["Jan 10", "Jan 11", "Jan 12", "Jan 13", "Jan 14", "Jan 15", "Jan 16"],
     datasets: [
       {
-        label: 'YouTube',
-        data: [75, 65, 70, 60, 55, 50, 45],
-        borderColor: '#ef4444',
-        backgroundColor: '#ef4444',
+        label: "YouTube",
+        data: [15, 25, 32, 18, 25, 20, 12],
+        borderColor: "#F23838",
+        backgroundColor: "#F23838",
         tension: 0.4,
         pointRadius: 0,
         borderWidth: 2,
       },
       {
-        label: 'Facebook',
-        data: [35, 45, 50, 55, 60, 65, 70],
-        borderColor: '#3b82f6',
-        backgroundColor: '#3b82f6',
+        label: "Facebook",
+        data: [25, 35, 38, 30, 40, 32, 47],
+        borderColor: "#1C89F6",
+        backgroundColor: "#1C89F6",
         tension: 0.4,
         pointRadius: 0,
         borderWidth: 2,
       },
       {
-        label: 'X',
-        data: [50, 60, 55, 45, 50, 55, 60],
-        borderColor: '#22c55e',
-        backgroundColor: '#22c55e',
+        label: "X",
+        data: [30, 65, 60, 55, 63, 63, 30],
+        borderColor: "#E38604",
+        backgroundColor: "#E38604",
         tension: 0.4,
         pointRadius: 0,
         borderWidth: 2,
       },
       {
-        label: 'TikTok',
-        data: [45, 50, 55, 60, 65, 70, 75],
-        borderColor: '#f59e0b',
-        backgroundColor: '#f59e0b',
+        label: "TikTok",
+        data: [50, 45, 50, 45, 55, 52, 68],
+        borderColor: "#0CAF60",
+        backgroundColor: "#0CAF60",
         tension: 0.4,
         pointRadius: 0,
         borderWidth: 2,
       },
       {
-        label: 'Instagram',
-        data: [60, 70, 75, 80, 75, 70, 80],
-        borderColor: '#ec4899',
-        backgroundColor: '#ec4899',
+        label: "Instagram",
+        data: [75, 58, 70, 55, 78, 65, 76],
+        borderColor: "#FE16D4",
+        backgroundColor: "#FE16D4",
         tension: 0.4,
         pointRadius: 0,
         borderWidth: 2,
@@ -75,7 +100,7 @@ export default function MentionsCard() {
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -83,90 +108,115 @@ export default function MentionsCard() {
         display: false,
       },
       tooltip: {
-        backgroundColor: '#1f2937',
-        titleColor: '#ffffff',
-        bodyColor: '#ffffff',
-        borderColor: '#374151',
+        backgroundColor: "#1f2937",
+        titleColor: "#ffffff",
+        bodyColor: "#ffffff",
+        borderColor: "#374151",
         borderWidth: 1,
+        padding: 8,
       },
     },
     scales: {
       x: {
         grid: {
           display: false,
+          drawTicks: false,
         },
         ticks: {
-          color: '#9ca3af',
+          color: "#4A5773",
           font: {
+            family: "spaceGrotesk",
             size: 12,
           },
+          padding: 8,
         },
       },
       y: {
-        grid: {
-          color: '#374151',
-        },
+        min: 0,
+        max: 80,
         ticks: {
-          color: '#9ca3af',
+          stepSize: 20,
+          color: "#4A5773",
           font: {
+            family: "spaceGrotesk",
             size: 12,
           },
+          padding: 8,
+        },
+        grid: {
+         
+          color: "#D1D5DB",
+         
         },
       },
     },
     interaction: {
       intersect: false,
+      mode: "index",
     },
   };
 
   return (
     <Card className="bg-white dark:bg-[#101828] dark:border-slate-700 backdrop-blur-sm">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-white text-lg font-semibold">Mentions</CardTitle>
+        <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">
+          Mentions
+        </CardTitle>
         <div className="flex items-center space-x-2">
           <Select defaultValue="weekly">
-            <SelectTrigger className="w-24 h-8 bg-slate-800 border-slate-600 text-white text-sm">
+            <SelectTrigger className="w-24 h-8 dark:bg-slate-800 bg-white font-space border-[#D0D5DD] text-[#4A5773] dark:text-white text-sm">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-slate-800 border-slate-600">
-              <SelectItem value="weekly" className="text-white">Weekly</SelectItem>
-              <SelectItem value="daily" className="text-white">Daily</SelectItem>
-              <SelectItem value="monthly" className="text-white">Monthly</SelectItem>
+            <SelectContent className="dark:bg-slate-800 bg-white border-slate-600">
+              <SelectItem
+                value="weekly"
+                className="dark:text-white font-space text-black"
+              >
+                Weekly
+              </SelectItem>
+              <SelectItem
+                value="daily"
+                className="dark:text-white font-space text-black"
+              >
+                Daily
+              </SelectItem>
+              <SelectItem
+                value="monthly"
+                className="dark:text-white font-space text-black"
+              >
+                Monthly
+              </SelectItem>
             </SelectContent>
           </Select>
-          <Button size="sm" variant="outline" className="h-8 w-8 p-0 bg-slate-800 border-slate-600 hover:bg-slate-700">
-            <Download className="w-3 h-3 text-gray-400" />
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8 w-8 p-0 dark:bg-slate-800 bg-white border-[#D0D5DD] dark:text-white dark:hover:bg-slate-700"
+          >
+            <Download className="w-4 h-4 text-[#473BF0]" />
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="pb-6">
-        <div className="flex items-center space-x-4 mb-4 flex-wrap gap-y-2">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <span className="text-xs text-gray-400">YouTube</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            <span className="text-xs text-gray-400">Facebook</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span className="text-xs text-gray-400">X</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-amber-500"></div>
-            <span className="text-xs text-gray-400">TikTok</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-pink-500"></div>
-            <span className="text-xs text-gray-400">Instagram</span>
-          </div>
+
+      <CardContent className="pb-6 text-[#4A5773] dark:text-white">
+        <div className="flex items-center flex-wrap gap-x-4 gap-y-2 mb-4">
+          {[
+            { label: "YouTube", color: "bg-[#F23838]" },
+            { label: "Facebook", color: "bg-[#1C89F6]" },
+            { label: "X", color: "bg-[#E38604]" },
+            { label: "TikTok", color: "bg-[#0CAF60]" },
+            { label: "Instagram", color: "bg-[#FE16D4]" },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center space-x-2">
+              <div className={`w-3 h-3 rounded-full ${item.color}`} />
+              <span className="font-space text-[12px] font-normal text-[#4A5773] dark:text-white/80 leading-none">
+                {item.label}
+              </span>
+            </div>
+          ))}
         </div>
         <div ref={chartRef} className="h-48 relative">
           <Line data={data} options={options} />
-          <div className="absolute top-4 left-4 bg-black text-white text-xs px-2 py-1 rounded">
-            -45
-          </div>
         </div>
       </CardContent>
     </Card>
