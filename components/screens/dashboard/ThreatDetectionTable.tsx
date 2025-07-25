@@ -26,7 +26,7 @@ import { FaCaretDown } from "react-icons/fa";
 
 import { gsap } from "gsap"
 
-interface Threat {
+type Threat = {
   id: string
   threatType: string
   platform: string
@@ -128,28 +128,28 @@ const handleAction = (
   action: "mitigate" | "dismiss" | "escalate" | "archive"
 ) => {
   // Step 1: Set "In Progress"
-  const inProgressUpdate = allThreats.map((t) =>
-    t.id === threatId ? { ...t, status: "In Progress" } : t
-  )
+ const inProgressUpdate = allThreats.map((t: Threat) =>
+  t.id === threatId ? { ...t, status: "In Progress" } : t
+)
   setAllThreats(inProgressUpdate)
 
   // Step 2: Wait 2s, then update to final status
   setTimeout(() => {
-    const finalUpdate = inProgressUpdate.map((t) =>
-      t.id === threatId
-        ? {
-            ...t,
-            status:
-              action === "mitigate"
-                ? "Mitigated"
-                : action === "dismiss"
-                ? "Dismissed"
-                : action === "escalate"
-                ? "Escalated"
-                : "Archived",
-          }
-        : t
-    )
+   const finalUpdate = inProgressUpdate.map((t: Threat) =>
+  t.id === threatId
+    ? {
+        ...t,
+        status:
+          action === "mitigate"
+            ? "Mitigated"
+            : action === "dismiss"
+            ? "Dismissed"
+            : action === "escalate"
+            ? "Escalated"
+            : "Archived",
+      }
+    : t
+)
     setAllThreats(finalUpdate)
   }, 2000)
 }
