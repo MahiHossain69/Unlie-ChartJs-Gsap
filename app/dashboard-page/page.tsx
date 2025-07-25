@@ -51,7 +51,7 @@ export default function Dashboard() {
           onContactClick={() => setContactModalOpen(true)}
         />
 
-        <div className="flex flex-1 flex-col overflow-hidden">
+        <div className="flex flex-1  flex-col overflow-hidden">
           <Header
             user={currentUser}
             onMenuClick={() => setSidebarOpen(true)}
