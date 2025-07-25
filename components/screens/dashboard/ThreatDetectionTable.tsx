@@ -26,7 +26,7 @@ import { FaCaretDown } from "react-icons/fa";
 
 import { gsap } from "gsap"
 
-type Threat = {
+interface Threat {
   id: string
   threatType: string
   platform: string
@@ -123,37 +123,27 @@ export default function ThreatDetectionTable() {
     setAllThreats(sorted)
   }
 
-const handleAction = (
-  threatId: string,
-  action: "mitigate" | "dismiss" | "escalate" | "archive"
-) => {
-  // Step 1: Set "In Progress"
- const inProgressUpdate = allThreats.map((t: Threat) =>
-  t.id === threatId ? { ...t, status: "In Progress" } : t
-)
-  setAllThreats(inProgressUpdate)
-
-  // Step 2: Wait 2s, then update to final status
-  setTimeout(() => {
-   const finalUpdate = inProgressUpdate.map((t: Threat) =>
-  t.id === threatId
-    ? {
-        ...t,
-        status:
-          action === "mitigate"
-            ? "Mitigated"
-            : action === "dismiss"
-            ? "Dismissed"
-            : action === "escalate"
-            ? "Escalated"
-            : "Archived",
-      }
-    : t
-)
-    setAllThreats(finalUpdate)
-  }, 2000)
-}
-
+  const handleAction = (
+    threatId: string,
+    action: "mitigate" | "dismiss" | "escalate" | "archive"
+  ) => {
+    const updated = allThreats.map((t) =>
+      t.id === threatId
+        ? {
+            ...t,
+            status:
+              action === "mitigate"
+                ? "Mitigated"
+                : action === "dismiss"
+                ? "Dismissed"
+                : action === "escalate"
+                ? "Escalated"
+                : "Archived",
+          }
+        : t
+    )
+    setAllThreats(updated)
+  }
 
   const filteredThreats = allThreats.filter(
     (threat) =>
@@ -169,28 +159,24 @@ const handleAction = (
     startIndex + itemsPerPage
   )
 
- const getStatusBadge = (status: string) => {
-  if (!status) return null // Don’t render anything if status is empty
-
-  const base =
-    "border-0 font-medium text-sm px-2 py-1 rounded bg-opacity-20 hover:bg-opacity-40"
-
-  switch (status) {
-    case "In Progress":
-      return <Badge className={`${base} bg-[#F38E001A]/10 dark:bg-[#FFFFFF14]/10 dark:text-[white] text-[#E38604] font-space font-medium text-[13px]`}>{status}</Badge>
-    case "Mitigated":
-      return <Badge className={`${base} bg-[#473BF01A]/10 dark:bg-[#F2383826]/15 dark:text-[#F23838] text-[#473BF0] font-space font-medium text-[13px]`}>{status}</Badge>
-    case "Dismissed":
-      return <Badge className={`${base} bg-[#0CAF6014]/10 text-[#0CAF60] font-space font-medium text-[13px]`}>{status}</Badge>
-    case "Escalated":
-      return <Badge className={`${base} bg-red-100 font-space font-medium text-[13px] text-red-600`}>{status}</Badge>
-    case "Archived":
-      return <Badge className={`${base} bg-gray-100 font-space font-medium text-[13px] text-gray-600`}>{status}</Badge>
-    default:
-      return <Badge variant="secondary">{status}</Badge>
+  const getStatusBadge = (status: string) => {
+    const base =
+      "border-0 font-medium text-sm px-2 py-1 rounded bg-opacity-20 hover:bg-opacity-40"
+    switch (status) {
+      case "In Progress":
+        return <Badge className={`${base} bg-[#F38E001A]/10 dark:bg-[#FFFFFF14]/10 dark:text-[white] text-[#E38604] font-space font-medium text-[13px]`}>{status}</Badge>
+      case "Mitigated":
+        return <Badge className={`${base} bg-[#473BF01A]/10 dark:bg-[#F2383826]/15 dark:text-[#F23838] text-[#473BF0] font-space font-medium text-[13px]`}>{status}</Badge>
+      case "Dismissed":
+        return <Badge className={`${base} bg-[#0CAF6014]/10 text-[#0CAF60] font-space font-medium text-[13px]`}>{status}</Badge>
+      case "Escalated":
+        return <Badge className={`${base} bg-red-100 font-space font-medium text-[13px] text-red-600`}>{status}</Badge>
+      case "Archived":
+        return <Badge className={`${base} bg-gray-100 font-space font-medium text-[13px] text-gray-600`}>{status}</Badge>
+      default:
+        return <Badge variant="secondary">{status}</Badge>
+    }
   }
-}
-
 
   const getReachBadge = (reach: string) => {
     switch (reach) {
