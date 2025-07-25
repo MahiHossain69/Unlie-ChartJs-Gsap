@@ -17,9 +17,13 @@ import {
   ChevronLeft,
   ChevronRight,
   Search,
+  
+  
 } from "lucide-react"
-import { FaCaretUp } from "react-icons/fa"
-import { FaCaretDown } from "react-icons/fa"
+import { FaCaretUp } from "react-icons/fa";
+import { FaCaretDown } from "react-icons/fa";
+
+
 import { gsap } from "gsap"
 
 interface Threat {
@@ -30,8 +34,8 @@ interface Threat {
   reach: string
   status: string
 }
-
 type ActionType = "mitigate" | "dismiss" | "escalate" | "archive"
+
 
 const allThreatsData: { [key: number]: Threat[] } = {
   1: [
@@ -77,7 +81,9 @@ type SortDirection = "asc" | "desc"
 
 export default function ThreatDetectionTable() {
   const tableRef = useRef<HTMLDivElement>(null)
-  const [allThreats, setAllThreats] = useState<Threat[]>(Object.values(allThreatsData).flat())
+  const [allThreats, setAllThreats] = useState<Threat[]>(
+    Object.values(allThreatsData).flat()
+  )
   const [sortField, setSortField] = useState<SortField | null>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
   const [searchTerm, setSearchTerm] = useState("")
@@ -103,47 +109,42 @@ export default function ThreatDetectionTable() {
   }, [currentPage, searchTerm, sortField, sortDirection])
 
   const handleSort = (field: SortField) => {
-    const newDirection = sortField === field && sortDirection === "asc" ? "desc" : "asc"
+    const newDirection =
+      sortField === field && sortDirection === "asc" ? "desc" : "asc"
     setSortField(field)
     setSortDirection(newDirection)
 
     const sorted = [...allThreats].sort((a, b) => {
       const aValue = a[field].toString().toLowerCase()
       const bValue = b[field].toString().toLowerCase()
-      return newDirection === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
+      return newDirection === "asc"
+        ? aValue.localeCompare(bValue)
+        : bValue.localeCompare(aValue)
     })
 
     setAllThreats(sorted)
   }
 
-  const handleAction = (threatId: string, action: ActionType) => {
-    // Show "In Progress"
-    setAllThreats((prevThreats) =>
-      prevThreats.map((t) =>
-        t.id === threatId ? { ...t, status: "In Progress" } : t
-      )
+  const handleAction = (
+    threatId: string,
+    action: "mitigate" | "dismiss" | "escalate" | "archive"
+  ) => {
+    const updated = allThreats.map((t) =>
+      t.id === threatId
+        ? {
+            ...t,
+            status:
+              action === "mitigate"
+                ? "Mitigated"
+                : action === "dismiss"
+                ? "Dismissed"
+                : action === "escalate"
+                ? "Escalated"
+                : "Archived",
+          }
+        : t
     )
-
-    // Delay update for 2 seconds
-    setTimeout(() => {
-      setAllThreats((prevThreats) =>
-        prevThreats.map((t) =>
-          t.id === threatId
-            ? {
-                ...t,
-                status:
-                  action === "mitigate"
-                    ? "Mitigated"
-                    : action === "dismiss"
-                    ? "Dismissed"
-                    : action === "escalate"
-                    ? "Escalated"
-                    : "Archived",
-              }
-            : t
-        )
-      )
-    }, 2000)
+    setAllThreats(updated)
   }
 
   const filteredThreats = allThreats.filter(
@@ -264,10 +265,11 @@ export default function ThreatDetectionTable() {
                     <td className="py-4 px-4">{getReachBadge(threat.reach)}</td>
                     <td className="py-4 px-4">
                       <div className="flex flex-col sm:flex-row gap-2">
-                        <Select 
-                          onValueChange={(value) => handleAction(threat.id, value as any)}
-                          disabled={["Mitigated", "Dismissed", "Escalated", "Archived"].includes(threat.status)}
-                        >
+                        <Select
+  onValueChange={(value: ActionType) => handleAction(threat.id, value)}
+  disabled={["Mitigated", "Dismissed", "Escalated", "Archived"].includes(threat.status)}
+>
+
                           <SelectTrigger className="w-24 h-8 bg-[#F23838] font-space  font-medium !text-[#FEF3F2] text-xs">
                             <SelectValue placeholder="Mitigate" />
                           </SelectTrigger>
@@ -277,9 +279,10 @@ export default function ThreatDetectionTable() {
                           </SelectContent>
                         </Select>
                         <Select
-                          onValueChange={(value) => handleAction(threat.id, value as any)}
-                          disabled={["Mitigated", "Dismissed", "Escalated", "Archived"].includes(threat.status)}
-                        >
+  onValueChange={(value: ActionType) => handleAction(threat.id, value)}
+  disabled={["Mitigated", "Dismissed", "Escalated", "Archived"].includes(threat.status)}
+>
+
                           <SelectTrigger className="w-24 h-8 bg-[#0CAF60] font-space  font-medium !text-[#FEF3F2] text-xs">
                             <SelectValue placeholder="Dismiss" />
                           </SelectTrigger>
