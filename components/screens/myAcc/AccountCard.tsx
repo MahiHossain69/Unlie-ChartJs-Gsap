@@ -70,7 +70,7 @@ export default function AccountCard({ account }: AccountCardProps) {
           />
         </div>
 
-        <div className="dark:bg-[#fff]/10 bg-black/10 px-1 rounded-md">
+        <div className="dark:bg-[#fff]/10 bg-black/5 px-1 rounded-md">
           <Metric
             text={`${otherThreats} Other Threats`}
             textClass="text-black dark:text-white font-space"
@@ -79,7 +79,7 @@ export default function AccountCard({ account }: AccountCardProps) {
           />
         </div>
 
-        <div className="dark:bg-[#fff]/10 bg-black/10 px-1 rounded-md">
+        <div className="dark:bg-[#fff]/10 bg-black/5 px-1 rounded-md">
           <Metric
           text={`${elementsToReview} Elements to Review`}
           textClass='text-black dark:text-white font-space'
@@ -88,7 +88,7 @@ export default function AccountCard({ account }: AccountCardProps) {
         />
         </div>
 
-        <div className="dark:bg-[#fff]/10 bg-black/10 px-1 rounded-md">
+        <div className="dark:bg-[#fff]/10 bg-black/5 px-1 rounded-md">
           <Metric
           text={`${newInsights} New Insights`}
           textClass='text-black dark:text-white font-space'

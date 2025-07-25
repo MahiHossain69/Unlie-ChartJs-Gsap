@@ -85,7 +85,7 @@ export default function Sidebar({ isOpen, onClose, onContactClick }: SidebarProp
         </div>
 
         {/* Logo */}
-        <div className="p-6 border-b border-slate-700">
+        <div className="p-6 lg:block hidden border-b border-slate-700">
           <Image src={Logo} alt="Unlie Logo" width={218} height={39} priority />
         </div>
 
@@ -99,7 +99,7 @@ export default function Sidebar({ isOpen, onClose, onContactClick }: SidebarProp
                 href={href}
                 onClick={handleNavClick}
                 className={cn(
-                  'flex items-center font-space px-4 py-3 text-sm font-medium rounded-lg transition-colors',
+                  'flex items-center mt-[40px] lg:mt-0 font-space px-4 py-3 text-sm font-medium rounded-lg transition-colors',
                   isActive
                     ? 'bg-blue-600 text-white'
                     : 'text-slate-300 hover:text-white hover:bg-slate-700'

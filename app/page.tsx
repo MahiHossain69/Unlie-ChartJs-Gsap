@@ -74,7 +74,7 @@ export default function Dashboard() {
               <h2 className="text-center font-space mb-0 text-[#fff] text-[24px] font-bold">
                 Welcome Back
               </h2>
-              <h2 className="text-center font-space text-[#98A2B3] text-[16px] font-normal">
+              <h2 className="text-center font-space text-[#98A2B3] text-[14px] font-normal">
                 Enter your credentials to continue
               </h2>
 
@@ -193,7 +193,7 @@ export default function Dashboard() {
   }
 
   return (
-    <section className="container mx-auto">
+    <section className="w-full min-h-screen">
       <div className="flex h-screen bg-white dark:bg-[#101828] text-slate-900 dark:text-white transition-colors">
         <Sidebar
           isOpen={sidebarOpen}

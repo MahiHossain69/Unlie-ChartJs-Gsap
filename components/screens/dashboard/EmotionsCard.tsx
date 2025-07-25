@@ -55,10 +55,11 @@ export default function EmotionsCard() {
 
   return (
     <Card className="bg-white dark:bg-[#101828] dark:border-slate-700 backdrop-blur-sm">
-      <CardHeader className="flex flex-row items-center mt-4 justify-between p-6 pb-4">
-        <CardTitle className="text-gray-900 dark:text-white font-space font-semibold text-xl">
-          Emotions
+     <CardHeader className="flex flex-col 2xl:flex-row items-start sm:items-center mt-4 justify-between gap-4">
+        <CardTitle className="dark:text-white font-space text-black text-base sm:text-lg font-semibold">
+          Emotions    
         </CardTitle>
+
         <div className="flex items-center font-space gap-2">
           <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
             <PopoverTrigger asChild>

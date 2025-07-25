@@ -112,7 +112,7 @@ export default function StatisticsCard() {
   };
 
   return (
-    <Card className="bg-white dark:bg-[#101828] dark:border-slate-700 shadow-sm border rounded-xl">
+    <Card className="bg-white dark:bg-[#101828] dark:border-slate-700 shadow-sm  border rounded-xl">
       <CardHeader className="flex flex-row items-center mt-4 justify-between px-5">
         <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">
           Statistic

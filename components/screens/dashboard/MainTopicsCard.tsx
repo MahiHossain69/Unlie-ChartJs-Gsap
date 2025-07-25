@@ -70,7 +70,7 @@ export default function MainTopicsCard() {
 
   return (
     <Card className="bg-white dark:bg-[#101828]  dark:border-slate-700 backdrop-blur-sm w-full max-w-full sm:max-w-[100%] ">
-      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center mt-4 justify-between gap-4">
+      <CardHeader className="flex flex-col 2xl:flex-row items-start sm:items-center mt-4 justify-between gap-4">
         <CardTitle className="dark:text-white font-space text-black text-base sm:text-lg font-semibold">
           Main Topics
         </CardTitle>
