@@ -8,7 +8,7 @@ const spaceGrotesk = localFont({
   src: [
     {
       path: "./../public/fonts/SpaceGrotesk-Bold.ttf", 
-      weight: "700",
+      
       style: "normal",
     },
   ],

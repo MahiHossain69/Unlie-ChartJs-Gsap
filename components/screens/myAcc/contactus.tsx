@@ -55,13 +55,13 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         "animate-in fade-in-0 zoom-in-95"
       )}>
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+        <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/10">
           <h2 className="text-xl font-bold font-space text-gray-900 dark:text-white">Contact Us</h2>
           <Button
             variant="ghost"
             size="icon"
             onClick={onClose}
-            className="h-8 w-8 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-700"
+            className="h-8 w-8 rounded-full hover:bg-gray-100 text-[#4A5773] hover:text-gray-700"
           >
             <X className="h-4 w-4" />
           </Button>
@@ -71,7 +71,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Name Field */}
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-sm font-space font-medium text-gray-700 dark:text-white">
+            <Label htmlFor="name" className="text-sm font-space font-medium text-[#101828] dark:text-white">
               Name
             </Label>
             <Input
@@ -81,14 +81,14 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               required
               value={formData.name}
               onChange={handleInputChange}
-              placeholder="Your name"
-              className="w-full px-3 py-2 border bg-gray-100 dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              placeholder="Name"
+              className="w-full px-3 py-2 dark:text-white  bg-gray-100 placeholder:text-[#FFFFFF80]/50 dark:!border-white/10 !border font-space placeholder:text-[13px] placeholder:font-normal placeholder:font-space !border-[#D0D5DD] dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg"
             />
           </div>
 
           {/* Email Field */}
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-space font-medium text-gray-700 dark:text-white">
+            <Label htmlFor="email" className="text-sm font-space font-medium text-[#101828] dark:text-white">
               Email
             </Label>
             <Input
@@ -99,13 +99,13 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className="w-full px-3 py-2 border bg-gray-100 dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-3 py-2 dark:text-white bg-gray-100 placeholder:text-[#FFFFFF80]/50 dark:!border-white/10 !border font-space placeholder:text-[13px] placeholder:font-normal placeholder:font-space !border-[#D0D5DD] dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg"
             />
           </div>
 
           {/* Message Field */}
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-sm font-space font-medium text-gray-700 dark:text-white">
+            <Label htmlFor="message" className="text-sm font-space font-medium text-[#101828] dark:text-white">
               Text
             </Label>
             <Textarea
@@ -114,9 +114,9 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               required
               value={formData.message}
               onChange={handleInputChange}
-              placeholder="Type your message here..."
+              placeholder="Type Your Message"
               rows={4}
-              className="w-full px-3 py-2 border bg-gray-100 dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+              className="w-full px-3 py-2 dark:text-white  bg-gray-100 placeholder:text-[#FFFFFF80]/50 dark:!border-white/10 !border font-space placeholder:text-[13px] placeholder:font-normal placeholder:font-space !border-[#D0D5DD] dark:bg-[rgba(255,255,255,0.1)] text-black border-[rgba(255,255,255,0.1)] rounded-lg resize-none"
             />
           </div>
 

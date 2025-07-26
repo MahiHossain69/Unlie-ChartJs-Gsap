@@ -174,22 +174,22 @@ export default function Header({
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
-                className="w-56 mt-2 space-y-3 px-4 py-4 border border-[#2A3144] font-space rounded-2xl bg-[#0C1023] text-white shadow-lg"
+                className="w-56 mt-2 space-y-3 px-4 py-4 border dark:border-white/10 dark:text-[#FFFFFFD9]/95 border-[#2A3144] font-space rounded-2xl bg-[#fff] text-[#4A5773] shadow-lg"
               >
                 <DropdownMenuItem className="flex items-center gap-3 text-sm font-medium">
-                  <span className="p-2 rounded-full bg-[#1C2333]">
+                  <span className="p-2 rounded-full bg-[#F2F4F7] dark:bg-[#171D291A]/10">
                     <MdOutlineSupervisorAccount className="w-5 h-5" />
                   </span>
                   My Accounts
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex items-center gap-3 text-sm font-medium">
-                  <span className="p-2 rounded-full bg-[#1C2333]">
+                  <span className="p-2 rounded-full bg-[#F2F4F7] dark:bg-[#171D291A]/10">
                     <IoSettingsOutline className="w-5 h-5" />
                   </span>
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex items-center gap-3 text-sm font-medium">
-                  <span className="p-2 rounded-full bg-[#1C2333]">
+                  <span className="p-2 rounded-full bg-[#F2F4F7] dark:bg-[#171D291A]/10">
                     <LuLogOut className="w-5 h-5" />
                   </span>
                   Log Out
