@@ -125,28 +125,29 @@ export default function ThreatDetectionTable() {
     setAllThreats(sorted)
   }
 
-  const handleAction = (
-    threatId: string,
-    action: "mitigate" | "dismiss" | "escalate" | "archive"
-  ) => {
-    const updated = allThreats.map((t) =>
-      t.id === threatId
-        ? {
-            ...t,
-            status:
-              action === "mitigate"
-                ? "Mitigated"
-                : action === "dismiss"
-                ? "Dismissed"
-                : action === "escalate"
-                ? "Escalated"
-                : "Archived",
-          }
-        : t
-    )
-    setAllThreats(updated)
-  }
+  const handleAction = (threatId: string, action: ActionType) => {
+  const updated = allThreats.map((t) =>
+    t.id === threatId ? { ...t, status: "In Progress" } : t
+  )
+  setAllThreats(updated)
 
+  const finalStatus =
+    action === "mitigate"
+      ? "Mitigated"
+      : action === "dismiss"
+      ? "Dismissed"
+      : action === "escalate"
+      ? "Escalated"
+      : "Archived"
+
+  setTimeout(() => {
+    setAllThreats((prev) =>
+      prev.map((t) =>
+        t.id === threatId ? { ...t, status: finalStatus } : t
+      )
+    )
+  }, 2000)
+}
   const filteredThreats = allThreats.filter(
     (threat) =>
       threat.threatType.toLowerCase().includes(searchTerm.toLowerCase()) ||
