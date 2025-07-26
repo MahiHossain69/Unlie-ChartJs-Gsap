@@ -178,22 +178,7 @@ const KnowledgeBaseAccordion = () => {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
-  const handleFormSubmit = () => {
-    if (!formData.title.trim()) {
-      toast({
-        title: "Error",
-        description: "Title is required",
-        variant: "destructive",
-      })
-      return
-    }
-    toast({
-      title: "Success",
-      description: "Information added to knowledge base successfully!",
-    })
-    // Reset form
-    setFormData({ title: "", textInfo: "", secondTitle: "" })
-  }
+ 
 
   // File upload handlers
   const handleFileUpload = (files: FileList | null, isInitial = false) => {

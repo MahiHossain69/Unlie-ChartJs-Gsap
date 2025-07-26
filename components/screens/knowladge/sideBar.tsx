@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Users, Settings, MessageCircle, X } from "lucide-react";
+import { Users, Settings, X } from "lucide-react";
 import { RiDashboardLine } from "react-icons/ri";
 import { BsBook } from "react-icons/bs";
 import { RiChatAiLine } from "react-icons/ri";
