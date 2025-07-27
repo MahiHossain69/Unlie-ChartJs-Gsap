@@ -181,7 +181,7 @@ const KnowledgeBaseAccordion = () => {
  
 
   // File upload handlers
-  const handleFileUpload = (files: FileList | null, isInitial = false) => {
+ const handleFileUpload = (files: FileList | null) => { // Removed isInitial parameter
     if (!files) return
     Array.from(files).forEach((file) => {
       const newFile: UploadedFile = {
@@ -222,9 +222,9 @@ const KnowledgeBaseAccordion = () => {
     e.preventDefault()
   }
 
-  const handleDrop = (e: React.DragEvent, isInitial = false) => {
+  const handleDrop = (e: React.DragEvent) => { // Removed isInitial parameter
     e.preventDefault()
-    handleFileUpload(e.dataTransfer.files, isInitial)
+    handleFileUpload(e.dataTransfer.files) // Removed isInitial argument
   }
 
   const removeFile = (fileId: string) => {
@@ -402,7 +402,7 @@ const KnowledgeBaseAccordion = () => {
           <div
             className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
             onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, false)}
+            onDrop={(e) => handleDrop(e, )}
             onClick={() => fileInputRef.current?.click()}
           >
             <Upload className="mx-auto h-8 w-8 text-gray-400 mb-3" />
@@ -770,7 +770,7 @@ const KnowledgeBaseAccordion = () => {
         <div
           className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-gray-50 mb-4 hover:bg-gray-100 transition-colors cursor-pointer"
           onDragOver={handleDragOver}
-          onDrop={(e) => handleDrop(e, true)}
+          onDrop={(e) => handleDrop(e, )}
           onClick={() => initialFileInputRef.current?.click()}
         >
           <Upload className="mx-auto h-6 w-6 text-gray-400 mb-2" />
@@ -785,7 +785,7 @@ const KnowledgeBaseAccordion = () => {
             multiple
             className="hidden"
             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.mp4"
-            onChange={(e) => handleFileUpload(e.target.files, true)}
+            onChange={(e) => handleFileUpload(e.target.files)}
           />
         </div>
 
