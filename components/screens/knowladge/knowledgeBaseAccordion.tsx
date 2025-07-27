@@ -23,6 +23,7 @@ import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
+import { IoCloudUploadOutline } from "react-icons/io5"
 
 interface AccordionSection {
   id: string
@@ -403,9 +404,10 @@ const KnowledgeBaseAccordion = () => {
   const renderAddInfoContent = () => (
   <div className="space-y-6 pt-4">
   {/* Title */}
+  <div className="bg-[#E4E7EC] -mt-[15px] w-full h-[1px]"></div>
   <div className="flex flex-col md:flex-row items-start md:gap-8 gap-2">
     <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
-      <label className="text-sm font-medium text-gray-700">
+      <label className="text-[15px] font-space font-medium text-gray-700">
         Title <span className="text-red-500">*</span>
       </label>
       <TooltipProvider>
@@ -413,14 +415,14 @@ const KnowledgeBaseAccordion = () => {
           <TooltipTrigger>
             <span className="text-gray-400 cursor-help">ⓘ</span>
           </TooltipTrigger>
-          <TooltipContent>Enter title text to submit</TooltipContent>
+          <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Enter title text to submit</TooltipContent>
         </Tooltip>
       </TooltipProvider>
     </div>
     <div className="w-full">
       <Input
         placeholder="Enter your text..."
-        className={`w-full bg-gray-50 border-gray-200 ${formErrors.title ? "border-red-500" : ""}`}
+        className={`w-full bg-[#000]/5 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${formErrors.title ? "border-red-500" : ""}`}
         value={formData.title}
         required
         onChange={(e) => handleFormChange("title", e.target.value)}
@@ -432,7 +434,7 @@ const KnowledgeBaseAccordion = () => {
   {/* Add Text Info */}
   <div className="flex flex-col md:flex-row items-start md:gap-8 gap-2">
     <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
-      <label className="text-sm font-medium text-gray-700">
+      <label className="text-[15px] font-space font-medium text-gray-700">
         Add Text Information <span className="text-red-500">*</span>
       </label>
       <TooltipProvider>
@@ -440,14 +442,14 @@ const KnowledgeBaseAccordion = () => {
           <TooltipTrigger>
             <span className="text-gray-400 cursor-help">ⓘ</span>
           </TooltipTrigger>
-          <TooltipContent>Add detailed text information here</TooltipContent>
+          <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Add detailed text information here</TooltipContent>
         </Tooltip>
       </TooltipProvider>
     </div>
     <div className="w-full">
       <Textarea
         placeholder="Enter your text..."
-        className={`w-full h-24 resize-none bg-gray-50 border-gray-200 ${formErrors.textInfo ? "border-red-500" : ""}`}
+        className={`w-full h-24 resize-none bg-[#000]/5 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${formErrors.textInfo ? "border-red-500" : ""}`}
         value={formData.textInfo}
         required
         onChange={(e) => handleFormChange("textInfo", e.target.value)}
@@ -455,11 +457,11 @@ const KnowledgeBaseAccordion = () => {
       {formErrors.textInfo && <p className="text-red-500 text-sm mt-1">{formErrors.textInfo}</p>}
     </div>
   </div>
-
+  <div className="bg-[#E4E7EC] w-full h-[1px]"></div>
   {/* Second Title */}
   <div className="flex flex-col md:flex-row items-start md:gap-8 gap-2">
     <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
-      <label className="text-sm font-medium text-gray-700">
+      <label className="text-[15px] font-space font-medium text-gray-700">
         Title <span className="text-red-500">*</span>
       </label>
       <TooltipProvider>
@@ -467,14 +469,14 @@ const KnowledgeBaseAccordion = () => {
           <TooltipTrigger>
             <span className="text-gray-400 cursor-help">ⓘ</span>
           </TooltipTrigger>
-          <TooltipContent>Provide another title if needed</TooltipContent>
+          <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Provide another title if needed</TooltipContent>
         </Tooltip>
       </TooltipProvider>
     </div>
     <div className="w-full">
       <Input
         placeholder="Enter your text..."
-        className={`w-full bg-gray-50 border-gray-200 ${formErrors.secondTitle ? "border-red-500" : ""}`}
+        className={`w-full bg-[#000]/5 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${formErrors.secondTitle ? "border-red-500" : ""}`}
         value={formData.secondTitle}
         required
         onChange={(e) => handleFormChange("secondTitle", e.target.value)}
@@ -485,45 +487,57 @@ const KnowledgeBaseAccordion = () => {
 
   {/* Upload Field */}
   <div className="flex flex-col md:flex-row items-start md:gap-8 gap-2">
-    <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
-      <label className="text-sm font-medium text-gray-700">Upload Initial Documents</label>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <span className="text-gray-400 cursor-help">ⓘ</span>
-          </TooltipTrigger>
-          <TooltipContent>Upload Initial Document</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </div>
-    <div className="w-full">
-      <div
-        className="border-2 border-dashed border-gray-300 rounded-lg p-6 md:p-8 text-center bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        <Upload className="mx-auto h-8 w-8 text-gray-400 mb-3" />
-        <div className="text-sm text-gray-600 mb-1">Choose a Document or drag & drop it here.</div>
-        <div className="text-xs text-gray-400 mb-4">PDF, DOC, JPG file formats, up to 100 MB</div>
-        <Button variant="outline" className="bg-white">
-          Browse File
-        </Button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          multiple
-          className="hidden"
-          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-          onChange={(e) => handleFileUpload(e.target.files)}
-        />
+  {/* Left: Label and Tooltip */}
+  <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
+    <label className="text-[15px] font-space font-medium text-gray-700">
+      Upload Initial Documents
+    </label>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <span className="text-gray-400 cursor-help">ⓘ</span>
+        </TooltipTrigger>
+        <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Upload Initial Document</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  </div>
+
+  {/* Right: Upload Area */}
+  <div className="w-full">
+    <div
+      className="border-2 border-dashed border-[#CDD0D5] rounded-lg p-3 md:p-8 bg-white hover:bg-gray-100 transition-colors cursor-pointer flex flex-col md:flex-row items-center justify-between text-start"
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+      onClick={() => fileInputRef.current?.click()}
+    >
+      <IoCloudUploadOutline className="h-8 w-8 text-[#525866] mb-3 md:mb-0" />
+      <div className="flex flex-col items-start flex-grow mx-4">
+        <h1 className="text-sm font-space text-[#0A0D14] mb-1 font-medium ">
+          Choose a Document or drag & drop it here.
+        </h1>
+        <h1 className="text-xs font-space font-normal text-[#868C98]">
+          PDF, .pptx, .doc etc formats, up to 20 MB.
+        </h1>
       </div>
+      <Button variant="outline" className="bg-white border-[#5258660F] font-space text-[#525866] font-medium">
+        Browse File
+      </Button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        multiple
+        className="hidden"
+        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+        onChange={(e) => handleFileUpload(e.target.files)}
+      />
     </div>
   </div>
+</div>
+
 
   {/* Submit Button */}
   <div className="flex justify-end pt-4">
-    <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8" onClick={handleFormSubmit}>
+    <Button className="bg-[#473BF0] hover:bg-blue-700 text-white px-8" onClick={handleFormSubmit}>
       Submit
     </Button>
   </div>
@@ -534,48 +548,55 @@ const KnowledgeBaseAccordion = () => {
 
   const renderKnowledgeTableContent = () => (
     <div className="space-y-6 pt-4">
+      <div className="bg-[#D0D5DD] w-full h-[1px] -mt-[15px]"></div>
       <div>
-        <h3 className="text-lg font-medium text-gray-900 mb-4">Information</h3>
-        <div className="flex gap-4 mb-6">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder="Search Threats"
-              className="pl-10 w-full"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="relative">
-            <select
-              className="pl-3 pr-8 py-2 border border-gray-200 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none min-w-[160px]"
-              value={filterCategory}
-              onChange={(e) => setFilterCategory(e.target.value)}
-            >
-              <option value="Filter by category">Filter by category</option>
-              <option value="article">Article</option>
-              <option value="social">Social Media</option>
-              <option value="post">Post</option>
-            </select>
-            <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-          </div>
-        </div>
+      <div className="lg:flex flex-col  items-center justify-between mb-4">
+  <h3 className="text-lg font-bold font-space text-[#101828]">Information</h3>
+  <div className="flex gap-4">
+    {/* Search Input */}
+    <div className="relative">
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#667085]" />
+      <Input
+        placeholder="Search Threats"
+        className="pl-10 pr-4 py-2 w-[260px] rounded-md border border-[#D0D5DD] text-sm font-space bg-white text-[#344054] placeholder:text-[#667085]"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+    </div>
+
+    {/* Filter Dropdown */}
+    <div className="relative">
+      <select
+        className="pl-3 pr-8 py-2 w-[200px] rounded-md border border-[#D0D5DD] text-sm font-space bg-white text-[#344054] appearance-none"
+        value={filterCategory}
+        onChange={(e) => setFilterCategory(e.target.value)}
+      >
+        <option value="Filter by category">Filter by category</option>
+        <option value="article">Article</option>
+        <option value="social">Social Media</option>
+        <option value="post">Post</option>
+      </select>
+      <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#667085] pointer-events-none" />
+    </div>
+  </div>
+</div>
+
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-[#000]/5 border-b border-gray-200">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-[10px] text-[#4A5773] uppercase tracking-wider font-space font-bold">
                   Title
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-[10px] text-[#4A5773] uppercase tracking-wider font-space font-bold">Type</th>
+                <th className="px-6 py-3 text-left text-[10px] text-[#4A5773] uppercase tracking-wider font-space font-bold">Date</th>
+                <th className="px-6 py-3 text-left text-[10px] text-[#4A5773] uppercase tracking-wider font-space font-bold">
                   Source
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-[10px] text-[#4A5773] uppercase tracking-wider font-space font-bold">
                   In Use
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-[10px] text-[#4A5773] uppercase tracking-wider font-space font-bold">
                   Action
                 </th>
               </tr>
@@ -583,7 +604,7 @@ const KnowledgeBaseAccordion = () => {
             <tbody className="divide-y divide-gray-200">
               {paginatedItems.map((item) => (
                 <tr key={item.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-space font-normal text-[#101828]">
                     {item.isEditing ? (
                       <Input
                         value={item.title}
@@ -594,7 +615,7 @@ const KnowledgeBaseAccordion = () => {
                       item.title
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-space font-normal text-[#101828]">
                     {item.isEditing ? (
                       <Input
                         value={item.type}
@@ -605,7 +626,7 @@ const KnowledgeBaseAccordion = () => {
                       item.type
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-space font-normal text-[#101828]">
                     {item.isEditing ? (
                       <Input
                         value={item.date}
@@ -616,7 +637,7 @@ const KnowledgeBaseAccordion = () => {
                       item.date
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-space font-normal text-[#101828]">
                     {item.isEditing ? (
                       <Input
                         value={item.source}
@@ -629,6 +650,7 @@ const KnowledgeBaseAccordion = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Switch
+                    className="data-[state=checked]:!bg-[#253EA7]"
                       checked={item.inUse}
                       onCheckedChange={(checked) => handleItemUpdate(item.id, "inUse", checked)}
                     />
@@ -648,7 +670,7 @@ const KnowledgeBaseAccordion = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleItemEdit(item.id)}
-                        className="text-gray-400 hover:text-gray-600"
+                        className="text-[#473BF0] hover:text-gray-600"
                       >
                         <Edit2 className="h-4 w-4" />
                       </Button>
@@ -657,11 +679,11 @@ const KnowledgeBaseAccordion = () => {
                 </tr>
               ))}
               {/* Add new item row */}
-              <tr className="bg-gray-50">
+              <tr className="bg-white">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Input
                     placeholder="Enter title"
-                    className="text-sm bg-white"
+                    className="text-sm text-[#98A2B3] font-space font-normal border-none shadow-none  bg-transparent"
                     value={newItem.title || ""}
                     onChange={(e) => handleNewItemChange("title", e.target.value)}
                   />
@@ -669,7 +691,7 @@ const KnowledgeBaseAccordion = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Input
                     placeholder="Enter type"
-                    className="text-sm bg-white"
+                    className="text-sm text-[#98A2B3] font-space font-normal border-none shadow-none  bg-transparent"
                     value={newItem.type || ""}
                     onChange={(e) => handleNewItemChange("type", e.target.value)}
                   />
@@ -677,7 +699,7 @@ const KnowledgeBaseAccordion = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Input
                     placeholder="Enter date"
-                    className="text-sm bg-white"
+                    className="text-sm text-[#98A2B3] font-space font-normal border-none shadow-none  bg-transparent"
                     value={newItem.date || ""}
                     onChange={(e) => handleNewItemChange("date", e.target.value)}
                   />
@@ -685,13 +707,14 @@ const KnowledgeBaseAccordion = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Input
                     placeholder="Enter source"
-                    className="text-sm bg-white"
+                    className="text-sm text-[#98A2B3] placeholder:font-space font-normal border-none shadow-none  bg-transparent"
                     value={newItem.source || ""}
                     onChange={(e) => handleNewItemChange("source", e.target.value)}
                   />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Switch
+                  className="data-[state=checked]:!bg-[#253EA7]"
                     checked={newItem.inUse || false}
                     onCheckedChange={(checked) => handleNewItemChange("inUse", checked)}
                   />
@@ -703,7 +726,7 @@ const KnowledgeBaseAccordion = () => {
                     className="text-green-600 hover:text-green-700"
                     onClick={handleAddNewItem}
                   >
-                    <div className="w-4 h-4 rounded-full bg-green-600 flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center">
                       <Check className="w-2 h-2 text-white" />
                     </div>
                   </Button>
@@ -713,48 +736,70 @@ const KnowledgeBaseAccordion = () => {
           </table>
         </div>
         {/* Pagination */}
-        <div className="flex items-center justify-center space-x-1 mt-6">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1}
-            className="h-8 w-8 p-0"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-            const page = i + 1
-            return (
-              <Button
-                key={page}
-                variant={currentPage === page ? "default" : "ghost"}
-                size="sm"
-                onClick={() => handlePageChange(page)}
-                className="h-8 w-8 p-0"
-              >
-                {page}
-              </Button>
-            )
-          })}
-          {totalPages > 5 && (
-            <>
-              <span className="text-gray-400 px-2">...</span>
-              <Button variant="ghost" size="sm" onClick={() => handlePageChange(totalPages)} className="h-8 w-8 p-0">
-                {totalPages}
-              </Button>
-            </>
-          )}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-            disabled={currentPage === totalPages}
-            className="h-8 w-8 p-0"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
+       <div className="flex items-center justify-center space-x-1 mt-6">
+  {/* Prev */}
+  <Button
+    variant="ghost"
+    size="sm"
+    onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+    disabled={currentPage === 1}
+    className="h-8 w-8 p-0"
+  >
+    <ChevronLeft className="h-4 w-4" />
+  </Button>
+
+  {/* Page Numbers */}
+  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+    const page = i + 1;
+    const isActive = currentPage === page;
+    return (
+      <Button
+        key={page}
+        variant="ghost"
+        size="sm"
+        onClick={() => handlePageChange(page)}
+        className={`h-8 w-8 p-0 rounded-full font-space text-sm ${
+          isActive
+            ? "bg-[#000]/10 text-[#212B36] "
+            : "bg-transparent text-[#101828] "
+        }`}
+      >
+        {page}
+      </Button>
+    );
+  })}
+
+  {/* Ellipsis + Last Page */}
+  {totalPages > 5 && (
+    <>
+      <span className="text-gray-400 px-2">...</span>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => handlePageChange(totalPages)}
+        className={`h-8 w-8 p-0 rounded-full font-space text-sm ${
+          currentPage === totalPages
+            ? "bg-[#101828] text-white "
+            : "bg-[#000]/10 text-[#101828] hover:bg-[#000]/20"
+        }`}
+      >
+        {totalPages}
+      </Button>
+    </>
+  )}
+
+  {/* Next */}
+  <Button
+    variant="ghost"
+    size="sm"
+    onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+    disabled={currentPage === totalPages}
+    className="h-8 w-8 p-0"
+  >
+    <ChevronRight className="h-4 w-4" />
+  </Button>
+</div>
+
       </div>
     </div>
   )
@@ -766,13 +811,13 @@ const KnowledgeBaseAccordion = () => {
 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
   {/* Label + Tooltip */}
   <div className="flex items-center min-w-[220px]">
-    <label className="text-sm font-medium text-gray-700">Relevant Keywords</label>
+    <label className="text-[15px] font-space font-medium text-gray-700">Relevant Keywords</label>
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
           <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
         </TooltipTrigger>
-        <TooltipContent>Add relevant keywords for better search</TooltipContent>
+        <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Add relevant keywords for better search</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   </div>
@@ -840,7 +885,7 @@ const KnowledgeBaseAccordion = () => {
           <TooltipTrigger asChild>
             <span className="text-gray-400 cursor-help">ⓘ</span>
           </TooltipTrigger>
-          <TooltipContent>
+          <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">
             Link verified social or official sources
           </TooltipContent>
         </Tooltip>
@@ -905,13 +950,13 @@ const KnowledgeBaseAccordion = () => {
   {/* Left Column: Label + Tooltip */}
   <div className="min-w-[220px]">
     <div className="flex items-center">
-      <label className="text-sm font-medium text-gray-700">Upload Initial Documents</label>
+      <label className="text-[15px] font-space font-medium text-gray-700">Upload Initial Documents</label>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
             <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
           </TooltipTrigger>
-          <TooltipContent>Upload Initial Document</TooltipContent>
+          <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Upload Initial Document</TooltipContent>
         </Tooltip>
       </TooltipProvider>
     </div>
@@ -927,9 +972,9 @@ const KnowledgeBaseAccordion = () => {
       onClick={() => initialFileInputRef.current?.click()}
     >
       <Upload className="mx-auto h-6 w-6 text-gray-400 mb-2" />
-      <div className="text-sm text-gray-600 mb-1">Choose a document or drag & drop it here.</div>
-      <div className="text-xs text-gray-400 mb-4">PDF, DOC, JPG file formats, up to 100 MB</div>
-      <Button variant="outline" className="bg-white">Browse File</Button>
+      <div className="text-sm font-space text-[#0A0D14] font-medium mb-1">Choose a document or drag & drop it here.</div>
+      <div className="text-xs text-[#868C98] font-space font-normal mb-4">PDF, .pptx, .doc etc formats, up to 20 MB.</div>
+      <Button variant="outline" className="bg-white border-[#5258660F] font-space text-[#525866] font-medium">Browse File</Button>
       <input
         ref={initialFileInputRef}
         type="file"
@@ -1001,7 +1046,7 @@ const KnowledgeBaseAccordion = () => {
     {/* Submit Button */}
     <div className="flex justify-end pt-2">
       <Button
-        className="bg-blue-600 hover:bg-blue-700 text-white px-8"
+        className="bg-[#473BF0] hover:bg-blue-700 text-white px-8"
         onClick={() => {
           toast({
             title: "Success",
@@ -1023,13 +1068,13 @@ const KnowledgeBaseAccordion = () => {
       {/* mobile  */}
       <div className="lg:hidden block">
         <div className="flex items-center mb-4">
-          <label className="text-sm font-medium text-gray-700">Relevant Keywords</label>
+          <label className="text-[15px] font-space font-medium text-gray-700">Relevant Keywords</label>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
               </TooltipTrigger>
-              <TooltipContent>Add relevant keywords for better search</TooltipContent>
+              <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Add relevant keywords for better search</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
@@ -1087,13 +1132,13 @@ const KnowledgeBaseAccordion = () => {
 
       <div className="lg:hidden block">
         <div className="flex items-center mb-4">
-          <label className="text-sm font-medium text-gray-700">Trusted Online Sources</label>
+          <label className="text-[15px] font-space font-medium text-gray-700">Trusted Online Sources</label>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
               </TooltipTrigger>
-              <TooltipContent>Manage trusted online sources</TooltipContent>
+              <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Manage trusted online sources</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
@@ -1132,13 +1177,13 @@ const KnowledgeBaseAccordion = () => {
 
       <div className="lg:hidden block">
         <div className="flex items-center mb-2">
-          <label className="text-sm font-medium text-gray-700">Upload Initial Documents</label>
+          <label className="text-[15px] font-space font-medium text-gray-700">Upload Initial Documents</label>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
               </TooltipTrigger>
-              <TooltipContent>Upload Initial Document</TooltipContent>
+              <TooltipContent className="bg-white text-[#0A0D14] border shadow-md border-[#E2E4E9]">Upload Initial Document</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
@@ -1149,9 +1194,9 @@ const KnowledgeBaseAccordion = () => {
           onClick={() => initialFileInputRef.current?.click()}
         >
           <Upload className="mx-auto h-6 w-6 text-gray-400 mb-2" />
-          <div className="text-sm text-gray-600 mb-1">Choose a Documents or drag & drop it here.</div>
-          <div className="text-xs text-gray-400 mb-4">PDF, DOC, JPG file formats, up to 100 MB</div>
-          <Button variant="outline" className="bg-white">
+          <div className="text-sm font-space text-[#0A0D14] font-medium  mb-1">Choose a Documents or drag & drop it here.</div>
+          <div className="text-xs text-[#868C98] font-space font-normal mb-4">PDF, .pptx, .doc etc formats, up to 20 MB.</div>
+          <Button variant="outline" className="bg-white border-[#5258660F] font-space text-[#525866] font-medium">
             Browse File
           </Button>
           <input
@@ -1221,7 +1266,7 @@ const KnowledgeBaseAccordion = () => {
 
       <div className="lg:hidden  flex justify-end pt-4">
         <Button
-          className="bg-blue-600 hover:bg-blue-700 text-white px-8"
+          className="bg-[#473BF0] hover:bg-blue-700 text-white px-8"
           onClick={() => {
             toast({
               title: "Success",
@@ -1253,10 +1298,10 @@ const KnowledgeBaseAccordion = () => {
       {sections.map((section) => (
         <div key={section.id} className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
           <div
-            className="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors border-b border-gray-100"
+            className="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors "
             onClick={() => toggleSection(section.id)}
           >
-            <h2 className="text-lg font-medium text-gray-900">{section.title}</h2>
+            <h2 className="text-[24px] font-bold font-space text-[#101828]">{section.title}</h2>
             <div
               ref={(el) => {
                 if (el) arrowRefs.current[section.id] = el
