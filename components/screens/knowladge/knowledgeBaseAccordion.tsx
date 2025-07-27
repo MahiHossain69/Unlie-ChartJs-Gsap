@@ -242,9 +242,9 @@ const KnowledgeBaseAccordion = () => {
     )
   }
 
-  const handleItemUpdate = (itemId: string, field: keyof KnowledgeItem, value: any) => {
-    setKnowledgeItems((prev) => prev.map((item) => (item.id === itemId ? { ...item, [field]: value } : item)))
-  }
+ const handleItemUpdate = (itemId: string, field: keyof KnowledgeItem, value: unknown) => {
+    setKnowledgeItems((prev) => prev.map((item) => (item.id === itemId ? { ...item, [field]: value } : item)));
+  };
 
   const handleItemSave = (itemId: string) => {
     setKnowledgeItems((prev) => prev.map((item) => (item.id === itemId ? { ...item, isEditing: false } : item)))
@@ -254,9 +254,9 @@ const KnowledgeBaseAccordion = () => {
     })
   }
 
-  const handleNewItemChange = (field: keyof KnowledgeItem, value: any) => {
-    setNewItem((prev) => ({ ...prev, [field]: value }))
-  }
+ const handleNewItemChange = (field: keyof KnowledgeItem, value: unknown) => {
+    setNewItem((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleAddNewItem = () => {
     if (!newItem.title || !newItem.type || !newItem.date || !newItem.source) {
