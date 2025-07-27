@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
-import { Tooltip } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
 
 interface AccordionSection {
   id: string
@@ -55,6 +55,12 @@ interface FormData {
   secondTitle: string
 }
 
+interface FormErrors {
+  title?: string
+  textInfo?: string
+  secondTitle?: string
+}
+
 const KnowledgeBaseAccordion = () => {
   const { toast } = useToast()
 
@@ -72,12 +78,16 @@ const KnowledgeBaseAccordion = () => {
     secondTitle: "",
   })
 
+  // Form validation state
+  const [formErrors, setFormErrors] = useState<FormErrors>({})
+
   // Knowledge table state
   const [knowledgeItems, setKnowledgeItems] = useState<KnowledgeItem[]>([
     { id: "1", title: "For Interview", type: "Article", date: "24/11/2024", source: "User", inUse: true },
     { id: "2", title: "X Account", type: "Social Media Account", date: "24/11/2024", source: "X", inUse: false },
     { id: "3", title: "Test", type: "Post", date: "24/11/2024", source: "Facebook", inUse: true },
   ])
+
   const [newItem, setNewItem] = useState<Partial<KnowledgeItem>>({
     title: "",
     type: "",
@@ -173,15 +183,59 @@ const KnowledgeBaseAccordion = () => {
     })
   }, [sections])
 
+  // Form validation
+  const validateForm = (): boolean => {
+    const errors: FormErrors = {}
+
+    if (!formData.title.trim()) {
+      errors.title = "Title is required"
+    }
+
+    if (!formData.textInfo.trim()) {
+      errors.textInfo = "Text information is required"
+    }
+
+    if (!formData.secondTitle.trim()) {
+      errors.secondTitle = "Second title is required"
+    }
+
+    setFormErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
   // Form handlers
   const handleFormChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
+    // Clear error when user starts typing
+    if (formErrors[field]) {
+      setFormErrors((prev) => ({ ...prev, [field]: undefined }))
+    }
   }
 
- 
+  const handleFormSubmit = () => {
+    if (validateForm()) {
+      toast({
+        title: "Success",
+        description: "Information submitted successfully!",
+      })
+      // Reset form after successful submission
+      setFormData({
+        title: "",
+        textInfo: "",
+        secondTitle: "",
+      })
+      setFormErrors({})
+    } else {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      })
+    }
+  }
 
   // File upload handlers
- const handleFileUpload = (files: FileList | null) => { // Removed isInitial parameter
+  const handleFileUpload = (files: FileList | null) => {
     if (!files) return
     Array.from(files).forEach((file) => {
       const newFile: UploadedFile = {
@@ -193,6 +247,7 @@ const KnowledgeBaseAccordion = () => {
         status: "uploading",
       }
       setUploadedFiles((prev) => [...prev, newFile])
+
       // Simulate upload progress
       const interval = setInterval(() => {
         setUploadedFiles((prev) =>
@@ -209,6 +264,7 @@ const KnowledgeBaseAccordion = () => {
           }),
         )
       }, 500)
+
       setTimeout(() => {
         clearInterval(interval)
         setUploadedFiles((prev) =>
@@ -222,9 +278,9 @@ const KnowledgeBaseAccordion = () => {
     e.preventDefault()
   }
 
-  const handleDrop = (e: React.DragEvent) => { // Removed isInitial parameter
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
-    handleFileUpload(e.dataTransfer.files) // Removed isInitial argument
+    handleFileUpload(e.dataTransfer.files)
   }
 
   const removeFile = (fileId: string) => {
@@ -242,9 +298,9 @@ const KnowledgeBaseAccordion = () => {
     )
   }
 
- const handleItemUpdate = (itemId: string, field: keyof KnowledgeItem, value: unknown) => {
-    setKnowledgeItems((prev) => prev.map((item) => (item.id === itemId ? { ...item, [field]: value } : item)));
-  };
+  const handleItemUpdate = (itemId: string, field: keyof KnowledgeItem, value: unknown) => {
+    setKnowledgeItems((prev) => prev.map((item) => (item.id === itemId ? { ...item, [field]: value } : item)))
+  }
 
   const handleItemSave = (itemId: string) => {
     setKnowledgeItems((prev) => prev.map((item) => (item.id === itemId ? { ...item, isEditing: false } : item)))
@@ -254,9 +310,9 @@ const KnowledgeBaseAccordion = () => {
     })
   }
 
- const handleNewItemChange = (field: keyof KnowledgeItem, value: unknown) => {
-    setNewItem((prev) => ({ ...prev, [field]: value }));
-  };
+  const handleNewItemChange = (field: keyof KnowledgeItem, value: unknown) => {
+    setNewItem((prev) => ({ ...prev, [field]: value }))
+  }
 
   const handleAddNewItem = () => {
     if (!newItem.title || !newItem.type || !newItem.date || !newItem.source) {
@@ -267,6 +323,7 @@ const KnowledgeBaseAccordion = () => {
       })
       return
     }
+
     const item: KnowledgeItem = {
       id: Date.now().toString(),
       title: newItem.title!,
@@ -275,6 +332,7 @@ const KnowledgeBaseAccordion = () => {
       source: newItem.source!,
       inUse: newItem.inUse || false,
     }
+
     setKnowledgeItems((prev) => [...prev, item])
     setNewItem({ title: "", type: "", date: "", source: "", inUse: false })
     toast({
@@ -343,97 +401,141 @@ const KnowledgeBaseAccordion = () => {
   }
 
   const renderAddInfoContent = () => (
-    <div className="space-y-6 pt-4">
-      <div className="text-sm text-gray-500 mb-6">Enter title text to submit</div>
+  <div className="space-y-6 pt-4">
+  {/* Title */}
+  <div className="flex flex-col md:flex-row items-start md:gap-8 gap-2">
+    <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
+      <label className="text-sm font-medium text-gray-700">
+        Title <span className="text-red-500">*</span>
+      </label>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <span className="text-gray-400 cursor-help">ⓘ</span>
+          </TooltipTrigger>
+          <TooltipContent>Enter title text to submit</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+    <div className="w-full">
+      <Input
+        placeholder="Enter your text..."
+        className={`w-full bg-gray-50 border-gray-200 ${formErrors.title ? "border-red-500" : ""}`}
+        value={formData.title}
+        required
+        onChange={(e) => handleFormChange("title", e.target.value)}
+      />
+      {formErrors.title && <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>}
+    </div>
+  </div>
 
-      <div className="space-y-6">
-        <div>
-          <div className="flex items-center mb-2">
-            <label className="text-sm font-medium text-gray-700">Title</label>
-            <Tooltip content="Enter title text to submit">
-              <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
-            </Tooltip>
-          </div>
-          <Input
-            placeholder="Enter your text..."
-            className="w-full bg-gray-50 border-gray-200"
-            value={formData.title}
-            onChange={(e) => handleFormChange("title", e.target.value)}
-          />
-        </div>
+  {/* Add Text Info */}
+  <div className="flex flex-col md:flex-row items-start md:gap-8 gap-2">
+    <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
+      <label className="text-sm font-medium text-gray-700">
+        Add Text Information <span className="text-red-500">*</span>
+      </label>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <span className="text-gray-400 cursor-help">ⓘ</span>
+          </TooltipTrigger>
+          <TooltipContent>Add detailed text information here</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+    <div className="w-full">
+      <Textarea
+        placeholder="Enter your text..."
+        className={`w-full h-24 resize-none bg-gray-50 border-gray-200 ${formErrors.textInfo ? "border-red-500" : ""}`}
+        value={formData.textInfo}
+        required
+        onChange={(e) => handleFormChange("textInfo", e.target.value)}
+      />
+      {formErrors.textInfo && <p className="text-red-500 text-sm mt-1">{formErrors.textInfo}</p>}
+    </div>
+  </div>
 
-        <div>
-          <div className="flex items-center mb-2">
-            <label className="text-sm font-medium text-gray-700">Add Text Information</label>
-            <Tooltip content="Add detailed text information here">
-              <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
-            </Tooltip>
-          </div>
-          <Textarea
-            placeholder="Enter your text..."
-            className="w-full h-24 resize-none bg-gray-50 border-gray-200"
-            value={formData.textInfo}
-            onChange={(e) => handleFormChange("textInfo", e.target.value)}
-          />
-        </div>
+  {/* Second Title */}
+  <div className="flex flex-col md:flex-row items-start md:gap-8 gap-2">
+    <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
+      <label className="text-sm font-medium text-gray-700">
+        Title <span className="text-red-500">*</span>
+      </label>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <span className="text-gray-400 cursor-help">ⓘ</span>
+          </TooltipTrigger>
+          <TooltipContent>Provide another title if needed</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+    <div className="w-full">
+      <Input
+        placeholder="Enter your text..."
+        className={`w-full bg-gray-50 border-gray-200 ${formErrors.secondTitle ? "border-red-500" : ""}`}
+        value={formData.secondTitle}
+        required
+        onChange={(e) => handleFormChange("secondTitle", e.target.value)}
+      />
+      {formErrors.secondTitle && <p className="text-red-500 text-sm mt-1">{formErrors.secondTitle}</p>}
+    </div>
+  </div>
 
-        <div>
-          <div className="flex items-center mb-2">
-            <label className="text-sm font-medium text-gray-700">Title</label>
-            <Tooltip content="Provide another title if needed">
-              <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
-            </Tooltip>
-          </div>
-          <Input
-            placeholder="Enter your text..."
-            className="w-full bg-gray-50 border-gray-200"
-            value={formData.secondTitle}
-            onChange={(e) => handleFormChange("secondTitle", e.target.value)}
-          />
-        </div>
-
-        <div>
-          <div className="flex items-center mb-2">
-            <label className="text-sm font-medium text-gray-700">Upload Initial Documents</label>
-            <Tooltip content="Upload Initial Document">
-              <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
-            </Tooltip>
-          </div>
-          <div
-            className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
-            onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, )}
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <Upload className="mx-auto h-8 w-8 text-gray-400 mb-3" />
-            <div className="text-sm text-gray-600 mb-1">Choose a Documents or drag & drop it here.</div>
-            <div className="text-xs text-gray-400 mb-4">PDF, DOC, JPG file formats, up to 100 MB</div>
-            <Button variant="outline" className="bg-white">
-              Browse File
-            </Button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              multiple
-              className="hidden"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              onChange={(e) => handleFileUpload(e.target.files)}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="flex justify-end pt-4">
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8">Submit</Button>
+  {/* Upload Field */}
+  <div className="flex flex-col md:flex-row items-start md:gap-8 gap-2">
+    <div className="flex items-center gap-2 pt-2 md:min-w-[220px]">
+      <label className="text-sm font-medium text-gray-700">Upload Initial Documents</label>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <span className="text-gray-400 cursor-help">ⓘ</span>
+          </TooltipTrigger>
+          <TooltipContent>Upload Initial Document</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+    <div className="w-full">
+      <div
+        className="border-2 border-dashed border-gray-300 rounded-lg p-6 md:p-8 text-center bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onClick={() => fileInputRef.current?.click()}
+      >
+        <Upload className="mx-auto h-8 w-8 text-gray-400 mb-3" />
+        <div className="text-sm text-gray-600 mb-1">Choose a Document or drag & drop it here.</div>
+        <div className="text-xs text-gray-400 mb-4">PDF, DOC, JPG file formats, up to 100 MB</div>
+        <Button variant="outline" className="bg-white">
+          Browse File
+        </Button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          className="hidden"
+          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+          onChange={(e) => handleFileUpload(e.target.files)}
+        />
       </div>
     </div>
+  </div>
+
+  {/* Submit Button */}
+  <div className="flex justify-end pt-4">
+    <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8" onClick={handleFormSubmit}>
+      Submit
+    </Button>
+  </div>
+</div>
+
+
   )
 
   const renderKnowledgeTableContent = () => (
     <div className="space-y-6 pt-4">
       <div>
         <h3 className="text-lg font-medium text-gray-900 mb-4">Information</h3>
-
         <div className="flex gap-4 mb-6">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -458,7 +560,6 @@ const KnowledgeBaseAccordion = () => {
             <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
           </div>
         </div>
-
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200">
@@ -611,7 +712,6 @@ const KnowledgeBaseAccordion = () => {
             </tbody>
           </table>
         </div>
-
         {/* Pagination */}
         <div className="flex items-center justify-center space-x-1 mt-6">
           <Button
@@ -661,12 +761,277 @@ const KnowledgeBaseAccordion = () => {
 
   const renderInitialInfoContent = () => (
     <div className="space-y-8 pt-4">
-      <div>
+      <div className="hidden lg:block">
+        {/* Relevant Keywords */}
+<div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+  {/* Label + Tooltip */}
+  <div className="flex items-center min-w-[220px]">
+    <label className="text-sm font-medium text-gray-700">Relevant Keywords</label>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
+        </TooltipTrigger>
+        <TooltipContent>Add relevant keywords for better search</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  </div>
+
+  {/* Keywords + Add */}
+  <div className="flex flex-wrap items-center gap-2">
+    {keywords.map((keyword, index) => (
+      <Badge
+        key={index}
+        variant="secondary"
+        className="bg-[#EBEFFF] text-[#3C37FF] px-3 py-1 rounded-full text-sm"
+      >
+        {keyword}
+        <X
+          className="ml-2 h-3 w-3 cursor-pointer hover:text-red-600"
+          onClick={() => handleRemoveKeyword(keyword)}
+        />
+      </Badge>
+    ))}
+    {showKeywordInput ? (
+      <div className="flex items-center gap-2">
+        <Input
+          value={newKeyword}
+          onChange={(e) => setNewKeyword(e.target.value)}
+          placeholder="Enter keyword"
+          className="w-32 h-8 text-sm"
+          onKeyPress={(e) => e.key === "Enter" && handleAddKeyword()}
+        />
+        <Button size="sm" onClick={handleAddKeyword} className="h-8 w-8 p-0">
+          <Check className="h-3 w-3" />
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => {
+            setShowKeywordInput(false)
+            setNewKeyword("")
+          }}
+          className="h-8 w-8 p-0"
+        >
+          <X className="h-3 w-3" />
+        </Button>
+      </div>
+    ) : (
+      <Button
+        variant="default"
+        size="sm"
+        className="bg-[#3C37FF] text-white rounded-full text-xs font-medium px-4 py-1 hover:bg-[#2d2bc4]"
+        onClick={() => setShowKeywordInput(true)}
+      >
+        + Add keyword
+      </Button>
+    )}
+  </div>
+</div>
+ <div className="flex flex-col lg:flex-row justify-between gap-6 mb-6">
+  {/* Left Column: Heading */}
+  <div className="min-w-[220px]">
+    <div className="flex items-center gap-2">
+      <h2 className="text-lg font-semibold text-gray-900">
+        Trusted Online Sources
+      </h2>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="text-gray-400 cursor-help">ⓘ</span>
+          </TooltipTrigger>
+          <TooltipContent>
+            Link verified social or official sources
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+  </div>
+
+  {/* Right Column: Grid of Sources */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+    {[
+      { label: "Wikipedia Page", placeholder: "Filter by category", status: "success" },
+      { label: "X", placeholder: "X account name", status: "error" },
+      { label: "Facebook", placeholder: "Facebook account name", status: "loading" },
+      { label: "Instagram", placeholder: "Instagram account name", status: "success" },
+      { label: "TikTok", placeholder: "TikTok account name", status: "success" },
+      { label: "Youtube", placeholder: "Youtube account name", status: "success" },
+    ].map((source, idx) => (
+      <div key={idx} className="space-y-1">
+        <label className="text-sm font-medium text-gray-900">
+          {source.label}
+        </label>
+        <div className="flex items-center justify-between border border-gray-200 rounded-md bg-gray-50 px-3 py-2">
+          <input
+            type="text"
+            placeholder={source.placeholder}
+            className="bg-transparent text-sm text-gray-500 w-full focus:outline-none"
+            disabled
+          />
+          {source.status === "success" && (
+            <Check className="w-4 h-4 text-green-600 ml-2 shrink-0" />
+          )}
+          {source.status === "error" && (
+            <X className="w-4 h-4 text-red-500 ml-2 shrink-0" />
+          )}
+          {source.status === "loading" && (
+            <svg
+              className="w-4 h-4 text-gray-400 animate-spin ml-2 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
+            </svg>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+<div className="flex flex-col lg:flex-row justify-between gap-6 mb-6">
+  {/* Left Column: Label + Tooltip */}
+  <div className="min-w-[220px]">
+    <div className="flex items-center">
+      <label className="text-sm font-medium text-gray-700">Upload Initial Documents</label>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
+          </TooltipTrigger>
+          <TooltipContent>Upload Initial Document</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+  </div>
+
+  {/* Right Column: Drag-drop area + Files + Submit */}
+  <div className="flex-1 space-y-4">
+    {/* Drag & Drop Upload */}
+    <div
+      className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+      onClick={() => initialFileInputRef.current?.click()}
+    >
+      <Upload className="mx-auto h-6 w-6 text-gray-400 mb-2" />
+      <div className="text-sm text-gray-600 mb-1">Choose a document or drag & drop it here.</div>
+      <div className="text-xs text-gray-400 mb-4">PDF, DOC, JPG file formats, up to 100 MB</div>
+      <Button variant="outline" className="bg-white">Browse File</Button>
+      <input
+        ref={initialFileInputRef}
+        type="file"
+        multiple
+        className="hidden"
+        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.mp4"
+        onChange={(e) => handleFileUpload(e.target.files)}
+      />
+    </div>
+
+    {/* Uploaded Files List */}
+    <div className="space-y-3">
+      {uploadedFiles.map((file) => (
+        <div
+          key={file.id}
+          className="flex items-center justify-between p-4 rounded-lg border border-gray-200 bg-white"
+        >
+          <div className="flex items-center space-x-3">
+            <div className={`w-8 h-8 rounded flex items-center justify-center ${getFileIconColor(file.type)}`}>
+              <span className="text-white text-xs font-bold">{getFileIcon(file.type)}</span>
+            </div>
+            <div>
+              <div className="text-sm font-medium text-gray-900">{file.name}</div>
+              <div className="text-xs text-gray-500 flex items-center">
+                {formatFileSize(file.size)}
+                {file.status === "uploading" && (
+                  <>
+                    <span className="mx-2">•</span>
+                    <span>Uploading...</span>
+                  </>
+                )}
+                {file.status === "completed" && (
+                  <>
+                    <span className="mx-2">•</span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
+                    <span>Completed</span>
+                  </>
+                )}
+                {file.status === "error" && (
+                  <>
+                    <span className="mx-2">•</span>
+                    <AlertCircle className="w-3 h-3 text-red-500 mr-1" />
+                    <span>Error</span>
+                  </>
+                )}
+              </div>
+              {file.status === "uploading" && (
+                <div className="w-full bg-gray-200 rounded-full h-1 mt-2">
+                  <div
+                    className="bg-blue-600 h-1 rounded-full transition-all duration-300"
+                    style={{ width: `${file.progress}%` }}
+                  ></div>
+                </div>
+              )}
+            </div>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => removeFile(file.id)}
+            className="text-red-400 hover:text-red-600 h-8 w-8 p-0"
+          >
+            {file.status === "uploading" ? <X className="h-4 w-4" /> : <Trash2 className="h-4 w-4" />}
+          </Button>
+        </div>
+      ))}
+    </div>
+
+    {/* Submit Button */}
+    <div className="flex justify-end pt-2">
+      <Button
+        className="bg-blue-600 hover:bg-blue-700 text-white px-8"
+        onClick={() => {
+          toast({
+            title: "Success",
+            description: "Initial information submitted successfully!",
+          });
+        }}
+      >
+        Submit
+      </Button>
+    </div>
+  </div>
+</div>
+
+
+
+
+      </div>
+
+      {/* mobile  */}
+      <div className="lg:hidden block">
         <div className="flex items-center mb-4">
           <label className="text-sm font-medium text-gray-700">Relevant Keywords</label>
-          <Tooltip content="Add relevant keywords for better search">
-            <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
-          </Tooltip>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
+              </TooltipTrigger>
+              <TooltipContent>Add relevant keywords for better search</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <div className="flex flex-wrap gap-2 mb-4">
           {keywords.map((keyword, index) => (
@@ -720,12 +1085,17 @@ const KnowledgeBaseAccordion = () => {
         </div>
       </div>
 
-      <div>
+      <div className="lg:hidden block">
         <div className="flex items-center mb-4">
           <label className="text-sm font-medium text-gray-700">Trusted Online Sources</label>
-          <Tooltip content="Manage trusted online sources">
-            <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
-          </Tooltip>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
+              </TooltipTrigger>
+              <TooltipContent>Manage trusted online sources</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <div className="space-y-3">
           {[
@@ -760,17 +1130,22 @@ const KnowledgeBaseAccordion = () => {
         </div>
       </div>
 
-      <div>
+      <div className="lg:hidden block">
         <div className="flex items-center mb-2">
           <label className="text-sm font-medium text-gray-700">Upload Initial Documents</label>
-          <Tooltip content="Upload Initial Document">
-            <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
-          </Tooltip>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <span className="text-gray-400 ml-2 cursor-help">ⓘ</span>
+              </TooltipTrigger>
+              <TooltipContent>Upload Initial Document</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <div
           className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-gray-50 mb-4 hover:bg-gray-100 transition-colors cursor-pointer"
           onDragOver={handleDragOver}
-          onDrop={(e) => handleDrop(e, )}
+          onDrop={handleDrop}
           onClick={() => initialFileInputRef.current?.click()}
         >
           <Upload className="mx-auto h-6 w-6 text-gray-400 mb-2" />
@@ -788,7 +1163,6 @@ const KnowledgeBaseAccordion = () => {
             onChange={(e) => handleFileUpload(e.target.files)}
           />
         </div>
-
         <div className="space-y-3">
           {uploadedFiles.map((file) => (
             <div
@@ -845,7 +1219,7 @@ const KnowledgeBaseAccordion = () => {
         </div>
       </div>
 
-      <div className="flex justify-end pt-4">
+      <div className="lg:hidden  flex justify-end pt-4">
         <Button
           className="bg-blue-600 hover:bg-blue-700 text-white px-8"
           onClick={() => {
@@ -875,7 +1249,7 @@ const KnowledgeBaseAccordion = () => {
   }
 
   return (
-    <div className=" space-y-4">
+    <div className="space-y-4">
       {sections.map((section) => (
         <div key={section.id} className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
           <div
