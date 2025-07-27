@@ -550,7 +550,7 @@ const KnowledgeBaseAccordion = () => {
     <div className="space-y-6 pt-4">
       <div className="bg-[#D0D5DD] w-full h-[1px] -mt-[15px]"></div>
       <div>
-      <div className="lg:flex flex-col  items-center justify-between mb-4">
+      <div className="lg:flex flex-col   justify-between mb-4">
   <h3 className="text-lg font-bold font-space text-[#101828]">Information</h3>
   <div className="flex gap-4">
     {/* Search Input */}
