@@ -181,7 +181,7 @@ const KnowledgeBaseAccordion = () => {
   const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const arrowRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const initialFileInputRef = useRef<HTMLInputElement>(null);
+  
 
   // Toggles the expansion of an accordion section
   const toggleSection = (sectionId: string) => {
