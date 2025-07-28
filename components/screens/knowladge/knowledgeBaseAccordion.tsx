@@ -547,10 +547,10 @@ const KnowledgeBaseAccordion = () => {
   )
 
   const renderKnowledgeTableContent = () => (
-    <div className="space-y-6 pt-4">
+    <div className="hidden lg:block space-y-6 pt-4">
       <div className="bg-[#D0D5DD] w-full h-[1px] -mt-[15px]"></div>
       <div>
-      <div className="lg:flex flex-col   justify-between mb-4">
+      <div className="lg:flex flex-col lg:flex-row   justify-between mb-4">
   <h3 className="text-lg font-bold font-space text-[#101828]">Information</h3>
   <div className="flex gap-4">
     {/* Search Input */}
@@ -1066,6 +1066,123 @@ const KnowledgeBaseAccordion = () => {
       </div>
 
       {/* mobile  */}
+      <div className="lg:hidden block">
+       
+  
+ 
+  <div className="space-y-4 pt-4">
+    <div className="bg-[#D0D5DD] w-full h-[1px] -mt-[15px]" />
+
+    {/* Header */}
+    <div className="flex flex-col gap-3">
+      <h3 className="text-lg font-bold font-space text-[#101828]">Information</h3>
+
+      <div className="flex flex-col gap-3">
+        <div className="relative w-full">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#667085]" />
+          <Input
+            placeholder="Search Threats"
+            className="pl-10 pr-4 py-3 w-full rounded-lg border border-[#D0D5DD] text-sm font-space bg-gray-50 focus:bg-white"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        <div className="relative w-full">
+          <select
+            className="pl-3 pr-8 py-3 w-full rounded-lg border border-[#D0D5DD] text-sm font-space bg-gray-50 focus:bg-white appearance-none"
+            value={filterCategory}
+            onChange={(e) => setFilterCategory(e.target.value)}
+          >
+            <option value="Filter by category">Filter by category</option>
+            <option value="article">Article</option>
+            <option value="social">Social Media</option>
+            <option value="post">Post</option>
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#667085]" />
+        </div>
+      </div>
+    </div>
+
+    {/* Table Wrapper with Vertical Scroll */}
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="overflow-x-auto">
+        <div className="max-h-[300px] overflow-y-auto"> {/* 👈 controls scroll height */}
+          <table className="w-full min-w-[600px]">
+            <thead className="bg-gray-100 border-b border-gray-200 sticky top-0 z-10">
+              <tr>
+                <th className="px-4 py-3 text-left text-[11px] text-gray-600 uppercase tracking-wider font-space font-semibold bg-gray-100">Title</th>
+                <th className="px-4 py-3 text-left text-[11px] text-gray-600 uppercase tracking-wider font-space font-semibold bg-gray-100">Type</th>
+                <th className="px-4 py-3 text-left text-[11px] text-gray-600 uppercase tracking-wider font-space font-semibold bg-gray-100">Date</th>
+                <th className="px-4 py-3 text-left text-[11px] text-gray-600 uppercase tracking-wider font-space font-semibold bg-gray-100">Source</th>
+                <th className="px-4 py-3 text-left text-[11px] text-gray-600 uppercase tracking-wider font-space font-semibold bg-gray-100">In Use</th>
+                <th className="px-4 py-3 text-left text-[11px] text-gray-600 uppercase tracking-wider font-space font-semibold bg-gray-100">Action</th>
+              </tr>
+            </thead>
+
+            <tbody className="divide-y divide-gray-100">
+              {paginatedItems.map((item) => (
+                <tr key={item.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-3 text-sm text-gray-800">{item.title}</td>
+                  <td className="px-4 py-3 text-sm text-gray-800">{item.type}</td>
+                  <td className="px-4 py-3 text-sm text-gray-800">{item.date}</td>
+                  <td className="px-4 py-3 text-sm text-gray-800">{item.source}</td>
+                  <td className="px-4 py-3">
+                    <Switch
+                      className="data-[state=checked]:!bg-[#253EA7]"
+                      checked={item.inUse}
+                      onCheckedChange={(checked) => handleItemUpdate(item.id, "inUse", checked)}
+                    />
+                  </td>
+                  <td className="px-4 py-3">
+                    <Button variant="ghost" size="sm" className="text-[#473BF0] hover:text-gray-600">
+                      <Edit2 className="h-4 w-4" />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+
+              {/* Add New Item Row */}
+              <tr>
+                <td className="px-4 py-3">
+                  <Input placeholder="Enter title" className="text-sm bg-transparent border-none shadow-none focus:ring-0" />
+                </td>
+                <td className="px-4 py-3">
+                  <Input placeholder="Enter type" className="text-sm bg-transparent border-none shadow-none focus:ring-0" />
+                </td>
+                <td className="px-4 py-3">
+                  <Input placeholder="Enter date" className="text-sm bg-transparent border-none shadow-none focus:ring-0" />
+                </td>
+                <td className="px-4 py-3">
+                  <Input placeholder="Enter source" className="text-sm bg-transparent border-none shadow-none focus:ring-0" />
+                </td>
+                <td className="px-4 py-3">
+                  <Switch className="data-[state=checked]:!bg-[#253EA7]" />
+                </td>
+                <td className="px-4 py-3">
+                  <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
+                    <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center">
+                      <Check className="w-2 h-2 text-white" />
+                    </div>
+                  </Button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {/* Pagination */}
+    <div className="flex items-center justify-center space-x-2 mt-4">
+      {/* pagination buttons */}
+    </div>
+  </div>
+
+
+
+
+      </div>
       <div className="lg:hidden block">
         <div className="flex items-center mb-4">
           <label className="text-[15px] font-space font-medium text-gray-700">Relevant Keywords</label>
