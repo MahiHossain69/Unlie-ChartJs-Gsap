@@ -6,7 +6,7 @@ import { gsap } from "gsap";
 import {
   ChevronRight,
   Search,
-  Upload,
+  // Removed 'Upload' as it was defined but never used
   Edit2,
   Trash2,
   X,
@@ -504,6 +504,7 @@ const KnowledgeBaseAccordion = () => {
     });
   };
 
+  // Helper functions for file icons and colors
   const getFileIcon = (type: string) => {
     if (type.includes("video")) return "MP4";
     if (type.includes("image")) return "JPG";
@@ -545,7 +546,7 @@ const KnowledgeBaseAccordion = () => {
         <div className="w-full">
           <Input
             placeholder="Enter your text..."
-            className={`w-full bg-black/5 dark:bg-[white]/5 dark:border-white/10 dark:placeholder:text-[white]/50 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${
+            className={`w-full bg-black/5 dark:bg-[white]/5 font-space dark:border-white/10 dark:placeholder:text-[white]/50 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${
               formErrors.title ? "border-red-500" : ""
             }`}
             value={formData.title}
@@ -578,7 +579,7 @@ const KnowledgeBaseAccordion = () => {
         <div className="w-full">
           <Textarea
             placeholder="Enter your text..."
-            className={`w-full h-24 resize-none bg-black/5  dark:bg-[white]/5 dark:border-white/10 dark:placeholder:text-[white]/50 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${
+            className={`w-full h-24 resize-none bg-black/5 font-space  dark:bg-[white]/5 dark:border-white/10 dark:placeholder:text-[white]/50 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${
               formErrors.textInfo ? "border-red-500" : ""
             }`}
             value={formData.textInfo}
@@ -611,7 +612,7 @@ const KnowledgeBaseAccordion = () => {
         <div className="w-full">
           <Input
             placeholder="Enter your text..."
-            className={`w-full bg-black/5 dark:bg-[white]/5 dark:border-white/10 dark:placeholder:text-[white]/50 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${
+            className={`w-full bg-black/5 dark:bg-[white]/5 font-space dark:border-white/10 dark:placeholder:text-[white]/50 border-[#D0D5DD] placeholder:font-space placeholder:text-[#000]/50 ${
               formErrors.secondTitle ? "border-red-500" : ""
             }`}
             value={formData.secondTitle}
@@ -1352,12 +1353,10 @@ const KnowledgeBaseAccordion = () => {
                 className="flex items-center dark:bg-white/5 dark:border-white/10 justify-between p-4 rounded-lg border border-gray-200 bg-black/5"
               >
                 <div className="flex items-center space-x-3">
-                 <Image src="/mp4.svg"
-                  alt="File Icon"
-                  width={24}
-                  height={24}
-                  className="w-6 dark:text-white h-6"
-                />
+                 {/* Replaced hardcoded Image with dynamic icon using getFileIcon and getFileIconColor */}
+                 <div className={`w-8 h-8 rounded flex items-center justify-center ${getFileIconColor(file.type)}`}>
+                    <span className="text-white text-xs font-bold">{getFileIcon(file.type)}</span>
+                 </div>
                   <div>
                     <h1 className="text-sm dark:text-white font-medium font-space text-[#101828] ">
                       {file.name}
