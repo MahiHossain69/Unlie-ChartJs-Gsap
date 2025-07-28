@@ -207,7 +207,7 @@ export default function Dashboard() {
             onThemeToggle={toggleTheme}
             theme={theme}
           />
-          <main className="flex-1 overflow-y-auto bg-[#e4e7ef] dark:bg-[#11162B] transition-colors duration-300">
+          <main className="flex-1 overflow-y-auto bg-[#e4e7ef] dark:bg-[rgb(7,12,32)] transition-colors duration-300">
             <AccountsList />
           </main>
         </div>
