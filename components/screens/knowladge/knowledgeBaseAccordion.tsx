@@ -30,7 +30,7 @@ import {
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { RiLoader2Fill } from "react-icons/ri";
-import Image from "next/image";
+
 
 interface AccordionSection {
   id: string;
