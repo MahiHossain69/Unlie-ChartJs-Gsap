@@ -6,6 +6,7 @@ import Header from '@/components/screens/askAvater/header';
 import Sidebar from '@/components/screens/askAvater/sidebar';
 import React from 'react';
 import AskAvatarChat from '@/components/screens/askAvater/askavatercontent';
+import AvaterHeader from '@/components/screens/askAvater/avaterHeader';
 
 const Page = () => {
   const [currentUser] = useState({
@@ -50,7 +51,12 @@ const Page = () => {
             theme={theme}
           />
           <main className="flex-1 overflow-y-auto bg-[#e4e7ef] dark:bg-[rgb(7,12,32)] transition-colors duration-300">
-            <AskAvatarChat />
+            <AvaterHeader/>
+
+            <div className="p-4 sm:p-6 ">
+                <AskAvatarChat/>
+
+            </div>
           </main>
         </div>
         <ContactModal
