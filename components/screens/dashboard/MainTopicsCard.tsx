@@ -69,7 +69,7 @@ export default function MainTopicsCard() {
   }, []);
 
   return (
-    <Card className="bg-white dark:bg-[#101828]  dark:border-slate-700 backdrop-blur-sm w-full max-w-full sm:max-w-[100%] ">
+    <Card className="bg-white dark:bg-[#fff]/5  dark:border-slate-700 backdrop-blur-sm w-full max-w-full sm:max-w-[100%] ">
       <CardHeader className="flex flex-col 2xl:flex-row items-start sm:items-center mt-4 justify-between gap-4">
         <CardTitle className="dark:text-white font-space text-black text-base sm:text-lg font-semibold">
           Main Topics
@@ -80,7 +80,7 @@ export default function MainTopicsCard() {
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className="h-9 px-3 text-sm text-[#4A5773]  font-spacetext-[#4A5773] sm:text-sm dark:bg-slate-800 bg-white border-[#D0D5DD]  dark:text-white"
+                className="h-9 px-3 text-sm text-[#4A5773] dark:border-white/30  font-spacetext-[#4A5773] sm:text-sm dark:bg-transparent bg-white border-[#D0D5DD]  dark:text-white"
               >
                 <CalendarIcon className="w-4 h-4 mr-2 dark:text-white  text-gray-600" />
                 Jan 10 - Jan 16
@@ -115,9 +115,9 @@ export default function MainTopicsCard() {
           <Button
             size="sm"
             variant="outline"
-            className="h-9 w-9 p-0 dark:bg-slate-800 bg-white border-[#D0D5DD]  dark:text-white dark:hover:bg-slate-700"
+            className="h-9 w-9 p-0 dark:bg-transparent bg-white dark:border-white/30 border-[#D0D5DD]  dark:text-white dark:hover:bg-slate-700"
           >
-            <Download className="w-4 h-4 text-[#473BF0]" />
+            <Download className="w-4 h-4 text-[#473BF0] dark:text-[rgb(249,248,255)]" />
           </Button>
         </div>
       </CardHeader>

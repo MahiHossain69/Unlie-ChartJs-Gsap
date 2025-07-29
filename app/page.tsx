@@ -67,7 +67,7 @@ export default function Dashboard() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#11162B] px-4">
+      <div className="min-h-screen flex items-center justify-center bg-[rgb(7,12,32)] px-4">
         <div className="max-w-md bg-white/5 border border-white/10 w-full space-y-6 rounded-2xl shadow-lg p-8">
           {!showForgot ? (
             <form onSubmit={handleLogin} className="space-y-5">

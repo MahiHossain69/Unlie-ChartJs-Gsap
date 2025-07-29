@@ -223,7 +223,7 @@ export default function ThreatDetectionTable() {
 
   return (
     <div className="">
-      <Card className="bg-white border border-gray-200 dark:bg-[#101828] dark:border-slate-700 shadow-sm">
+      <Card className="bg-white border border-gray-200 dark:!bg-[#fff]/5 dark:border-slate-700 shadow-sm">
         <CardHeader className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 px-6 py-6 ">
           <div className="flex flex-wrap items-center gap-3">
             <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">Threat Detection</CardTitle>
@@ -236,70 +236,68 @@ export default function ThreatDetectionTable() {
                 placeholder="Search Threats"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 border font-space border-[#D0D5DD] bg-[#0000000F]/5 placeholder:font-space placeholder:font-normal placeholder:text-[13px] placeholder:text-[#98A2B3] w-full h-10"
+                className="pl-10 border dark:border-[#E4E7EC1A] dark:bg-[#FFFFFF0F] font-space border-[#D0D5DD] bg-[#0000000F]/5 placeholder:font-space placeholder:font-normal placeholder:text-[13px] placeholder:text-[#98A2B3] w-full h-10"
               />
             </div>
           </div>
         </CardHeader>
 
         <CardContent className="px-3 ">
-          <div ref={tableRef} className="overflow-x-auto">
-            <table className="w-full  text-sm min-w-[900px]">
-              <thead className="bg-[#4444440D]/5   dark:bg-white/5 border border-[#0000001A]/10 dark:border-white/10">
-                <tr className="border  border-gray-200 dark:border-[#FFFFFF1A]/10">
-                  <SortableHeader  field="threatType">Threat Type</SortableHeader>
-                  <SortableHeader field="platform">Platform</SortableHeader>
-                  <SortableHeader field="contentSummary">Content Summary</SortableHeader>
-                  <SortableHeader field="id">ID</SortableHeader>
-                  <SortableHeader field="reach">Reach</SortableHeader>
-                  <th className="text-left text-[#4A5773] dark:text-[#E4E7EC]  py-4 px-4">Action</th>
-                  <SortableHeader field="status">Status</SortableHeader>
-                </tr>
-              </thead>
-              <tbody className="bg-white dark:bg-[#101828]">
-                {paginatedThreats.map((threat) => (
-                  <tr key={threat.id} className="table-row border-b border-l border-r dark:border-l dark:border-r dark:bg-[#101828] dark:border-white/10 border-gray-100 hover:bg-gray-50">
-                    <td className="py-4 px-4 font-space font-normal text-[13px] text-[#1880F0] dark:text-[#84CAFF]">{threat.threatType}</td>
-                    <td className="py-4 px-4 font-space font-normal text-[13px] text-[#1880F0] dark:text-[#84CAFF]">{threat.platform}</td>
-                    <td className="py-4 px-4 font-space font-normal text-[13px] text-[#1880F0] dark:text-[#84CAFF]">{threat.contentSummary}</td>
-                    <td className="py-4 px-4 font-space font-normal text-[13px] text-[#1880F0] dark:text-[#fff]">{threat.id}</td>
-                    <td className="py-4 px-4">{getReachBadge(threat.reach)}</td>
-                    <td className="py-4 px-4">
-                      <div className="flex flex-col sm:flex-row gap-2">
-                        <Select
-  onValueChange={(value: ActionType) => handleAction(threat.id, value)}
-  disabled={["Mitigated", "Dismissed", "Escalated", "Archived"].includes(threat.status)}
->
-
-                          <SelectTrigger className="w-24 h-8 bg-[#F23838] font-space  font-medium !text-[#FEF3F2] text-xs">
-                            <SelectValue placeholder="Mitigate" />
-                          </SelectTrigger>
-                          <SelectContent className="text-black dark:text-white font-space font-normal">
-                            <SelectItem value="mitigate" >Mitigate</SelectItem>
-                            <SelectItem value="escalate">Escalate</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <Select
-  onValueChange={(value: ActionType) => handleAction(threat.id, value)}
-  disabled={["Mitigated", "Dismissed", "Escalated", "Archived"].includes(threat.status)}
->
-
-                          <SelectTrigger className="w-24 h-8 bg-[#0CAF60] font-space  font-medium !text-[#FEF3F2] text-xs">
-                            <SelectValue placeholder="Dismiss" />
-                          </SelectTrigger>
-                          <SelectContent className="text-black dark:text-white font-space font-normal">
-                            <SelectItem value="dismiss">Dismiss</SelectItem>
-                            <SelectItem value="archive">Archive</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 ">{getStatusBadge(threat.status)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+         <div ref={tableRef} className="overflow-x-auto rounded-[10px] border border-gray-200 dark:border-white/10">
+  <table className="w-full text-sm min-w-[900px] overflow-hidden rounded-[5px]">
+    <thead className="bg-[#4444440D]/5 dark:bg-white/5 border-b border-[#0000001A]/10 dark:border-white/10">
+      <tr className="border-b border-gray-200 dark:border-[#FFFFFF1A]/10">
+        <SortableHeader field="threatType">Threat Type</SortableHeader>
+        <SortableHeader field="platform">Platform</SortableHeader>
+        <SortableHeader field="contentSummary">Content Summary</SortableHeader>
+        <SortableHeader field="id">ID</SortableHeader>
+        <SortableHeader field="reach">Reach</SortableHeader>
+        <th className="text-left text-[#4A5773] dark:text-[#E4E7EC] py-4 px-4">Action</th>
+        <SortableHeader field="status">Status</SortableHeader>
+      </tr>
+    </thead>
+    <tbody className="bg-white dark:bg-transparent">
+      {paginatedThreats.map((threat) => (
+        <tr key={threat.id} className="table-row border-b border-l border-r dark:border-white/10 border-gray-100 hover:bg-white/5">
+          <td className="py-4 px-4 font-space font-normal text-[13px] text-[#1880F0] dark:text-[#84CAFF]">{threat.threatType}</td>
+          <td className="py-4 px-4 font-space font-normal text-[13px] text-[#1880F0] dark:text-[#84CAFF]">{threat.platform}</td>
+          <td className="py-4 px-4 font-space font-normal text-[13px] text-[#1880F0] dark:text-[#84CAFF]">{threat.contentSummary}</td>
+          <td className="py-4 px-4 font-space font-normal text-[13px] text-[#1880F0] dark:text-[#fff]">{threat.id}</td>
+          <td className="py-4 px-4">{getReachBadge(threat.reach)}</td>
+          <td className="py-4 px-4">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Select
+                onValueChange={(value: ActionType) => handleAction(threat.id, value)}
+                disabled={["Mitigated", "Dismissed", "Escalated", "Archived"].includes(threat.status)}
+              >
+                <SelectTrigger className="w-24 h-8 bg-[#F23838] font-space font-medium !text-[#FEF3F2] text-xs">
+                  <SelectValue placeholder="Mitigate" />
+                </SelectTrigger>
+                <SelectContent className="text-black dark:text-white font-space font-normal">
+                  <SelectItem value="mitigate">Mitigate</SelectItem>
+                  <SelectItem value="escalate">Escalate</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select
+                onValueChange={(value: ActionType) => handleAction(threat.id, value)}
+                disabled={["Mitigated", "Dismissed", "Escalated", "Archived"].includes(threat.status)}
+              >
+                <SelectTrigger className="w-24 h-8 bg-[#0CAF60] font-space font-medium !text-[#FEF3F2] text-xs">
+                  <SelectValue placeholder="Dismiss" />
+                </SelectTrigger>
+                <SelectContent className="text-black dark:text-white font-space font-normal">
+                  <SelectItem value="dismiss">Dismiss</SelectItem>
+                  <SelectItem value="archive">Archive</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </td>
+          <td className="py-4 px-4">{getStatusBadge(threat.status)}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
           {/* Pagination */}
           <div className="flex justify-center items-center space-x-1 mt-6 px-6 pb-2">

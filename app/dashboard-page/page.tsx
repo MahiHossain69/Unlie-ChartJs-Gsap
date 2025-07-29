@@ -42,7 +42,7 @@ export default function Dashboard() {
 
   return (
     <section className="w-full min-h-screen">
-      <div className="flex flex-col lg:flex-row min-h-screen bg-white dark:bg-[#101828] text-slate-900 dark:text-white transition-colors duration-300">
+      <div className="flex h-screen bg-white dark:bg-[#101828] text-slate-900 dark:text-white transition-colors duration-300">
         
         {/* Sidebar - responsive for small screens */}
         <Sidebar

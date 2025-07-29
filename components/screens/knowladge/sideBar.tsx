@@ -49,7 +49,7 @@ export default function Sidebar({
     {
       name: "Ask the Avatar",
       icon: RiChatAiLine,
-      href: "#",
+      href: "/AskTheAvater-page",
     },
   ];
 

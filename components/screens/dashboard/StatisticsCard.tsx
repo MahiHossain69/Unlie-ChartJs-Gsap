@@ -112,14 +112,14 @@ export default function StatisticsCard() {
   };
 
   return (
-    <Card className="bg-white dark:bg-[#101828] dark:border-slate-700 shadow-sm  border rounded-xl">
+    <Card className="bg-white dark:bg-[#fff]/5 dark:border-slate-700 shadow-sm  border rounded-xl">
       <CardHeader className="flex flex-row items-center mt-4 justify-between px-5">
         <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">
           Statistic
         </CardTitle>
         <div className="flex items-center space-x-2">
           <Select defaultValue="weekly">
-            <SelectTrigger className="w-24 h-8 dark:bg-slate-800 bg-white font-space border-[#D0D5DD] text-[#4A5773] dark:text-white text-sm">
+            <SelectTrigger className="w-24 h-8 dark:bg-transparent dark:border-[#FFF]/30 bg-white font-space border-[#D0D5DD] text-[#4A5773] dark:text-white text-sm">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="dark:bg-slate-800 bg-white border-slate-600">
@@ -137,9 +137,9 @@ export default function StatisticsCard() {
           <Button
             size="sm"
             variant="outline"
-            className="h-8 w-8 p-0 dark:bg-slate-800 bg-white border-[#D0D5DD] dark:text-white dark:hover:bg-slate-700"
+            className="h-8 w-8 p-0 dark:bg-transparent bg-white border-[#D0D5DD] dark:border-white/30 dark:text-white dark:hover:bg-slate-700"
           >
-            <Download className="w-4 h-4 text-[#473BF0]" />
+            <Download className="w-4 h-4 text-[#473BF0] dark:text-[rgb(249,248,255)]" />
           </Button>
         </div>
       </CardHeader>
