@@ -57,7 +57,7 @@ const Page = () => {
           <main className="flex-1 overflow-y-auto bg-[#e4e7ef] dark:bg-[rgb(7,12,32)] transition-colors duration-300">
             <AvaterHeader/>
 
-            <div className=" flex min-h-[707px] flex-col lg:flex-row  gap-4  p-4 sm:p-8">
+            <div className=" flex min-h-[707px] flex-col lg:flex-row  gap-8  p-4 sm:p-8">
        <ChatSidebar   />
       <AskAvatarChat />
     </div>

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
   History,
-  SlidersHorizontal,
+  
   MoreHorizontal,
   Pencil,
   Trash2,
@@ -24,6 +24,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog"
 import gsap from "gsap"
+import Image from "next/image"
 
 export default function ChatSidebar() {
   const [isAllTimeActive, setIsAllTimeActive] = useState(true)
@@ -106,7 +107,7 @@ export default function ChatSidebar() {
   const renderItem = (item: string) => (
     <div
       key={item}
-      className="flex items-center justify-between px-4 py-2 bg-white/10 hover:bg-white/20 transition-all duration-300 rounded-xl shadow-sm group"
+      className="flex items-center justify-between  font-space px-4 py-2 bg-transparent border border-[#D0D5DD] hover:bg-white transition-all duration-300 rounded-xl shadow-sm group"
     >
       {editingItem === item ? (
         <input
@@ -121,7 +122,7 @@ export default function ChatSidebar() {
           className="border-none outline-none w-full text-sm text-white placeholder-white/40 bg-white/10 px-2 py-1 rounded-md"
         />
       ) : (
-        <span className="truncate text-sm text-white">{item}</span>
+        <span className="truncate text-sm text-[#4A5773]">{item}</span>
       )}
 
       {editingItem !== item && (
@@ -130,25 +131,25 @@ export default function ChatSidebar() {
             <Button
               variant="ghost"
               size="icon"
-              className="hover:bg-white/10 text-white rounded-full w-7 h-7"
+              className="  text-[#4A5773]  w-7 h-7"
             >
               <MoreHorizontal className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="bg-[#1F1F3D] border border-white/10 text-white p-1 rounded-xl shadow-xl w-40 backdrop-blur-lg"
+            className="bg-[#fff] font-space  border border-white/10 text-white p-1 rounded-xl shadow-xl w-40 backdrop-blur-lg"
             align="end"
           >
             <DropdownMenuItem
               onClick={() => startRenaming(item)}
-              className="flex items-center gap-2 px-3 py-2 hover:bg-white/10 rounded-md text-sm"
+              className="flex items-center gap-2 px-3 py-2 hover:bg-white/10 font-space font-medium text-[#4A5773] cursor-pointer rounded-md text-sm"
             >
-              <Pencil className="w-4 h-4 text-purple-300" /> Rename
+              <Pencil className="w-4 h-4 text-[#4A5773]" /> Rename
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-white/10 my-1" />
             <DropdownMenuItem
               onClick={() => removeItem(item)}
-              className="flex items-center gap-2 px-3 py-2 text-red-400 hover:bg-red-900/30 rounded-md text-sm"
+              className="flex items-center gap-2 px-3 py-2 text-red-400 font-medium hover:bg-red-900/30 rounded-md text-sm"
             >
               <Trash2 className="w-4 h-4" /> Remove
             </DropdownMenuItem>
@@ -165,29 +166,26 @@ export default function ChatSidebar() {
       <Button
         variant="ghost"
         size="icon"
-        className="text-white hover:bg-white/10 rounded-full w-8 h-8 md:w-9 md:h-9"
+        className="text-[#4A5773] hover:bg-white/10 rounded-full w-8 h-8 md:w-9 md:h-9"
       >
         <History className="w-4 h-4 md:w-5 md:h-5" />
       </Button>
 
-      <div className="flex items-center gap-1.5 bg-white/10 rounded-lg p-1">
+      <div className="flex items-center gap-1.5 border border-[#E4E7ECs] rounded-lg ">
         <Button
           onClick={() =>
             isMobile ? setIsModalOpen(true) : setIsAllTimeActive(!isAllTimeActive)
           }
-          className={`text-xs md:text-sm font-medium px-3 md:px-4 py-1.5 rounded-md transition-all duration-300 text-white ${
-            isAllTimeActive ? "bg-white/20 shadow-inner" : "hover:bg-white/15"
+          className={`text-xs md:text-sm   font-space font-normal bg-white hover:bg-white w-full py-1.5 rounded-md transition-all duration-300 text-[#4A5773] ${
+            isAllTimeActive ? "" : ""
           }`}
         >
           All Time
+          
+          <Image src="/switch.svg" alt="Switch Icon" width={16} height={16} className="" />
+        
         </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-white hover:bg-white/10 rounded-md w-8 h-8"
-        >
-          <SlidersHorizontal className="w-4 h-4" />
-        </Button>
+        
       </div>
     </div>
 
@@ -195,13 +193,13 @@ export default function ChatSidebar() {
     {!isMobile && (
       <div className="flex-grow overflow-y-auto custom-scrollbar pr-1">
         <div ref={recentSectionRef}>
-          <p className="text-xs md:text-sm font-medium text-white/70 mb-1 md:mb-2">Recent</p>
+          <p className="text-xs md:text-sm font-medium text-[#101828] font-space mb-1 md:mb-2">Recent</p>
           <div className="space-y-2">{recentItems.map(renderItem)}</div>
         </div>
 
         {isAllTimeActive && (
           <div ref={datedSectionRef} className="mt-5 md:mt-6">
-            <p className="text-xs md:text-sm font-medium text-white/70 mb-1 md:mb-2">
+            <p className="text-xs md:text-sm font-medium text-[#101828] font-space mb-1 md:mb-2">
               03 Jan 2025
             </p>
             <div className="space-y-2">{datedItems.map(renderItem)}</div>

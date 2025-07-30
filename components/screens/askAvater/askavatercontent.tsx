@@ -3,9 +3,12 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { Paperclip, Send, Sparkles } from "lucide-react"
+import { FaArrowRightLong } from "react-icons/fa6";
+
 import { gsap } from "gsap"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Image from "next/image"
+import { LuCirclePlus } from "react-icons/lu"
 
 interface Message {
   id: number
@@ -56,14 +59,14 @@ export default function Component() {
       id: Date.now(),
       sender: "user",
       text: userMessageText,
-      avatar: "/placeholder.svg?height=40&width=40",
+      avatar: "/adamroot.svg",
     }
 
     const thinkingMessage: Message = {
       id: Date.now() + 1,
       sender: "ai",
       text: "Thinking...",
-      avatar: "/placeholder.svg?height=40&width=40",
+      avatar: "/chatreply.svg",
       isThinking: true,
     }
 
@@ -71,7 +74,7 @@ export default function Component() {
     setInputValue("")
 
     setTimeout(() => {
-      const aiResponse = `Here's the results of 5 attention-grabbing headlines:\n1. Revolutionize Customer Engagement with AI Chat Copywriter\n2. Unleash the Power of AI Chat Copywriters\n3. Chatbots on Steroids: Meet the AI Copywriter\n4. From Bland to Brilliant: AI Copywriters\n5. Say Goodbye to Boring Chats`
+      const aiResponse = `Thinking...`
       setMessages((prev) =>
         prev.map((msg) => (msg.id === thinkingMessage.id ? { ...msg, text: aiResponse, isThinking: false } : msg)),
       )
@@ -83,7 +86,7 @@ export default function Component() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-between xl:min-h-[707px] md:h-full lg:h-[883px] h-full p-4 md:p-6 bg-white rounded-lg text-white">
+    <div className="flex w-full flex-col items-center justify-between xl:min-h-[707px] md:h-full lg:h-[883px] h-full p-4 md:p-6 bg-white rounded-lg bg-gradient-to-r from-[#fff] via-[#ffffff] to-[#ecebff] text-white">
       <div className="w-full flex-grow mt-20 text-center flex flex-col items-center justify-center max-w-4xl mx-auto space-y-6">
         {messages.length === 0 ? (
           <>
@@ -122,15 +125,15 @@ export default function Component() {
                   </Avatar>
                 )}
                 <div
-                  className={`p-3 md:p-4 rounded-xl shadow-lg backdrop-blur-sm text-sm md:text-base ${
+                  className={`p-3 md:p-4 rounded-xl  shadow-lg backdrop-blur-sm text-sm md:text-base ${
                     message.sender === "user"
-                      ? "bg-purple-600 text-white"
-                      : "bg-white/10 border border-purple-500 text-white"
+                      ? "bg-[#0000000F]/5 border font-normal text-[14px] border-[#E4E7EC] font-space text-[#101828]"
+                      : "shadow-none font-space font-normal text-[14px] text-white"
                   } ${message.isThinking ? "animate-pulse" : ""}`}
                   style={{ maxWidth: "80%" }}
                 >
                   {message.text.split("\n").map((line, i) => (
-                    <p key={i} className="mb-1 last:mb-0 whitespace-pre-wrap">{line}</p>
+                    <p key={i} className="mb-1 text-[#101828] last:mb-0 whitespace-pre-wrap">{line}</p>
                   ))}
                 </div>
                 {message.sender === "user" && (
@@ -166,14 +169,12 @@ export default function Component() {
       </div>
 
       <div ref={inputAreaRef} className="relative w-full max-w-3xl mx-auto mt-auto pb-6">
-        <div className="bg-white/10 mt-[25px] border border-purple-500 rounded-xl p-4 shadow-lg backdrop-blur-sm">
-          <div className="flex items-center gap-2 text-gray-300 mb-2">
-            <Sparkles className="w-5 h-5 text-purple-300" />
-            <span className="text-sm">Ask whatever you want...</span>
-          </div>
-          <Textarea
-            className="w-full bg-transparent border-none text-white placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none min-h-[80px] sm:min-h-[100px]"
-            placeholder="Type your message here..."
+        <div className="bg-[#E4E7EC] mt-[25px] border border-[#E4E7EC] rounded-xl p-4 shadow-[#0000000A]/5 backdrop-blur-sm">
+          <div className="flex  gap-2 text-gray-300 mb-2">
+           <Image src="/chaticon.svg" alt="chaticon" width={16} height={16} className="-mt-[60px] cursor-pointer"/>
+            <Textarea
+            className="w-full bg-[transparent] placeholder:font-space text-[#101828] placeholder:text-[#101828] border-none font-space  focus-visible:ring-0 focus-visible:ring-offset-0 resize-none min-h-[80px] sm:min-h-[100px]"
+            placeholder="Ask whatever you want..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => {
@@ -183,17 +184,20 @@ export default function Component() {
               }
             }}
           />
+            
+          </div>
+          
           <div className="flex justify-between items-center mt-2">
-            <Button variant="ghost" className="text-gray-300 hover:text-white hover:bg-white/10 rounded-full">
-              <Paperclip className="w-4 h-4 mr-2" />
+            <Button variant="ghost" className="text-[#4A5773] font-space font-normal  rounded-full">
+              <LuCirclePlus className="w-4 h-4 mr-2" />
               Add Attachment
             </Button>
             <Button
               variant="ghost"
-              className="text-gray-300 hover:text-white hover:bg-white/10 rounded-full"
+              className="text-gray-300 hover:text-white bg-[#473BF0] hover:bg-[#665cff] p-3 rounded-lg"
               onClick={handleSendMessage}
             >
-              <Send className="w-5 h-5" />
+              <FaArrowRightLong className="w-[24px] text-white h-[24px]" />
             </Button>
           </div>
         </div>
