@@ -94,3 +94,28 @@ body:is(.dark *) {
 .lucide-chevron-down{
   opacity: 1;
 }
+
+
+/* Custom button style for prompt buttons */
+.btn-prompt {
+  @apply border border-purple-500 text-white bg-transparent hover:bg-purple-500/20;
+}
+
+/* Custom scrollbar for chat history */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
