@@ -119,3 +119,25 @@ body:is(.dark *) {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
+@keyframes dots {
+  0% {
+    content: 'Thinking';
+  }
+  25% {
+    content: 'Thinking.';
+  }
+  50% {
+    content: 'Thinking..';
+  }
+  75% {
+    content: 'Thinking...';
+  }
+}
+
+.thinking-text::after {
+  content: 'Thinking';
+  animation: dots 1.5s steps(4, jump-none) infinite;
+  white-space: pre;
+
+  
+}

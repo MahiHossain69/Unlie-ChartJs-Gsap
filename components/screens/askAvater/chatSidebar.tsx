@@ -107,7 +107,7 @@ export default function ChatSidebar() {
   const renderItem = (item: string) => (
     <div
       key={item}
-      className="flex items-center justify-between  font-space px-4 py-2 bg-transparent border border-[#D0D5DD] hover:bg-white transition-all duration-300 rounded-xl shadow-sm group"
+      className="flex items-center justify-between  font-space px-4 py-2 bg-transparent border dark:hover:bg-[#070C22] dark:border-[#344054] border-[#D0D5DD] hover:bg-white transition-all duration-300 rounded-xl shadow-sm group"
     >
       {editingItem === item ? (
         <input
@@ -122,7 +122,7 @@ export default function ChatSidebar() {
           className="border-none outline-none w-full text-sm text-white placeholder-white/40 bg-white/10 px-2 py-1 rounded-md"
         />
       ) : (
-        <span className="truncate text-sm text-[#4A5773]">{item}</span>
+        <span className="truncate text-sm text-[#4A5773] dark:text-[#D0D5DD]">{item}</span>
       )}
 
       {editingItem !== item && (
@@ -131,27 +131,27 @@ export default function ChatSidebar() {
             <Button
               variant="ghost"
               size="icon"
-              className="  text-[#4A5773]  w-7 h-7"
+              className="  text-[#4A5773] dark:text-[#D0D5DD]  w-7 h-7"
             >
               <MoreHorizontal className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="bg-[#fff] font-space  border border-white/10 text-white p-1 rounded-xl shadow-xl w-40 backdrop-blur-lg"
+            className="bg-[#fff] font-space dark:bg-[#101828]  border border-white/10 text-white p-1 rounded-xl shadow-xl w-40 backdrop-blur-lg"
             align="end"
           >
             <DropdownMenuItem
               onClick={() => startRenaming(item)}
-              className="flex items-center gap-2 px-3 py-2 hover:bg-white/10 font-space font-medium text-[#4A5773] cursor-pointer rounded-md text-sm"
+              className="flex items-center gap-2 px-3 py-2 hover:bg-white/10 dark:hover:bg-[#1D2939]  font-space font-medium text-[#4A5773] cursor-pointer rounded-md text-sm"
             >
-              <Pencil className="w-4 h-4 text-[#4A5773]" /> Rename
+              <Pencil className="w-4 h-4 text-[#4A5773] dark:text-white" /> Rename
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-white/10 my-1" />
             <DropdownMenuItem
               onClick={() => removeItem(item)}
-              className="flex items-center gap-2 px-3 py-2 text-red-400 font-medium hover:bg-red-900/30 rounded-md text-sm"
+              className="flex items-center gap-2 px-3 py-2 text-red-400 font-medium dark:text-red-600 hover:bg-red-900/30 dark:hover:bg-[#1D2939] rounded-md text-sm"
             >
-              <Trash2 className="w-4 h-4" /> Remove
+              <Trash2 className="w-4 h-4 dark:text-red-600" /> Remove
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -160,29 +160,30 @@ export default function ChatSidebar() {
   )
 
   return (
-    <div className="w-full h-full lg:w-[280px] bg-[#f8f7fe] p-4 md:p-5 lg:p-6 rounded-2xl flex flex-col space-y-5 md:space-y-6 border border-[#E4E7EC]">
+    <div className="w-full lg:min-h-[885px] dark:bg-[#1a1d40] dark:border-none h-full lg:w-[280px] bg-[#f8f7fe] p-4 md:p-5 lg:p-6 rounded-2xl flex flex-col space-y-5 md:space-y-6 border  border-[#E4E7EC]">
     {/* Header Controls */}
     <div className="flex items-center justify-between">
       <Button
         variant="ghost"
         size="icon"
-        className="text-[#4A5773] hover:bg-white/10 rounded-full w-8 h-8 md:w-9 md:h-9"
+        className="text-[#4A5773] dark:text-[#E4E7EC] hover:bg-white/10 rounded-full w-8 h-8 md:w-9 md:h-9"
       >
-        <History className="w-4 h-4 md:w-5 md:h-5" />
+        <History className="w-4 h-4 md:w-5 md:h-5" /> 
       </Button>
 
-      <div className="flex items-center gap-1.5 border border-[#E4E7ECs] rounded-lg ">
+      <div className="flex items-center gap-1.5 rounded-lg ">
         <Button
           onClick={() =>
             isMobile ? setIsModalOpen(true) : setIsAllTimeActive(!isAllTimeActive)
           }
-          className={`text-xs md:text-sm   font-space font-normal bg-white hover:bg-white w-full py-1.5 rounded-md transition-all duration-300 text-[#4A5773] ${
+          className={`text-xs md:text-sm   font-space font-normal bg-white dark:bg-[#171C35] border border-[#E4E7EC] dark:text-[#E4E7EC] dark:border-[#344054]  hover:bg-white w-full py-1.5 rounded-md transition-all duration-300 text-[#4A5773] ${
             isAllTimeActive ? "" : ""
           }`}
         >
           All Time
           
-          <Image src="/switch.svg" alt="Switch Icon" width={16} height={16} className="" />
+          <Image src="/switch.svg" alt="Switch Icon" width={16} height={16} className="block dark:hidden" />
+          <Image src="/darkswitch.svg" alt="Switch Icon" width={16} height={16} className="hidden dark:block" />
         
         </Button>
         
@@ -193,13 +194,13 @@ export default function ChatSidebar() {
     {!isMobile && (
       <div className="flex-grow overflow-y-auto custom-scrollbar pr-1">
         <div ref={recentSectionRef}>
-          <p className="text-xs md:text-sm font-medium text-[#101828] font-space mb-1 md:mb-2">Recent</p>
+          <p className="text-xs md:text-sm font-medium text-[#101828] dark:text-white font-space mb-1 md:mb-2">Recent</p>
           <div className="space-y-2">{recentItems.map(renderItem)}</div>
         </div>
 
         {isAllTimeActive && (
           <div ref={datedSectionRef} className="mt-5 md:mt-6">
-            <p className="text-xs md:text-sm font-medium text-[#101828] font-space mb-1 md:mb-2">
+            <p className="text-xs md:text-sm font-medium text-[#101828] dark:text-white font-space mb-1 md:mb-2">
               03 Jan 2025
             </p>
             <div className="space-y-2">{datedItems.map(renderItem)}</div>
@@ -210,21 +211,21 @@ export default function ChatSidebar() {
 
     {/* Mobile Modal */}
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogContent className="sm:max-w-full w-[95vw] h-[90vh] bg-[#2C2C4A] text-white border border-[#4A4A6E] rounded-xl p-4 overflow-y-auto custom-scrollbar">
+      <DialogContent className="sm:max-w-full w-[95vw] h-[90vh] dark:bg-[#1a1d40] bg-[white] text-[#101828] border border-[#4A4A6E] rounded-xl p-4 overflow-y-auto custom-scrollbar">
         <DialogHeader>
-          <DialogTitle className="text-base md:text-lg">Chat History</DialogTitle>
-          <DialogDescription className="text-white/60 text-sm">
+          <DialogTitle className="text-base font-space text-[#101828] dark:text-white md:text-lg">Chat History</DialogTitle>
+          <DialogDescription className="text-[#101828] dark:text-white font-space text-sm">
             Access your recent and past chats here.
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-4 space-y-6">
           <div>
-            <p className="text-sm font-semibold text-white/70 mb-2">Recent</p>
+            <p className="text-sm font-semibold font-space dark:text-white text-[#101828] mb-2">Recent</p>
             <div className="space-y-2">{recentItems.map(renderItem)}</div>
           </div>
           <div>
-            <p className="text-sm font-semibold text-white/70 mb-2">03 Jan 2025</p>
+            <p className="text-sm font-semibold text-[#101828] dark:text-white fon mb-2">03 Jan 2025</p>
             <div className="space-y-2">{datedItems.map(renderItem)}</div>
           </div>
         </div>
