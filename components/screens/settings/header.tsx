@@ -88,7 +88,7 @@ export default function Header({
                 alt="Notifications"
                 width={32}
                 height={32}
-                className="h-[32px] drak:hidden block w-[32px]"
+                className="h-[32px] dark:hidden block w-[32px]"
               />
              <Image
                 src="/darkbell.svg"
