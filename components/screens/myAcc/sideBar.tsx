@@ -2,9 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Users, Settings, X } from "lucide-react";
-import { RiDashboardLine } from "react-icons/ri";
-import { BsBook } from "react-icons/bs";
-import { RiChatAiLine } from "react-icons/ri";
+
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -23,7 +21,7 @@ export default function Sidebar({
   onClose,
   onContactClick,
 }: SidebarProps) {
-  const pathname = usePathname(); // 🧠 Current route
+  const pathname = usePathname(); 
 
   const navigation = [
     {

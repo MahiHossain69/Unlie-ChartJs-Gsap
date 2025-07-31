@@ -7,7 +7,7 @@ import Sidebar from '@/components/screens/settings/sideBar'
 import SettingsHeader from '@/components/screens/settings/settingHeader'
 import SettingsContenet from '@/components/screens/settings/settingsContent'
 
-const page = () => {
+const Page = () => {
 
       const [currentUser] = useState({
         name: 'Adam Root',
@@ -67,4 +67,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+
 import {  ChevronDown } from "lucide-react";
 import { MdOutlineSupervisorAccount, MdOutlineWbSunny } from "react-icons/md";
 import { IoMoonOutline, IoSettingsOutline } from "react-icons/io5";
@@ -34,7 +34,7 @@ export default function Header({
   onThemeToggle = () => {},
   theme = "light",
 }: HeaderProps) {
-  const [notifications] = useState(3);
+ 
 
   const getGreeting = () => {
     const hour = new Date().getHours();
