@@ -34,23 +34,11 @@ export default function Sidebar({
     {
       name: "Settings",
       icon: Settings,
-      href: "#",
+      href: "/settings-page",
     },
-    {
-      name: "Dashboard",
-      icon: RiDashboardLine,
-      href: "/dashboard-page",
-    },
-    {
-      name: "Knowledge Base",
-      icon: BsBook,
-      href: "/knowladge-page",
-    },
-    {
-      name: "Ask the Avatar",
-      icon: RiChatAiLine,
-      href: "/AskTheAvater-page",
-    },
+   
+   
+   
   ];
 
   const handleNavClick = () => {
@@ -108,13 +96,13 @@ export default function Sidebar({
                 href={href}
                 onClick={handleNavClick}
                 className={cn(
-                  "flex items-center mt-[40px] lg:mt-0 font-space px-4 py-3 text-sm font-medium rounded-lg transition-colors",
+                  "flex items-center gap-2 mt-[40px] lg:mt-0 font-space px-4 py-3 text-sm font-medium rounded-lg transition-colors",
                   isActive
                     ? "bg-blue-600 text-white"
                     : "text-slate-300 hover:text-white hover:bg-slate-700"
                 )}
               >
-                <Icon className="mr-3 h-5 w-5 flex-shrink-0" />
+               <Icon className="w-8 h-8 p-1.5 rounded-full bg-white/10 text-white" />
                 {name}
               </Link>
             );

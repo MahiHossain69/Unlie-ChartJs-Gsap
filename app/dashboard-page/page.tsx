@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Sidebar from '@/components/screens/dashboard/sidebar';
-import Header from '@/components/screens/myAcc/header';
+import Header from '@/components/screens/dashboard/header';
 import DashboardContent from '@/components/screens/dashboard/dashboardHeader';
 
 import ContactModal from '@/components/screens/dashboard/contactus';

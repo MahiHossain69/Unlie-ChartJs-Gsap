@@ -11,18 +11,24 @@ module.exports = {
   ],
   theme: {
   	extend: {
-		 animation: {
-        blink: 'blink 1s steps(2, start) infinite',
-      },
-	  keyframes: {
-        blink: {
-          '0%, 100%': { opacity: '0' },
-          '50%': { opacity: '1' },
-        },
-      },
-		fontFamily: {
-  			space: ["var(--font-space)"],
-		},
+  		animation: {
+  			blink: 'blink 1s steps(2, start) infinite'
+  		},
+  		keyframes: {
+  			blink: {
+  				'0%, 100%': {
+  					opacity: '0'
+  				},
+  				'50%': {
+  					opacity: '1'
+  				}
+  			}
+  		},
+  		fontFamily: {
+  			space: [
+  				'var(--font-space)'
+  			]
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -31,7 +37,6 @@ module.exports = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-        
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -69,6 +74,16 @@ module.exports = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
   			}
   		}
   	}

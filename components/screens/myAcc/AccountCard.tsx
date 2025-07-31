@@ -12,6 +12,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/components/ui/avatar';
+import Link from 'next/link';
 
 interface AccountCardProps {
   account?: {
@@ -100,13 +101,14 @@ export default function AccountCard({ account }: AccountCardProps) {
 
       {/* Button */}
       <div className="self-start sm:self-auto">
+        <Link href="/dashboard-page" passHref>
         <Button
           onClick={handleViewProfile}
           className="bg-[#473BF0] font-space hover:bg-blue-700  text-white px-4 py-2 rounded-md text-[14px] font-medium flex items-center gap-2"
         >
           <Eye className="w-4 h-4" />
           View Profile
-        </Button>
+        </Button></Link>
       </div>
     </div>
   );
