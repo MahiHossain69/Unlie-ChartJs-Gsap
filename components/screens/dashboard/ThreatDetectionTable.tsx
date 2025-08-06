@@ -223,7 +223,7 @@ export default function ThreatDetectionTable() {
 
   return (
     <div className="">
-      <Card className="bg-white border border-gray-200 dark:!bg-[#fff]/5 dark:border-slate-700 shadow-sm">
+      <Card className="bg-white border border-gray-200 dark:!bg-[#fff]/5 dark:border-white/10 shadow-sm">
         <CardHeader className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 px-6 py-6 ">
           <div className="flex flex-wrap items-center gap-3">
             <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">Threat Detection</CardTitle>
@@ -245,8 +245,8 @@ export default function ThreatDetectionTable() {
         <CardContent className="px-3 ">
          <div ref={tableRef} className="overflow-x-auto rounded-[10px] border border-gray-200 dark:border-white/10">
   <table className="w-full text-sm min-w-[900px] overflow-hidden rounded-[5px]">
-    <thead className="bg-[#4444440D]/5 dark:bg-white/5 border-b border-[#0000001A]/10 dark:border-white/10">
-      <tr className="border-b border-gray-200 dark:border-[#FFFFFF1A]/10">
+    <thead className="bg-[#4444440D]/5 dark:bg-white/5 border-b border-[white]/10 dark:border-white/10">
+      <tr className="border-b border-gray-200 dark:border-[white]/10">
         <SortableHeader field="threatType">Threat Type</SortableHeader>
         <SortableHeader field="platform">Platform</SortableHeader>
         <SortableHeader field="contentSummary">Content Summary</SortableHeader>

@@ -14,16 +14,6 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 export default function SentimentCard() {
   const chartRef = useRef(null);
 
-  useEffect(() => {
-    if (chartRef.current) {
-      gsap.fromTo(
-        chartRef.current,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1, delay: 0.9, ease: 'power3.out' }
-      );
-    }
-  }, []);
-
   const data = {
     labels: ['Jan 10', 'Jan 11', 'Jan 12', 'Jan 13', 'Jan 14', 'Jan 15', 'Jan 16'],
     datasets: [
@@ -70,23 +60,19 @@ export default function SentimentCard() {
     scales: {
       x: {
         stacked: true,
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
         ticks: {
-          color: '#4A5773',
-         font: { family: 'spaceGrotesk', size: 12 },
+          color: '#6B7280',
+          font: { family: 'spaceGrotesk', size: 12 },
         },
       },
       y: {
         stacked: true,
         min: 0,
         max: 200,
-        grid: {
-          color: '#E5E7EB',
-        },
+        grid: { color: '#E5E7EB' },
         ticks: {
-          color: '#4A5773',
+          color: '#6B7280',
           font: { family: 'spaceGrotesk', size: 12 },
           stepSize: 50,
         },
@@ -94,8 +80,44 @@ export default function SentimentCard() {
     },
   };
 
+  useEffect(() => {
+    if (chartRef.current) {
+      gsap.fromTo(
+        chartRef.current,
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1, delay: 0.9, ease: 'power3.out' }
+      );
+    }
+  }, []);
+
+  const handleDownload = () => {
+    const labels = data.labels;
+    const datasets = data.datasets;
+
+    // CSV Header
+    let csv = 'Date,Neutral,Positive,Negative\n';
+
+    for (let i = 0; i < labels.length; i++) {
+      const row = [
+        labels[i],
+        datasets[0]?.data[i] ?? '',
+        datasets[1]?.data[i] ?? '',
+        datasets[2]?.data[i] ?? '',
+      ];
+      csv += row.join(',') + '\n';
+    }
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sentiment-data.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
-    <Card className="bg-white dark:bg-[#fff]/5 dark:border-slate-700 backdrop-blur-sm">
+    <Card className="bg-white dark:bg-[#fff]/5 dark:border-white/10 backdrop-blur-sm">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">
           Sentiment
@@ -106,45 +128,41 @@ export default function SentimentCard() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="dark:bg-slate-800 bg-white border-slate-600">
-              <SelectItem value="weekly" className="dark:text-white font-space text-black">
-                Weekly
-              </SelectItem>
-              <SelectItem value="daily" className="dark:text-white font-space text-black">
-                Daily
-              </SelectItem>
-              <SelectItem value="monthly" className="dark:text-white font-space text-black">
-                Monthly
-              </SelectItem>
+              <SelectItem value="weekly" className="dark:text-white font-space text-black">Weekly</SelectItem>
+              <SelectItem value="daily" className="dark:text-white font-space text-black">Daily</SelectItem>
+              <SelectItem value="monthly" className="dark:text-white font-space text-black">Monthly</SelectItem>
             </SelectContent>
           </Select>
+
           <Button
             size="sm"
             variant="outline"
+            onClick={handleDownload}
             className="h-8 w-8 p-0 dark:border-white/30 dark:bg-transparent bg-white border-[#D0D5DD] dark:text-white dark:hover:bg-slate-700"
           >
             <Download className="w-4 h-4 text-[#473BF0] dark:text-[rgb(249,248,255)]" />
           </Button>
         </div>
       </CardHeader>
+
       <CardContent className="pb-6">
         <div className="flex items-center flex-wrap gap-x-4 gap-y-2 mb-4">
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-[#5B606A]"></div>
+            <div className="w-3 h-3 rounded-full bg-[#5B606A]" />
             <span className="text-xs font-space text-[#4A5773] dark:text-white/80">Neutral</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-[#0CAF60]"></div>
+            <div className="w-3 h-3 rounded-full bg-[#0CAF60]" />
             <span className="text-xs font-space text-[#4A5773] dark:text-white/80">Positive</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-[#F23838]"></div>
+            <div className="w-3 h-3 rounded-full bg-[#F23838]" />
             <span className="text-xs font-space text-[#4A5773] dark:text-white/80">Negative</span>
           </div>
         </div>
+
         <div ref={chartRef} className="h-48 relative">
           <Bar data={data} options={options} />
-          
-          
         </div>
       </CardContent>
     </Card>

@@ -123,7 +123,7 @@ export default function MentionsCard() {
           drawTicks: false,
         },
         ticks: {
-          color: "#4A5773",
+          color: "#6B7280",
           font: {
             family: "spaceGrotesk",
             size: 12,
@@ -136,7 +136,7 @@ export default function MentionsCard() {
         max: 80,
         ticks: {
           stepSize: 20,
-          color: "#4A5773",
+          color: "#6B7280",
           font: {
             family: "spaceGrotesk",
             size: 12,
@@ -144,9 +144,7 @@ export default function MentionsCard() {
           padding: 8,
         },
         grid: {
-         
           color: "#D1D5DB",
-         
         },
       },
     },
@@ -156,8 +154,23 @@ export default function MentionsCard() {
     },
   };
 
+  const handleDownloadCSV = () => {
+    let csv = "Label, " + data.labels?.join(", ") + "\n";
+    data.datasets.forEach((dataset) => {
+      csv += dataset.label + ", " + dataset.data.join(", ") + "\n";
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "MentionsChart.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <Card className="bg-white dark:bg-[#fff]/5 dark:border-slate-700 backdrop-blur-sm">
+    <Card className="bg-white dark:bg-[#fff]/5 dark:border-white/10 backdrop-blur-sm">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="dark:text-white font-space text-black text-[18px] font-semibold">
           Mentions
@@ -168,22 +181,13 @@ export default function MentionsCard() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="dark:bg-slate-800 bg-white border-slate-600">
-              <SelectItem
-                value="weekly"
-                className="dark:text-white font-space text-black"
-              >
+              <SelectItem value="weekly" className="dark:text-white font-space text-black">
                 Weekly
               </SelectItem>
-              <SelectItem
-                value="daily"
-                className="dark:text-white font-space text-black"
-              >
+              <SelectItem value="daily" className="dark:text-white font-space text-black">
                 Daily
               </SelectItem>
-              <SelectItem
-                value="monthly"
-                className="dark:text-white font-space text-black"
-              >
+              <SelectItem value="monthly" className="dark:text-white font-space text-black">
                 Monthly
               </SelectItem>
             </SelectContent>
@@ -191,6 +195,7 @@ export default function MentionsCard() {
           <Button
             size="sm"
             variant="outline"
+            onClick={handleDownloadCSV}
             className="h-8 w-8 p-0 dark:bg-transparent dark:border-white/30 bg-white border-[#D0D5DD] dark:text-white dark:hover:bg-slate-700"
           >
             <Download className="w-4 h-4 text-[#473BF0] dark:text-[rgb(249,248,255)]" />
@@ -200,20 +205,17 @@ export default function MentionsCard() {
 
       <CardContent className="pb-6 text-[#4A5773] dark:text-white">
         <div className="flex items-center flex-wrap gap-x-4 gap-y-2 mb-4">
-          {[
-            { label: "YouTube", color: "bg-[#F23838]" },
-            { label: "Facebook", color: "bg-[#1C89F6]" },
-            { label: "X", color: "bg-[#E38604]" },
-            { label: "TikTok", color: "bg-[#0CAF60]" },
-            { label: "Instagram", color: "bg-[#FE16D4]" },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center space-x-2">
-              <div className={`w-3 h-3 rounded-full ${item.color}`} />
-              <span className="font-space text-[12px] font-normal text-[#4A5773] dark:text-white/80 leading-none">
-                {item.label}
-              </span>
-            </div>
-          ))}
+          {["YouTube", "Facebook", "X", "TikTok", "Instagram"].map((label, i) => {
+            const colors = ["#F23838", "#1C89F6", "#E38604", "#0CAF60", "#FE16D4"];
+            return (
+              <div key={label} className="flex items-center space-x-2">
+                <div className={`w-3 h-3 rounded-full`} style={{ backgroundColor: colors[i] }} />
+                <span className="font-space text-[12px] font-normal text-[#4A5773] dark:text-white/80 leading-none">
+                  {label}
+                </span>
+              </div>
+            );
+          })}
         </div>
         <div ref={chartRef} className="h-48 relative">
           <Line data={data} options={options} />

@@ -151,7 +151,7 @@ export default function Sidebar({ isOpen, onClose, onContactClick }: SidebarProp
                 className={cn(
                   "flex items-center gap-2 mt-[40px] lg:mt-0 font-space px-4 py-3 text-sm font-medium rounded-lg transition-colors",
                   isActive
-                    ? "bg-blue-600 text-white"
+                    ? "bg-[#473BF0] text-white"
                     : "text-slate-300 hover:text-white hover:bg-slate-700"
                 )}
               >

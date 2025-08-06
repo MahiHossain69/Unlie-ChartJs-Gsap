@@ -1,8 +1,10 @@
 "use client";
 
-
-import {  ChevronDown } from "lucide-react";
-import { MdOutlineSupervisorAccount, MdOutlineWbSunny } from "react-icons/md";
+import { ChevronDown } from "lucide-react";
+import {
+  MdOutlineSupervisorAccount,
+  MdOutlineWbSunny,
+} from "react-icons/md";
 import { IoMoonOutline, IoSettingsOutline } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
 import { RiMenu3Fill } from "react-icons/ri";
@@ -34,8 +36,6 @@ export default function Header({
   onThemeToggle = () => {},
   theme = "light",
 }: HeaderProps) {
-  
-
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return "Good Morning";
@@ -52,61 +52,8 @@ export default function Header({
     .toUpperCase();
 
   return (
-    <header className="lg:bg-white bg-slate-50 dark:bg-[rgba(16,24,40,0.06)] lg:border-b  border-slate-200 dark:border-zinc-700 px-4 sm:px-6 py-3 transition-colors w-full">
+    <header className="lg:bg-white bg-slate-50 dark:bg-[#11162B]  border-slate-200 dark:border-white/10 px-4 sm:px-6 py-3 transition-colors w-full">
       <div className="flex items-center justify-between">
-        {/* Mobile version */}
-        <div className="lg:hidden flex items-center justify-between w-full">
-          <div className="dark:flex hidden items-center">
-            <Image src="/moblogo.svg" alt="Logo" width={77} height={32} />
-          </div>
-          <div className="flex dark:hidden items-center">
-            <Image src="/moblogoblack.svg" alt="Logo" width={77} height={32} />
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center rounded-md bg-[#fff] border border-[#D0D5DD] dark:bg-[#11162B] dark:border-[#282C3F] p-1 gap-1">
-              <button
-                onClick={() => theme === "dark" && onThemeToggle()}
-                className={`rounded-md p-1 ${
-                  theme === "light" ? "bg-[#624BFF] text-white" : "text-gray-400"
-                }`}
-              >
-                <MdOutlineWbSunny className="h-5 w-5" />
-              </button>
-              <button
-                onClick={() => theme === "light" && onThemeToggle()}
-                className={`rounded-md p-1 ${
-                  theme === "dark" ? "bg-[#624BFF] text-white" : "text-gray-400"
-                }`}
-              >
-                <IoMoonOutline className="h-5 w-5" />
-              </button>
-            </div>
-            <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
-             <Image
-                src="/bell.svg"
-                alt="Notifications"
-                width={32}
-                height={32}
-                className="h-[32px] drak:hidden block w-[32px]"
-              />
-             <Image
-                src="/darkbell.svg"
-                alt="Notifications"
-                width={32}
-                height={32}
-                className="h-[32px] hidden dark:block w-[32px]"
-              />
-            </button>
-            <button
-              onClick={onMenuClick}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-            >
-              <RiMenu3Fill className="w-5 h-5 text-gray-600 dark:text-white" />
-            </button>
-          </div>
-        </div>
-
         {/* Desktop version */}
         <div className="hidden lg:flex items-center justify-between w-full">
           <div className="flex items-center gap-4">
@@ -138,28 +85,90 @@ export default function Header({
               </button>
             </div>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative text-[#0A0D14] dark:text-white"
-            >
-              <Image
-                src="/bell.svg"
-                alt="Notifications"
-                width={32}
-                height={32}
-                className="h-[32px] dark:hidden block w-[32px]"
-              />
-             <Image
-                src="/darkbell.svg"
-                alt="Notifications"
-                width={32}
-                height={32}
-                className="h-[32px] hidden dark:block w-[32px]"
-              />
-             
-            </Button>
+            {/* Notification Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative text-[#0A0D14] dark:text-white hover:bg-muted/50"
+                >
+                  <Image
+                    src="/bell.svg"
+                    alt="Notifications"
+                    width={32}
+                    height={32}
+                    className="h-[32px] dark:hidden block w-[32px]"
+                  />
+                  <Image
+                    src="/darkbell.svg"
+                    alt="Notifications"
+                    width={32}
+                    height={32}
+                    className="h-[32px] hidden dark:block w-[32px]"
+                  />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="w-[230px] mt-2 space-y-3 px-4 py-4 border dark:border-white/10 dark:text-white border-[#E4E7EC] font-space rounded-2xl bg-white dark:bg-[#282C3F] shadow-xl"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="rounded-full p-2 bg-[#F9FAFB] dark:bg-[#282C3F]">
+                    <Image
+                      src="/onlybell.svg"
+                      alt="Bell Icon"
+                      width={18}
+                      height={17}
+                      className="opacity-70 dark:hidden block"
+                    />
+                    <Image
+                      src="/onlybelldark.svg"
+                      alt="Bell Icon"
+                      width={18}
+                      height={17}
+                      className="opacity-70 hidden dark:block"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-[#4A5773] dark:text-white">
+                      John Due
+                    </p>
+                    <p className="text-xs text-[#98A2B3] dark:text-[#98A2B3]">
+                      3 New Insights
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="rounded-full p-2 bg-[#F9FAFB] dark:bg-[#282C3F]">
+                    <Image
+                      src="/onlybell.svg"
+                      alt="Bell Icon"
+                      width={18}
+                      height={17}
+                      className="opacity-70  dark:hidden block"
+                    />
+                    <Image
+                      src="/onlybelldark.svg"
+                      alt="Bell Icon"
+                      width={18}
+                      height={17}
+                      className="opacity-70 hidden dark:block"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-[#4A5773] dark:text-white">
+                      Albert Flores
+                    </p>
+                    <p className="text-xs text-[#98A2B3] dark:text-[#98A2B3]">
+                      2 Elements to Review
+                    </p>
+                  </div>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
+            {/* User Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -169,7 +178,7 @@ export default function Header({
                   <Avatar className="h-8 w-8">
                     <AvatarImage asChild>
                       <Image
-                        src= "/john.svg"
+                        src="/john.svg"
                         alt="User Avatar"
                         width={32}
                         height={32}
@@ -206,14 +215,14 @@ export default function Header({
                   </DropdownMenuItem>
                 </Link>
 
-                 <Link href="/" passHref>
-                 <DropdownMenuItem className="flex items-center gap-3 text-sm font-medium cursor-pointer">
-                  <span className="p-2 rounded-full bg-[#F2F4F7] dark:bg-[#171D291A]/10">
-                    <LuLogOut className="w-5 h-5" />
-                  </span>
-                  Log Out
-                </DropdownMenuItem>
-                 </Link>
+                <Link href="/" passHref>
+                  <DropdownMenuItem className="flex items-center gap-3 text-sm font-medium cursor-pointer">
+                    <span className="p-2 rounded-full bg-[#F2F4F7] dark:bg-[#171D291A]/10">
+                      <LuLogOut className="w-5 h-5" />
+                    </span>
+                    Log Out
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

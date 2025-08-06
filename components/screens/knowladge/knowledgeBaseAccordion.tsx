@@ -30,6 +30,7 @@ import {
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { RiLoader2Fill } from "react-icons/ri";
+import Image from "next/image";
 
 
 interface AccordionSection {
@@ -1253,7 +1254,7 @@ const KnowledgeBaseAccordion = () => {
                   type="text"
                   placeholder={source.placeholder}
                   className="bg-transparent  text-sm !font-normal text-gray-500 w-full focus:outline-none"
-                  disabled
+                 
                 />
                 {source.status === "success" && (
                   <Check className="w-[19px] h-[19px] dark:text-black bg-[#0CAF60] text-white rounded-full px-[2px] ml-2 shrink-0" />
@@ -1262,25 +1263,13 @@ const KnowledgeBaseAccordion = () => {
                   <X className="w-[19px] h-[19px] dark:text-black text-white bg-[#F23838] px-[2px] rounded-full ml-2 shrink-0" />
                 )}
                 {source.status === "loading" && (
-                  <svg
-                    className="w-4 h-4 text-gray-400 animate-spin ml-2 shrink-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
+                 <Image
+                    src="/reload.svg"
+                    alt="Loading"
+                    width={20}
+                    height={20}
+                    className=" w-[19px] h-[19px] ml-2"
+                  />
                 )}
               </div>
             </div>

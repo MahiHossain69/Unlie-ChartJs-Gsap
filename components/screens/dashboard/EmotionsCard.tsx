@@ -38,12 +38,10 @@ export default function EmotionsCard() {
   };
 
   useEffect(() => {
-    // Animate progress bars on mount
     progressRefs.current.forEach((ref, index) => {
       if (ref) {
         const bar = ref.querySelector<HTMLElement>("[data-progress-indicator]");
         if (bar) {
-          // Simple animation without gsap
           setTimeout(() => {
             bar.style.transition = 'width 1s ease-out';
             bar.style.width = `${emotions[index].value}%`;
@@ -53,11 +51,31 @@ export default function EmotionsCard() {
     });
   }, []);
 
+  // Download CSV logic
+  const handleDownload = () => {
+    const csvHeader = "Emotion,Count,Value,Badge\n";
+    const csvRows = emotions.map((e) =>
+      `${e.name},${e.count},${e.value},${e.badge ?? ""}`
+    );
+    const csvContent = csvHeader + csvRows.join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "emotions.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
-    <Card className="bg-white dark:bg-[#fff]/5 dark:border-slate-700 backdrop-blur-sm">
-     <CardHeader className="flex flex-col 2xl:flex-row items-start sm:items-center mt-4 justify-between gap-4">
+    <Card className="bg-white dark:bg-[#fff]/5 dark:border-white/10 backdrop-blur-sm">
+      <CardHeader className="flex flex-col 2xl:flex-row items-start sm:items-center mt-4 justify-between gap-4">
         <CardTitle className="dark:text-white font-space text-black text-base sm:text-lg font-semibold">
-          Emotions    
+          Emotions
         </CardTitle>
 
         <div className="flex items-center font-space gap-2">
@@ -65,9 +83,9 @@ export default function EmotionsCard() {
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className="h-9 px-3 text-sm text-[#4A5773] dark:border-white/30  font-spacetext-[#4A5773] sm:text-sm dark:bg-transparent bg-white border-[#D0D5DD]  dark:text-white"
+                className="h-9 px-3 text-sm text-[#4A5773] dark:border-white/30 font-space sm:text-sm dark:bg-transparent bg-white border-[#D0D5DD] dark:text-white"
               >
-                <CalendarIcon className="w-4 h-4 mr-2 dark:text-white  text-gray-600" />
+                <CalendarIcon className="w-4 h-4 mr-2 dark:text-white text-gray-600" />
                 Jan 10 - Jan 16
               </Button>
             </PopoverTrigger>
@@ -100,7 +118,8 @@ export default function EmotionsCard() {
           <Button
             size="sm"
             variant="outline"
-            className="h-9 w-9 p-0 dark:bg-transparent bg-white dark:border-white/30 border-[#D0D5DD]  dark:text-white dark:hover:bg-slate-700"
+            className="h-9 w-9 p-0 dark:bg-transparent bg-white dark:border-white/30 border-[#D0D5DD] dark:text-white dark:hover:bg-slate-700"
+            onClick={handleDownload} // <-- Add download handler
           >
             <Download className="w-4 h-4 text-[#473BF0] dark:text-[rgb(249,248,255)]" />
           </Button>
@@ -118,15 +137,15 @@ export default function EmotionsCard() {
                 {emotion.count}
               </span>
             </div>
-            
+
             <div ref={setProgressRef(index)} className="relative">
               <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div
                   data-progress-indicator
                   className="h-full rounded-full relative transition-all duration-1000 ease-out"
-                  style={{ 
+                  style={{
                     width: "0%",
-                    backgroundColor: emotion.color
+                    backgroundColor: emotion.color,
                   }}
                 >
                   {emotion.badge && (

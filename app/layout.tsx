@@ -7,7 +7,7 @@ import FooterSection from "@/components/layouts/footer";
 const spaceGrotesk = localFont({
   src: [
     {
-      path: "./../public/fonts/SpaceGrotesk-Bold.ttf", 
+      path: "./../public/fonts/SpaceGrotesk-VariableFont_wght.ttf", 
       
       style: "normal",
     },
