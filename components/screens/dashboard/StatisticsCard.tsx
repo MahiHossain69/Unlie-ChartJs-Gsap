@@ -81,7 +81,6 @@ export default function StatisticsCard() {
       tooltip: {
         enabled: false,
         external: (context) => {
-          // Custom tooltip handler
           const { chart, tooltip } = context;
           let tooltipEl = chart.canvas.parentNode?.querySelector(
             "div.chart-tooltip"
@@ -160,19 +159,17 @@ export default function StatisticsCard() {
     },
   };
 
-  // Convert chart data to CSV string
+  // ✅ Fixed: Convert chart data to CSV string
   function convertDataToCSV() {
     const labels = data.labels as string[];
     const datasets = data.datasets;
 
-    // Header row
     let csv = "Date," + datasets.map((ds) => ds.label).join(",") + "\n";
 
-    // Each row per label
     labels.forEach((label, idx) => {
       const row = [label];
       datasets.forEach((ds) => {
-        row.push(toString());
+        row.push(String(ds.data[idx] ?? ""));
       });
       csv += row.join(",") + "\n";
     });
@@ -226,8 +223,7 @@ export default function StatisticsCard() {
       <CardContent className="pb-6 px-5">
         {/* Legend */}
         <div className="flex flex-wrap gap-3 font-space font-normal items-center mb-4">
-          {[
-            { color: "#F23838", label: "High Risk" },
+          {[{ color: "#F23838", label: "High Risk" },
             { color: "#E38604", label: "Medium Risk" },
             { color: "#0CAF60", label: "Low Risk" },
             { color: "#665CF3", label: "Mitigated Risk" },
