@@ -7,7 +7,7 @@ import KnowladgeHeader from '@/components/screens/knowladge/knowladgeHeader';
 import ContactModal from '@/components/screens/knowladge/contactus';
 import KnowledgeBaseAccordion from '@/components/screens/knowladge/knowledgeBaseAccordion';
 
-export default function Dashboard() {
+export default function Knowladge() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -38,12 +38,14 @@ export default function Dashboard() {
 
   return (
     <section className="w-full min-h-screen">
-      <div className="flex h-screen bg-white dark:bg-[#101828] text-slate-900 dark:text-white transition-colors">
+      <div className="flex flex-col lg:flex-row h-screen bg-white dark:bg-[#101828] text-slate-900 dark:text-white transition-colors">
+        {/* Sidebar - overlay on mobile */}
         <Sidebar
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           onContactClick={() => setContactModalOpen(true)}
         />
+
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header
             user={currentUser}
@@ -51,15 +53,15 @@ export default function Dashboard() {
             onThemeToggle={toggleTheme}
             theme={theme}
           />
+
           <main className="flex-1 overflow-y-auto bg-[#e4e7ef] dark:bg-[rgb(7,12,32)] transition-colors duration-300">
-            <KnowladgeHeader/>
-
-            <div className="p-4 sm:p-6 ">
-                <KnowledgeBaseAccordion/>
-
+            <KnowladgeHeader />
+            <div className="p-4 sm:p-6">
+              <KnowledgeBaseAccordion />
             </div>
           </main>
         </div>
+
         <ContactModal
           isOpen={contactModalOpen}
           onClose={() => setContactModalOpen(false)}
