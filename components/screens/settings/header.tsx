@@ -180,7 +180,26 @@ export default function Header({
                 align="end"
                 className="w-[230px] mt-2 space-y-3 px-4 py-4 border dark:border-white/10 dark:text-white border-[#E4E7EC] font-space rounded-2xl bg-white dark:bg-[#282C3F] shadow-xl"
               >
-                {/* Notification content as above */}
+                 <div className="flex items-center gap-3">
+                  <div className="rounded-full p-2 bg-[#F9FAFB] dark:bg-[#282C3F]">
+                    <Image src="/onlybell.svg" alt="Bell Icon" width={18} height={17} className="opacity-70 dark:hidden block" />
+                    <Image src="/onlybelldark.svg" alt="Bell Icon" width={18} height={17} className="opacity-70 hidden dark:block" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-[#4A5773] dark:text-white">John Due</p>
+                    <p className="text-xs text-[#98A2B3] dark:text-[#98A2B3]">3 New Insights</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="rounded-full p-2 bg-[#F9FAFB] dark:bg-[#282C3F]">
+                    <Image src="/onlybell.svg" alt="Bell Icon" width={18} height={17} className="opacity-70 dark:hidden block" />
+                    <Image src="/onlybelldark.svg" alt="Bell Icon" width={18} height={17} className="opacity-70 hidden dark:block" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-[#4A5773] dark:text-white">Albert Flores</p>
+                    <p className="text-xs text-[#98A2B3] dark:text-[#98A2B3]">2 Elements to Review</p>
+                  </div>
+                </div>
               </DropdownMenuContent>
             </DropdownMenu>
 
