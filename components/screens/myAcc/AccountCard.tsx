@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
-
 import { Button } from '@/components/ui/button';
 import {
   Avatar,
@@ -30,6 +29,10 @@ interface AccountCardProps {
 }
 
 export default function AccountCard({ account }: AccountCardProps) {
+  // ✅ Hooks must be declared unconditionally, BEFORE any return
+  const [openTooltipId, setOpenTooltipId] = useState<string | null>(null);
+
+  // 🔁 Return early after Hook declaration
   if (!account) return null;
 
   const {
@@ -50,11 +53,8 @@ export default function AccountCard({ account }: AccountCardProps) {
     console.log(`Viewing profile for ${name}`);
   };
 
-  const [openTooltipId, setOpenTooltipId] = useState<string | null>(null);
-
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-gray200 bg-white px-6 py-5 dark:border-white/10 dark:bg-white/[0.04]">
-
       {/* Avatar and Name */}
       <div className="flex items-center gap-3 md:min-w-[220px]">
         <Avatar className="w-10 h-10">
