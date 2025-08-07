@@ -40,7 +40,15 @@ export default function StatisticsCard() {
   }, []);
 
   const data: ChartData<"bar"> = {
-    labels: ["Jan 10", "Jan 11", "Jan 12", "Jan 13", "Jan 14", "Jan 15", "Jan 16"],
+    labels: [
+      "Jan 10",
+      "Jan 11",
+      "Jan 12",
+      "Jan 13",
+      "Jan 14",
+      "Jan 15",
+      "Jan 16",
+    ],
     datasets: [
       {
         label: "High Risk",
@@ -91,7 +99,7 @@ export default function StatisticsCard() {
             tooltipEl.className = "chart-tooltip";
             tooltipEl.style.cssText = `
               position: absolute;
-              background: #111827;
+              background: #000;
               color: #fff;
               border-radius: 8px;
               padding: 8px 12px;
@@ -102,30 +110,52 @@ export default function StatisticsCard() {
               transition: all 0.3s ease;
               box-shadow: 0 6px 20px rgba(0,0,0,0.15);
               z-index: 9999;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 4px;
             `;
             chart.canvas.parentNode?.appendChild(tooltipEl);
           }
 
-          if (tooltip.opacity === 0) {
+          if (tooltip.opacity === 0 || !tooltip.dataPoints?.length) {
             tooltipEl.style.opacity = "0";
             return;
           }
 
-          const title = tooltip.title[0];
-          const bodyLines = tooltip.body
-            .map((b, i) => {
-              const color = tooltip.labelColors[i].backgroundColor;
-              const value = b.lines[0].split(": ")[1];
-              return `<div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
-                        <div style="width:8px;height:8px;border-radius:50%;background:${color}"></div>
-                        <span>${value}</span>
-                      </div>`;
+          const index = tooltip.dataPoints[0].dataIndex;
+          const title = chart.data.labels?.[index] || "";
+
+          const colorsMap: Record<string, string> = {
+            "High Risk": "#F23838",
+            "Medium Risk": "#E38604",
+            "Low Risk": "#0CAF60",
+          };
+
+          const activeValues = chart.data.datasets
+            .filter((ds) =>
+              ["High Risk", "Medium Risk", "Low Risk"].includes(ds.label || "")
+            )
+            .map((ds) => {
+              const value = ds.data[index] ?? "";
+              const label = ds.label || "";
+              const color = colorsMap[label] ?? "#ccc";
+              return `
+                <div style="display:flex; align-items:center; justify-content: space-between; width: 100%; margin-top:2px;">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <div style="width:8px;height:8px;border-radius:50%;background:${color}"></div>
+                   
+                  </div>
+                  <span style="font-weight: 600;">${value}</span>
+                </div>`;
             })
             .join("");
 
           tooltipEl.innerHTML = `
-            <div style="text-align:center; font-weight:600; margin-bottom:6px;">${title}</div>
-            ${bodyLines}
+            <div style="text-align:center; font-weight:600; margin-bottom:6px; width: 100%;">${title}</div>
+            <div style="display: flex; flex-direction: column; width: 100%;">
+              ${activeValues}
+            </div>
           `;
 
           const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
@@ -223,7 +253,8 @@ export default function StatisticsCard() {
       <CardContent className="pb-6 px-5">
         {/* Legend */}
         <div className="flex flex-wrap gap-3 font-space font-normal items-center mb-4">
-          {[{ color: "#F23838", label: "High Risk" },
+          {[
+            { color: "#F23838", label: "High Risk" },
             { color: "#E38604", label: "Medium Risk" },
             { color: "#0CAF60", label: "Low Risk" },
             { color: "#665CF3", label: "Mitigated Risk" },

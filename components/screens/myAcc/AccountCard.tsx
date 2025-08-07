@@ -5,8 +5,8 @@ import {
   Eye,
   X
 } from 'lucide-react';
-import { TbAlertHexagonFilled } from "react-icons/tb";
 import { useState } from 'react';
+import { TbAlertHexagonFilled } from "react-icons/tb";
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,6 +15,7 @@ import {
   AvatarImage,
 } from '@/components/ui/avatar';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface AccountCardProps {
   account?: {
@@ -49,6 +50,8 @@ export default function AccountCard({ account }: AccountCardProps) {
     console.log(`Viewing profile for ${name}`);
   };
 
+  const [openTooltipId, setOpenTooltipId] = useState<string | null>(null);
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-gray200 bg-white px-6 py-5 dark:border-white/10 dark:bg-white/[0.04]">
 
@@ -64,42 +67,51 @@ export default function AccountCard({ account }: AccountCardProps) {
       </div>
 
       {/* Metrics */}
-        <div className="flex items-center gap-1 rounded-md dark:bg-[#FF83831A]/10 bg-[#FF83831A]/10 px-3 py-1.5 text-sm font-medium t">
-          <Metric
-            icon={<TbAlertHexagonFilled className="w-4 h-4 text-[#F23838]" />}
-            text={`Critical Threats: ${criticalThreats.toString().padStart(2, '0')}`}
-            textClass="text-red-500 font-space"
-          />
-        </div>
-      <div className="items-center gap-1.5 space-y-1.5 md:flex md:space-y-0">
+      <div className="flex items-center gap-1 rounded-md dark:bg-[#FF83831A]/10 bg-[#FF83831A]/10 px-3 py-1.5 text-sm font-medium ">
+        <Metric
+          icon={<Image src="/alert.svg" width={20} height={20} alt='alertIcon' />}
+          text={`Critical Threats: ${criticalThreats.toString().padStart(2, '0')}`}
+          textClass="text-red-500 font-space"
+        />
+      </div>
 
+      <div className="items-center gap-1.5 space-y-1.5 md:flex md:space-y-0">
         <div className="dark:bg-[#fff]/5 bg-black/5 px-1 rounded-md">
           <Metric
+            id="otherThreats"
             text={`${otherThreats} Other Threats`}
             textClass="text-black dark:text-white font-space"
             icon={<Info className="w-4 h-4 text-gray-400" />}
             reverse
             withTooltip
+            openTooltipId={openTooltipId}
+            setOpenTooltipId={setOpenTooltipId}
           />
         </div>
 
         <div className="dark:bg-[#fff]/5 bg-black/5 px-1 rounded-md">
           <Metric
+            id="elementsToReview"
             text={`${elementsToReview} Elements to Review`}
             textClass='text-black dark:text-white font-space'
             icon={<Info className="w-4 h-4 text-gray-400" />}
             reverse
             withTooltip
+            openTooltipId={openTooltipId}
+            setOpenTooltipId={setOpenTooltipId}
           />
         </div>
 
         <div className="dark:bg-[#fff]/5 bg-black/5 px-1 rounded-md">
           <Metric
+            id="newInsights"
             text={`${newInsights} New Insights`}
             textClass='text-black dark:text-white font-space'
             icon={<Info className="w-4 h-4 text-gray-400" />}
             reverse
             withTooltip
+            openTooltipId={openTooltipId}
+            setOpenTooltipId={setOpenTooltipId}
           />
         </div>
       </div>
@@ -113,7 +125,8 @@ export default function AccountCard({ account }: AccountCardProps) {
           >
             <Eye className="w-4 h-4" />
             View Profile
-          </Button></Link>
+          </Button>
+        </Link>
       </div>
     </div>
   );
@@ -121,41 +134,52 @@ export default function AccountCard({ account }: AccountCardProps) {
 
 // Reusable Metric with Tooltip
 function Metric({
+  id,
   icon,
   text,
   textClass = 'text-gray-600',
   reverse = false,
   withTooltip = false,
+  openTooltipId,
+  setOpenTooltipId
 }: {
+  id?: string;
   icon: React.ReactNode;
   text: string;
   textClass?: string;
   reverse?: boolean;
   withTooltip?: boolean;
+  openTooltipId?: string | null;
+  setOpenTooltipId?: (id: string | null) => void;
 }) {
-  const [showTooltip, setShowTooltip] = useState(false);
+  const isTooltipOpen = openTooltipId === id;
   const threats = Array.from({ length: 8 }, (_, i) => `This is threat no ${i + 1}`);
 
   const InfoIconWithTooltip = (
     <div className="relative">
       <button
-        onClick={() => setShowTooltip(!showTooltip)}
+        onClick={() => {
+          if (setOpenTooltipId && id) {
+            setOpenTooltipId(isTooltipOpen ? null : id);
+          }
+        }}
         className="cursor-pointer p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition"
       >
         {icon}
       </button>
-      {withTooltip && showTooltip && (
-        <div className="absolute z-50 top-full left-1/2 -translate-x-1/2 mt-2 bg-white border-[white]/10 text-black shadow-lg rounded-xl p-4 w-[370px] font-space text-[14px]">
-          <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 shadow-lg border-b-8 border-l-transparent border-r-transparent border-b-white" />
+
+      {withTooltip && isTooltipOpen && (
+        <div className="absolute z-50 top-full left-1/2 -translate-x-1/2 mt-2 bg-white dark:bg-[#131313] border-[white]/10 text-black shadow-2xl rounded-xl p-4 w-[370px] font-space text-[14px]">
+          <div className="absolute -top-2 left-1/2 shadow-2xl -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white dark:border-b-[#131313]" />
 
           <div className="flex justify-between items-center mb-3">
-            <h3 className="text-[18px] font-bold text-[#101828]">8 Other Threats</h3>
-            <button onClick={() => setShowTooltip(false)}>
-              <X className="w-4 h-4 text-[#0F172A]" />
+            <h3 className="text-[18px] font-bold dark:text-[white] text-[#101828]">{text}</h3>
+            <button onClick={() => setOpenTooltipId && setOpenTooltipId(null)}>
+              <X className="w-4 h-4 text-[#4A5773] dark:text-white" />
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-y-1 gap-x-4 text-[16px] text-[#4A5773] font-space font-normal">
+          <div className="grid grid-cols-2 gap-y-1 gap-x-4 text-[16px] dark:text-gray-200 text-[#4A5773] font-space font-normal">
             {threats.map((threat, i) => (
               <p key={i}>{i + 1}. {threat}</p>
             ))}

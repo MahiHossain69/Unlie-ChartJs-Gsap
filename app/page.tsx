@@ -146,7 +146,7 @@ export default function Dashboard() {
                     >
                       <FaSquareCheck
                         className={`
-            text-[#473BF0] w-full h-full rounded-sm transition-all duration-300
+            text-[#473BF0]  w-full h-full rounded-sm transition-all duration-300
             ${isChecked ? "opacity-100 scale-100" : "opacity-0 scale-75"}
           `}
                       />

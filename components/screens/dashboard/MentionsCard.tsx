@@ -108,12 +108,74 @@ export default function MentionsCard() {
         display: false,
       },
       tooltip: {
-        backgroundColor: "#1f2937",
-        titleColor: "#ffffff",
-        bodyColor: "#ffffff",
-        borderColor: "#374151",
-        borderWidth: 1,
-        padding: 8,
+        enabled: false, // Disable the default Chart.js tooltip
+        external: (context) => {
+          const { chart, tooltip } = context;
+          let tooltipEl = chart.canvas.parentNode?.querySelector(
+            "div.chart-tooltip"
+          ) as HTMLDivElement;
+
+          if (!tooltipEl) {
+            tooltipEl = document.createElement("div");
+            tooltipEl.className = "chart-tooltip";
+            tooltipEl.style.cssText = `
+              position: absolute;
+              background: #111827;
+              color: #fff;
+              border-radius: 8px;
+              padding: 8px 12px;
+              font-family: spaceGrotesk, sans-serif;
+              font-size: 12px;
+              pointer-events: none;
+              opacity: 0;
+              transition: all 0.3s ease;
+              box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+              z-index: 9999;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              white-space: nowrap;
+            `;
+            chart.canvas.parentNode?.appendChild(tooltipEl);
+          }
+
+          if (tooltip.opacity === 0 || !tooltip.dataPoints?.length) {
+            tooltipEl.style.opacity = "0";
+            return;
+          }
+
+          const index = tooltip.dataPoints[0].dataIndex;
+          const title = chart.data.labels?.[index] || "";
+          
+          const activeValues = tooltip.dataPoints
+            .map((dataPoint) => {
+              const label = dataPoint.dataset.label;
+              const value = dataPoint.raw as number;
+              const color = dataPoint.dataset.borderColor as string;
+              
+              return `
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <div style="width:8px;height:8px;border-radius:50%;background:${color}"></div>
+                  <span style="font-weight: 600;">${label}: ${value}</span>
+                </div>
+              `;
+            })
+            .join("");
+
+          tooltipEl.innerHTML = `
+            <div style="text-align: center; font-weight: 600; color: #E5E7EB; margin-bottom: 8px; ">${title}</div>
+            <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start; ">
+              ${activeValues}
+            </div>
+          `;
+
+          const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
+          tooltipEl.style.opacity = "1";
+          tooltipEl.style.left =
+            positionX + tooltip.caretX - tooltipEl.offsetWidth / 2 + "px";
+          tooltipEl.style.top =
+            positionY + tooltip.caretY - tooltipEl.offsetHeight - 8 + "px";
+        },
       },
     },
     scales: {
