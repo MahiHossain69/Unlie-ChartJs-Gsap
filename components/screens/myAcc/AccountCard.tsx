@@ -63,15 +63,15 @@ export default function AccountCard({ account }: AccountCardProps) {
             {initials}
           </AvatarFallback>
         </Avatar>
-        <span className="text-[15px] dark:text-white font-space font-medium text-gray-900">{name}</span>
+        <span className="text-[18px] dark:text-white font-space font-bold text-[#101828]">{name}</span>
       </div>
 
       {/* Metrics */}
-      <div className="flex items-center gap-1 rounded-md dark:bg-[#FF83831A]/10 bg-[#FF83831A]/10 px-3 py-1.5 text-sm font-medium ">
+      <div className="flex items-center gap-1 rounded-md dark:bg-[#FF8383]/10 bg-[#FF8383]/10 px-3 py-1.5 text-sm font-medium ">
         <Metric
           icon={<Image src="/alert.svg" width={20} height={20} alt='alertIcon' />}
           text={`Critical Threats: ${criticalThreats.toString().padStart(2, '0')}`}
-          textClass="text-red-500 font-space"
+          textClass="text-[#F23838] font-space font-medium text-[14px]"
         />
       </div>
 
@@ -80,7 +80,7 @@ export default function AccountCard({ account }: AccountCardProps) {
           <Metric
             id="otherThreats"
             text={`${otherThreats} Other Threats`}
-            textClass="text-black dark:text-white font-space"
+            textClass="text-[#101828] font-medium text-[14px] dark:text-white font-space"
             icon={<Info className="w-4 h-4 text-gray-400" />}
             reverse
             withTooltip
